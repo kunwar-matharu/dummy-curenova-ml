@@ -3,11 +3,13 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from typing import List
 from ..database import get_db
-from ..models.models import StressTestRun
+from ..models.models import StressTestRun, User
 from ..schemas.schemas import StressTestConfig, StressTestResultOut
 from ..services.stress_test_engine import StressTestEngine
+from ..dependencies.auth import require_researcher, get_current_active_user
 
 router = APIRouter(prefix="/stress-tests", tags=["Stress-Test Lab"])
+
 
 def format_run_out(run: StressTestRun) -> dict:
     return {
@@ -39,8 +41,15 @@ def get_stress_test(run_id: int, db: Session = Depends(get_db)):
     return format_run_out(run)
 
 @router.post("/run", response_model=StressTestResultOut)
-def execute_stress_test(config: StressTestConfig, db: Session = Depends(get_db)):
-    """Executes a real computational stress test run across selected evaluation split."""
+def execute_stress_test(
+    config: StressTestConfig,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_researcher)
+):
+    """
+    Executes a computationally intensive stress test run across selected evaluation split.
+    Restricted strictly to verified, approved researchers and administrators.
+    """
     run = StressTestEngine.run_stress_test(
         db=db,
         title=config.title,
@@ -52,8 +61,13 @@ def execute_stress_test(config: StressTestConfig, db: Session = Depends(get_db))
     )
     return format_run_out(run)
 
+
 @router.get("/{run_id}/export")
-def export_stress_test_report(run_id: int, db: Session = Depends(get_db)):
+def export_stress_test_report(
+    run_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
+):
     run = db.query(StressTestRun).filter(StressTestRun.id == run_id).first()
     if not run:
         raise HTTPException(status_code=404, detail="Stress test run not found")

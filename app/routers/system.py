@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from ..database import get_db
 from ..config import settings
-from ..models.models import Drug, Disease, CandidatePrediction, StressTestRun, ClinicalTrialRecord, EvidenceRecord
+from ..models.models import Drug, Disease, CandidatePrediction, StressTestRun, ClinicalTrialRecord, EvidenceRecord, User
+from ..dependencies.auth import require_admin
 
 router = APIRouter(prefix="/system", tags=["System & Mode Configuration"])
 
@@ -30,7 +31,8 @@ def get_system_status(db: Session = Depends(get_db)):
     }
 
 @router.post("/mode/toggle")
-def toggle_system_mode():
+def toggle_system_mode(current_admin: User = Depends(require_admin)):
+    """Toggles system demo/live mode. Restricted strictly to verified administrators."""
     settings.DEMO_MODE = not settings.DEMO_MODE
     return {
         "demo_mode": settings.DEMO_MODE,

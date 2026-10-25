@@ -1,18 +1,21 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from ..database import get_db
-from ..models.models import DrugInteraction, ClinicalTrialRecord, Drug
+from ..models.models import DrugInteraction, ClinicalTrialRecord, Drug, User
 from ..schemas.schemas import DDIAlert, ClinicalTrialOut
 from ..services.biomedical_adapters import BiomedicalAdapter
+from ..dependencies.auth import require_doctor
+from ..services.auth_service import get_client_ip, outbound_rate_limiter
 
 router = APIRouter(prefix="/doctor", tags=["Doctor Portal — Clinical Evidence & Safety"])
 
 @router.get("/interactions", response_model=List[DDIAlert])
 def check_interactions(
-    drug_names: Optional[str] = Query(None, description="Comma-separated list of drug names to check"),
-    severity: Optional[str] = None,
-    db: Session = Depends(get_db)
+    drug_names: Optional[str] = Query(None, max_length=500, description="Comma-separated list of drug names to check"),
+    severity: Optional[str] = Query(None, max_length=50),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_doctor)
 ):
     query = db.query(DrugInteraction)
     if severity:
@@ -56,10 +59,11 @@ def check_interactions(
 
 @router.get("/clinical-trials", response_model=List[ClinicalTrialOut])
 def get_clinical_trials(
-    condition: Optional[str] = None,
-    phase: Optional[str] = None,
-    status: Optional[str] = None,
-    db: Session = Depends(get_db)
+    condition: Optional[str] = Query(None, max_length=150),
+    phase: Optional[str] = Query(None, max_length=50),
+    status: Optional[str] = Query(None, max_length=50),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_doctor)
 ):
     query = db.query(ClinicalTrialRecord)
     if condition:
@@ -72,10 +76,14 @@ def get_clinical_trials(
 
 @router.get("/clinical-trials/live")
 async def fetch_live_clinical_trials(
-    condition: str = Query(..., description="Condition or disease name"),
-    drug: Optional[str] = None
+    request: Request,
+    condition: str = Query(..., min_length=2, max_length=150, description="Condition or disease name"),
+    drug: Optional[str] = Query(None, max_length=100),
+    current_user: User = Depends(require_doctor)
 ):
     """Fetches live human clinical trial records from ClinicalTrials.gov REST API v2."""
+    client_ip = get_client_ip(request)
+    outbound_rate_limiter.check_rate_limit(f"{client_ip}:trials")
     trials = await BiomedicalAdapter.search_clinical_trials(condition=condition, drug=drug, max_results=5)
     return {
         "condition": condition,

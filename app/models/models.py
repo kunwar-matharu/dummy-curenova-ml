@@ -1,8 +1,13 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, Float, Boolean, Text, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from ..database import Base
+
+def utc_now() -> datetime:
+    """Returns the current timezone-aware UTC datetime."""
+    return datetime.now(timezone.utc)
+
 
 class User(Base):
     __tablename__ = "users"
@@ -11,7 +16,26 @@ class User(Base):
     full_name = Column(String(255), nullable=False)
     role = Column(String(50), default="researcher")  # researcher, doctor, patient, admin
     hashed_password = Column(String(255), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False)
+    approval_status = Column(String(50), default="approved")  # approved, pending, rejected
+    created_at = Column(DateTime, default=utc_now)
+
+    refresh_tokens = relationship("RefreshToken", back_populates="user", cascade="all, delete-orphan")
+
+class RefreshToken(Base):
+    __tablename__ = "refresh_tokens"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    token_hash = Column(String(64), unique=True, index=True, nullable=False)  # SHA-256 of raw refresh token
+    jti = Column(String(100), unique=True, index=True, nullable=False)
+    family_id = Column(String(100), index=True, nullable=False)
+    is_revoked = Column(Boolean, default=False)
+    expires_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, default=utc_now)
+
+    user = relationship("User", back_populates="refresh_tokens")
+
 
 class ResearchProject(Base):
     __tablename__ = "research_projects"
@@ -20,8 +44,8 @@ class ResearchProject(Base):
     disease_focus = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
     status = Column(String(50), default="active")  # active, archived, completed
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
+    updated_at = Column(DateTime, default=utc_now, onupdate=utc_now)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
 
 class Drug(Base):
@@ -65,7 +89,7 @@ class CandidatePrediction(Base):
     chembl_id = Column(String(50), nullable=True)
     disease_id = Column(Integer, ForeignKey("diseases.id"), nullable=True)
     disease_name = Column(String(255), index=True, nullable=False)
-    
+
     # Model prediction details
     model_name = Column(String(100), default="CureNova GraphEnsemble v2.4")
     model_version = Column(String(50), default="2.4.0")
@@ -78,12 +102,12 @@ class CandidatePrediction(Base):
     rank = Column(Integer, nullable=False)
     rationale = Column(Text, nullable=True)
     biological_mechanism = Column(Text, nullable=True)
-    
+
     status = Column(String(50), default="Hypothesis")  # Hypothesis, Validated, Disproven, In-Review
     approval_status = Column(String(100), default="Approved (Other Indication)")
     evidence_count = Column(Integer, default=0)
     is_bookmarked = Column(Boolean, default=False)
-    last_updated = Column(DateTime, default=datetime.utcnow)
+    last_updated = Column(DateTime, default=utc_now)
 
     evidence_records = relationship("EvidenceRecord", back_populates="candidate", cascade="all, delete-orphan")
     notes = relationship("ResearchNote", back_populates="candidate", cascade="all, delete-orphan")
@@ -103,7 +127,7 @@ class EvidenceRecord(Base):
     excerpt = Column(Text, nullable=False)
     sample_size = Column(String(100), nullable=True)
     provenance_url = Column(String(500), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     candidate = relationship("CandidatePrediction", back_populates="evidence_records")
 
@@ -113,7 +137,7 @@ class ResearchNote(Base):
     candidate_id = Column(Integer, ForeignKey("candidate_predictions.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     content = Column(Text, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     candidate = relationship("CandidatePrediction", back_populates="notes")
 
@@ -147,13 +171,13 @@ class StressTestRun(Base):
     temporal_cutoff_year = Column(Integer, nullable=True)  # e.g. 2020
     perturbation_rate = Column(Float, default=0.20)  # e.g. 0.20 for 20% edge removal
     status = Column(String(50), default="completed")  # running, completed, failed
-    
+
     # JSON-encoded metrics and evaluations
     metrics_json = Column(Text, default="{}")  # auroc, auprc, recall_k, precision_k, brier_score, kendall_tau
     failure_analysis_json = Column(Text, default="[]")  # list of collapsed candidates
     rank_stability_json = Column(Text, default="{}")  # top-10 turnover, rank correlation
     logs_json = Column(Text, default="[]")  # execution steps and logs
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
 class DrugInteraction(Base):
     __tablename__ = "drug_interactions"
@@ -187,3 +211,21 @@ class PatientMedicineGuide(Base):
     food_interactions = Column(Text, nullable=True)
     what_to_ask_doctor = Column(Text, nullable=False)
     synthetic_disclaimer = Column(String(255), default="For educational demonstration only. Consult your licensed healthcare provider.")
+
+class ResearchFeedback(Base):
+    __tablename__ = "research_feedback"
+    id = Column(Integer, primary_key=True, index=True)
+    workflow_id = Column(String(100), nullable=True, index=True)
+    candidate_id = Column(Integer, ForeignKey("candidate_predictions.id"), nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user_role = Column(String(50), nullable=False)
+    rating = Column(Integer, nullable=False)  # 1 to 5
+    feedback_category = Column(String(50), nullable=False)  # hallucination, mechanism_accuracy, safety_omission, citation_validity, general
+    comment = Column(Text, nullable=True)
+    prompt_version = Column(String(50), default="v2.5.0")
+    model_name = Column(String(100), default="deterministic")
+    provenance_mode = Column(String(50), default="deterministic_fallback")  # llm, deterministic_fallback
+    created_at = Column(DateTime, default=utc_now)
+
+    user = relationship("User")
+    candidate = relationship("CandidatePrediction")

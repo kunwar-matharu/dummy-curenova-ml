@@ -6,31 +6,56 @@ from ..models.models import (
     EvidenceRecord, KnowledgeNode, KnowledgeEdge, StressTestRun,
     DrugInteraction, ClinicalTrialRecord, PatientMedicineGuide, ResearchNote
 )
+from ..config import settings
 
 def seed_database(db: Session):
+    # Strict safeguard: Demo dataset and accounts are strictly forbidden in production
+    if settings.ENVIRONMENT == "production" or not settings.ENABLE_DEMO_SEEDING:
+        return
+
     # Check if already seeded
     if db.query(Drug).first():
         return
 
-    # 1. Users
+
+    # 1. Users (Standard Password: "CureNova2026!Secure")
+    argon2_demo_hash = "$argon2id$v=19$m=65536,t=3,p=4$4Ok5SFZFNL58y8TB1Aty9w$yDW80JO8wQKG4FsoXC43220e2YivcS1/ZZVa8kUpRy8"
     default_users = [
         User(
             email="dr.elena.vance@curenova-research.org",
             full_name="Dr. Elena Vance, PhD",
             role="researcher",
-            hashed_password="pbkdf2_demo_secure_hash_researcher"
+            hashed_password=argon2_demo_hash,
+            is_active=True,
+            is_verified=True,
+            approval_status="approved"
         ),
         User(
             email="marcus.chen.md@metropolitan-health.org",
             full_name="Dr. Marcus Chen, MD",
             role="doctor",
-            hashed_password="pbkdf2_demo_secure_hash_doctor"
+            hashed_password=argon2_demo_hash,
+            is_active=True,
+            is_verified=True,
+            approval_status="approved"
         ),
         User(
             email="sarah.jenkins@patient-portal.org",
             full_name="Sarah Jenkins",
             role="patient",
-            hashed_password="pbkdf2_demo_secure_hash_patient"
+            hashed_password=argon2_demo_hash,
+            is_active=True,
+            is_verified=True,
+            approval_status="approved"
+        ),
+        User(
+            email="admin@curenova.ai",
+            full_name="CureNova System Admin",
+            role="admin",
+            hashed_password=argon2_demo_hash,
+            is_active=True,
+            is_verified=True,
+            approval_status="approved"
         )
     ]
     for u in default_users:

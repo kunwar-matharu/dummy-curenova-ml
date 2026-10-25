@@ -1,20 +1,22 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request, Body, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from ..database import get_db
-from ..models.models import EvidenceRecord
+from ..models.models import EvidenceRecord, User
 from ..schemas.schemas import EvidenceRecordOut
 from ..services.biomedical_adapters import BiomedicalAdapter
 from ..config import settings
+from ..dependencies.auth import require_researcher
+from ..services.auth_service import get_client_ip, outbound_rate_limiter, evidence_synthesis_rate_limiter
 
 router = APIRouter(prefix="/evidence", tags=["Literature & Evidence Workspace"])
 
 @router.get("", response_model=List[EvidenceRecordOut])
 def get_evidence(
-    study_type: Optional[str] = None,
-    direction: Optional[str] = None,  # supporting, contradictory, inconclusive
+    study_type: Optional[str] = Query(None, max_length=50),
+    direction: Optional[str] = Query(None, max_length=50),  # supporting, contradictory, inconclusive
     candidate_id: Optional[int] = None,
-    search: Optional[str] = None,
+    search: Optional[str] = Query(None, max_length=150),
     db: Session = Depends(get_db)
 ):
     query = db.query(EvidenceRecord)
@@ -34,10 +36,14 @@ def get_evidence(
 
 @router.get("/pubmed-live")
 async def fetch_live_pubmed(
-    query: str = Query(..., description="Biomedical search terms"),
-    max_results: int = Query(5, ge=1, le=10)
+    request: Request,
+    query: str = Query(..., min_length=2, max_length=150, description="Biomedical search terms"),
+    max_results: int = Query(5, ge=1, le=10),
+    current_user: User = Depends(require_researcher)
 ):
     """Retrieves live peer-reviewed publications from NCBI PubMed E-utilities."""
+    client_ip = get_client_ip(request)
+    outbound_rate_limiter.check_rate_limit(f"{client_ip}:pubmed")
     results = await BiomedicalAdapter.search_pubmed(query, max_results)
     return {
         "query": query,
@@ -47,9 +53,22 @@ async def fetch_live_pubmed(
     }
 
 @router.post("/synthesize")
-def synthesize_literature(evidence_ids: List[int], db: Session = Depends(get_db)):
+def synthesize_literature(
+    request: Request,
+    evidence_ids: List[int] = Body(..., max_length=50),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_researcher)
+):
     """Generates source-grounded synthesis linked strictly to retrieved passages."""
-    records = db.query(EvidenceRecord).filter(EvidenceRecord.id.in_(evidence_ids)).all()
+    client_ip = get_client_ip(request)
+    evidence_synthesis_rate_limiter.check_rate_limit(f"{client_ip}:synthesize")
+    clean_ids = list(dict.fromkeys(x for x in evidence_ids if isinstance(x, int) and x > 0))
+    if not clean_ids:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="At least one valid positive evidence ID is required for literature synthesis."
+        )
+    records = db.query(EvidenceRecord).filter(EvidenceRecord.id.in_(clean_ids)).all()
     if not records:
         return {"summary": "No matching evidence passages selected for synthesis.", "citations": []}
         

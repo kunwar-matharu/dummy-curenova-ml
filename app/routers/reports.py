@@ -1,12 +1,17 @@
 from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from ..database import get_db
-from ..models.models import CandidatePrediction, EvidenceRecord, StressTestRun
+from ..models.models import CandidatePrediction, EvidenceRecord, StressTestRun, User
+from ..dependencies.auth import get_current_active_user
 
 router = APIRouter(prefix="/reports", tags=["Research Dossier Reports"])
 
 @router.get("/candidate/{candidate_id}/markdown")
-def download_candidate_report_markdown(candidate_id: int, db: Session = Depends(get_db)):
+def download_candidate_report_markdown(
+    candidate_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
+):
     candidate = db.query(CandidatePrediction).filter(CandidatePrediction.id == candidate_id).first()
     if not candidate:
         raise HTTPException(status_code=404, detail="Candidate not found")

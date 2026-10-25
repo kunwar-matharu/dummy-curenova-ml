@@ -1,12 +1,18 @@
 from datetime import datetime
-from typing import List, Optional, Dict, Any
-from pydantic import BaseModel, Field
+from typing import List, Optional, Dict, Any, Literal
+from pydantic import BaseModel, Field, ConfigDict
 
 # User & Auth
 class UserBase(BaseModel):
     email: str
     full_name: str
-    role: str = "researcher"
+    role: str = "patient"
+
+class UserSignup(BaseModel):
+    email: str
+    full_name: str
+    password: str = Field(..., min_length=8)
+    role: str = "patient"
 
 class UserCreate(UserBase):
     password: str
@@ -17,9 +23,35 @@ class UserLogin(BaseModel):
 
 class UserOut(UserBase):
     id: int
+    is_active: bool = True
+    is_verified: bool = False
+    approval_status: str = "approved"
     created_at: datetime
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
+    expires_in: int
+    user: UserOut
+
+class TokenRefreshResponse(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
+    expires_in: int
+
+class RefreshTokenRequest(BaseModel):
+    refresh_token: str
+
+class LogoutRequest(BaseModel):
+    refresh_token: Optional[str] = None
+
+class UserApprovalRequest(BaseModel):
+    approval_status: Literal["approved", "rejected", "pending"] = "approved"
+
 
 # Evidence & Candidates
 class EvidenceRecordOut(BaseModel):
@@ -36,8 +68,7 @@ class EvidenceRecordOut(BaseModel):
     excerpt: str
     sample_size: Optional[str] = None
     provenance_url: Optional[str] = None
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ResearchNoteCreate(BaseModel):
     content: str
@@ -47,8 +78,7 @@ class ResearchNoteOut(BaseModel):
     candidate_id: int
     content: str
     created_at: datetime
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CandidateSummaryOut(BaseModel):
     id: int
@@ -70,15 +100,13 @@ class CandidateSummaryOut(BaseModel):
     evidence_count: int
     is_bookmarked: bool
     last_updated: datetime
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CandidateDetailOut(CandidateSummaryOut):
     biological_mechanism: Optional[str] = None
     evidence_records: List[EvidenceRecordOut] = []
     notes: List[ResearchNoteOut] = []
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Stress Testing
 class StressTestConfig(BaseModel):
@@ -104,8 +132,8 @@ class StressTestResultOut(BaseModel):
     rank_stability: Dict[str, Any]
     logs: List[Dict[str, Any]]
     created_at: datetime
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+
 
 # Knowledge Graph
 class GraphNode(BaseModel):
@@ -152,8 +180,7 @@ class ClinicalTrialOut(BaseModel):
     interventions: str
     primary_endpoints: Optional[str] = None
     source_url: Optional[str] = None
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Patient Portal
 class MedicineGuideOut(BaseModel):
@@ -164,12 +191,11 @@ class MedicineGuideOut(BaseModel):
     food_interactions: Optional[str] = None
     what_to_ask_doctor: str
     synthetic_disclaimer: str
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class LaymanStudyExplanationRequest(BaseModel):
-    study_title: str
-    abstract_text: str
+    study_title: str = Field(..., min_length=2, max_length=300, description="Title of scientific research paper")
+    abstract_text: str = Field(..., min_length=10, max_length=10000, description="Abstract text to explain in plain language")
 
 class LaymanStudyExplanationOut(BaseModel):
     investigated: str
@@ -181,17 +207,17 @@ class LaymanStudyExplanationOut(BaseModel):
 
 # Research Project
 class ProjectCreate(BaseModel):
-    title: str
-    disease_focus: str
-    description: Optional[str] = None
+    title: str = Field(..., min_length=2, max_length=255)
+    disease_focus: str = Field(..., min_length=2, max_length=255)
+    description: Optional[str] = Field(None, max_length=5000)
 
 class ProjectOut(ProjectCreate):
     id: int
     status: str
     created_at: datetime
     updated_at: datetime
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+
 
 # Agent Workflow Trace
 class AgentWorkflowStep(BaseModel):
@@ -205,6 +231,22 @@ class AgentWorkflowStep(BaseModel):
     findings_summary: str
     uncertainties_detected: List[str] = []
 
+class StructuredSynthesisOut(BaseModel):
+    candidate_drug: str
+    target_disease: str
+    research_rationale: str
+    proposed_mechanism: str
+    supporting_evidence_ids: List[int] = []
+    conflicting_evidence_ids: List[int] = []
+    safety_concerns: List[str] = []
+    missing_information: List[str] = []
+    evidence_strength: str = "Preliminary Preclinical"
+    epistemic_uncertainty: float = 0.15
+    validated_citations: List[Dict[str, Any]] = []
+    rejected_unsupported_ids: List[int] = []
+    research_limitations: str
+    non_clinical_disclaimer: str
+
 class AgentWorkflowResponse(BaseModel):
     workflow_id: str
     query_entity: str
@@ -213,3 +255,49 @@ class AgentWorkflowResponse(BaseModel):
     candidate_hypotheses: List[CandidateSummaryOut]
     synthesis_report: str
     limitations_and_boundary_warning: str
+    provenance_mode: Literal["llm", "deterministic_fallback"] = "deterministic_fallback"
+    llm_provider: Optional[str] = "none"
+    model_version: Optional[str] = "2.5.0"
+    structured_synthesis: Optional[StructuredSynthesisOut] = None
+
+# Research Feedback & Offline Evaluation
+class FeedbackCreate(BaseModel):
+    workflow_id: Optional[str] = Field(None, max_length=100)
+    candidate_id: Optional[int] = None
+    rating: int = Field(..., ge=1, le=5, description="1 (Poor/Incorrect) to 5 (Rigorous/Accurate)")
+    feedback_category: Literal[
+        "hallucination",
+        "mechanism_accuracy",
+        "safety_omission",
+        "citation_validity",
+        "general"
+    ]
+    comment: Optional[str] = Field(None, max_length=2000)
+    prompt_version: Optional[str] = Field("v2.5.0", max_length=50)
+    model_name: Optional[str] = Field(None, max_length=100)
+
+class FeedbackOut(BaseModel):
+    id: int
+    workflow_id: Optional[str] = None
+    candidate_id: Optional[int] = None
+    user_id: int
+    user_email: str
+    user_role: str
+    rating: int
+    feedback_category: str
+    comment: Optional[str] = None
+    prompt_version: str
+    model_name: str
+    provenance_mode: str
+    created_at: datetime
+    model_config = ConfigDict(from_attributes=True)
+
+class FeedbackEvaluationSummary(BaseModel):
+    total_feedback_count: int
+    average_rating: float
+    category_counts: Dict[str, int]
+    hallucination_report_frequency: float
+    safety_discrepancy_frequency: float
+    prompt_version_breakdown: Dict[str, Any]
+    recurring_failure_patterns: List[Dict[str, Any]]
+    policy_evaluation_status: str

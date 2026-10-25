@@ -1,15 +1,16 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from ..database import get_db
 from ..models.models import PatientMedicineGuide
 from ..schemas.schemas import MedicineGuideOut, LaymanStudyExplanationRequest, LaymanStudyExplanationOut
+from ..services.auth_service import get_client_ip, patient_explain_rate_limiter
 
 router = APIRouter(prefix="/patient", tags=["Patient Portal — Plain Language Health Education"])
 
 @router.get("/medicines", response_model=List[MedicineGuideOut])
 def get_patient_medicines(
-    search: Optional[str] = None,
+    search: Optional[str] = Query(None, max_length=100),
     db: Session = Depends(get_db)
 ):
     query = db.query(PatientMedicineGuide)
@@ -18,7 +19,10 @@ def get_patient_medicines(
     return query.all()
 
 @router.get("/medicines/{drug_name}", response_model=MedicineGuideOut)
-def get_single_medicine(drug_name: str, db: Session = Depends(get_db)):
+def get_single_medicine(
+    drug_name: str,
+    db: Session = Depends(get_db)
+):
     guide = db.query(PatientMedicineGuide).filter(
         PatientMedicineGuide.drug_name.ilike(f"%{drug_name}%")
     ).first()
@@ -27,11 +31,16 @@ def get_single_medicine(drug_name: str, db: Session = Depends(get_db)):
     return guide
 
 @router.post("/explain-research", response_model=LaymanStudyExplanationOut)
-def explain_study_in_plain_language(req: LaymanStudyExplanationRequest):
+def explain_study_in_plain_language(
+    req: LaymanStudyExplanationRequest,
+    request: Request
+):
     """
     Translates complex biomedical scientific research abstracts into safe,
     accessible, clear plain-language summaries for patients and families.
     """
+    client_ip = get_client_ip(request)
+    patient_explain_rate_limiter.check_rate_limit(f"{client_ip}:patient_explain")
     title_lower = req.study_title.lower()
     abstract_lower = req.abstract_text.lower()
     

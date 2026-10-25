@@ -1,16 +1,18 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from ..database import get_db
-from ..models.models import CandidatePrediction, ResearchNote, EvidenceRecord
+from ..models.models import CandidatePrediction, ResearchNote, EvidenceRecord, User
 from ..schemas.schemas import (
     CandidateSummaryOut, CandidateDetailOut, ResearchNoteCreate, ResearchNoteOut,
     AgentWorkflowResponse
 )
 from ..services.agentic_orchestrator import AgenticOrchestrator
 from ..config import settings
+from ..dependencies.auth import get_current_active_user, require_role, require_researcher
 
 router = APIRouter(prefix="/candidates", tags=["Candidate Hypotheses"])
+
 
 @router.get("", response_model=List[CandidateSummaryOut])
 def get_candidates(
@@ -47,18 +49,30 @@ def get_candidates(
 
 @router.post("/investigate", response_model=AgentWorkflowResponse)
 async def investigate_query(
-    query: str = Query(..., description="Disease or Drug to investigate"),
-    user_role: str = Query("researcher"),
-    db: Session = Depends(get_db)
+    query: str = Query(..., min_length=2, max_length=150, description="Disease or Drug to investigate"),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_researcher)
 ):
-    """Executes the Agentic Orchestrator multi-step research workflow."""
+    """
+    Executes the Agentic Orchestrator multi-step research workflow.
+    Restricted strictly to approved researchers and administrators.
+    Derives principal role from verified authenticated user identity.
+    """
+    clean_query = query.strip()
+    if not clean_query:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Investigation query cannot be blank or whitespace-only."
+        )
+
     result = await AgenticOrchestrator.run_investigation(
         db=db,
-        query=query,
-        user_role=user_role,
+        query=clean_query,
+        user_role=current_user.role,
         demo_mode=settings.DEMO_MODE
     )
     return result
+
 
 @router.get("/{candidate_id}", response_model=CandidateDetailOut)
 def get_candidate_detail(candidate_id: int, db: Session = Depends(get_db)):
@@ -68,7 +82,12 @@ def get_candidate_detail(candidate_id: int, db: Session = Depends(get_db)):
     return candidate
 
 @router.post("/{candidate_id}/bookmark", response_model=CandidateSummaryOut)
-def toggle_bookmark(candidate_id: int, db: Session = Depends(get_db)):
+def toggle_bookmark(
+    candidate_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
+):
+    """Toggles bookmark on a drug candidate for the authenticated user."""
     candidate = db.query(CandidatePrediction).filter(CandidatePrediction.id == candidate_id).first()
     if not candidate:
         raise HTTPException(status_code=404, detail="Candidate not found")
@@ -78,19 +97,47 @@ def toggle_bookmark(candidate_id: int, db: Session = Depends(get_db)):
     return candidate
 
 @router.post("/{candidate_id}/notes", response_model=ResearchNoteOut)
-def add_candidate_note(candidate_id: int, note_in: ResearchNoteCreate, db: Session = Depends(get_db)):
+def add_candidate_note(
+    candidate_id: int,
+    note_in: ResearchNoteCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role("researcher", "doctor", "admin"))
+):
+    """
+    Adds a verified research note attributing author strictly to the authenticated principal.
+    Removes hardcoded user_id=1.
+    """
     candidate = db.query(CandidatePrediction).filter(CandidatePrediction.id == candidate_id).first()
     if not candidate:
         raise HTTPException(status_code=404, detail="Candidate not found")
     note = ResearchNote(
         candidate_id=candidate_id,
-        user_id=1,
+        user_id=current_user.id,
         content=note_in.content
     )
     db.add(note)
     db.commit()
     db.refresh(note)
     return note
+
+@router.delete("/notes/{note_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_candidate_note(
+    note_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
+):
+    """Enforces resource ownership: only the author or an administrator may delete notes."""
+    note = db.query(ResearchNote).filter(ResearchNote.id == note_id).first()
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
+    if note.user_id != current_user.id and current_user.role != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden: You do not have permission to delete this note"
+        )
+    db.delete(note)
+    db.commit()
+
 
 @router.get("/compare/pair", response_model=List[CandidateDetailOut])
 def compare_candidates(id1: int, id2: int, db: Session = Depends(get_db)):

@@ -1,9 +1,10 @@
 import json
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Any, List, Optional
 from sqlalchemy.orm import Session
 from ..models.models import CandidatePrediction, StressTestRun, KnowledgeEdge
+
 
 def compute_auroc_auprc(y_true: np.ndarray, y_scores: np.ndarray):
     """Computes empirical AUROC and AUPRC without heavy external dependencies."""
@@ -80,7 +81,7 @@ class StressTestEngine:
         
         logs = []
         logs.append({
-            "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
             "level": "INFO",
             "message": f"Initializing Stress-Test Lab protocol: '{title}' [{split_type}] with Model: {model_name}"
         })
@@ -95,7 +96,7 @@ class StressTestEngine:
         if split_type == "Temporal-Cutoff":
             cutoff = temporal_cutoff_year or 2020
             logs.append({
-                "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+                "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
                 "level": "INFO",
                 "message": f"Applying Temporal Leakage barrier at Year <= {cutoff}. Filtering out post-{cutoff} evidence links."
             })
@@ -108,7 +109,7 @@ class StressTestEngine:
         elif split_type == "Data-Perturbation":
             rate = max(0.05, min(0.50, perturbation_rate))
             logs.append({
-                "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+                "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
                 "level": "WARN",
                 "message": f"Applying controlled edge dropout ({int(rate*100)}% structural edges removed from knowledge graph)."
             })
@@ -121,7 +122,7 @@ class StressTestEngine:
             
         else:  # Target-Held-Out / Generalization
             logs.append({
-                "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+                "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
                 "level": "INFO",
                 "message": "Generating 5-Fold Target-Held-Out cross validation splits across target families."
             })
@@ -173,7 +174,7 @@ class StressTestEngine:
                 })
         
         logs.append({
-            "timestamp": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
             "level": "INFO",
             "message": f"Stress test completed. AUROC: {auroc:.3f}, Kendall's Tau: {kendall_tau:.3f}, Brier Score: {brier:.3f}. Flagged {len(failure_analysis)} instability cases."
         })
