@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Activity,
   Search,
@@ -42,13 +43,13 @@ export const Navbar = () => {
   const getRoleMeta = (role) => {
     switch (role) {
       case 'doctor':
-        return { label: 'Clinician (MD)', shortLabel: 'Clinician', icon: Stethoscope, color: '#0A2540' };
+        return { label: 'Clinician (MD)', shortLabel: 'Clinician', icon: Stethoscope, color: 'var(--color-brand-secondary)' };
       case 'researcher':
-        return { label: 'Researcher (PhD)', shortLabel: 'Researcher', icon: Microscope, color: '#0284C7' };
+        return { label: 'Researcher (PhD)', shortLabel: 'Researcher', icon: Microscope, color: 'var(--color-brand-primary)' };
       case 'patient':
-        return { label: 'Patient / Caregiver', shortLabel: 'Patient', icon: HeartHandshake, color: '#16A34A' };
+        return { label: 'Patient / Caregiver', shortLabel: 'Patient', icon: HeartHandshake, color: 'var(--color-status-safe)' };
       default:
-        return { label: 'Clinical Guest', shortLabel: 'Guest', icon: User, color: '#64748B' };
+        return { label: 'Clinical Guest', shortLabel: 'Guest', icon: User, color: 'var(--color-text-secondary)' };
     }
   };
 
@@ -57,56 +58,50 @@ export const Navbar = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-card)]/95 backdrop-blur-md transition-colors duration-200">
+      <header className="sticky top-0 z-40 w-full border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-card)]/90 backdrop-blur-xl transition-colors duration-200">
         <div className="w-full px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto flex h-14 sm:h-16 items-center justify-between gap-4">
           
           {/* Brand Logo & Desktop Nav Links */}
           <div className="flex items-center gap-6 lg:gap-8">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-[#0284C7] text-white shadow-sm shadow-[#0284C7]/20 group-hover:scale-105 transition-transform duration-150">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-[var(--color-brand-primary)] text-white shadow-sm shadow-[var(--color-brand-primary)]/25 transition-colors"
+              >
                 <Activity className="h-4 w-4 sm:h-5 sm:w-5" />
-                <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#16A34A] border border-white dark:border-[#0A1624]" />
-              </div>
+                <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[var(--color-status-safe)] border border-[var(--color-surface-card)]" />
+              </motion.div>
               <div className="flex items-center gap-1.5">
-                <span className="text-lg sm:text-xl font-extrabold tracking-tight text-[#0A2540] dark:text-[#F1F5F9]">
-                  Cure<span className="text-[#0284C7] dark:text-[#38BDF8]">Nova</span>
+                <span className="text-lg sm:text-xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
+                  Cure<span className="text-[var(--color-brand-primary)]">Nova</span>
                 </span>
-                <span className="text-[10px] font-mono font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] dark:bg-[#0284C7]/20 dark:text-[#38BDF8] dark:border-[#0284C7]/40">
+                <span className="text-[10px] font-mono font-bold tracking-wider uppercase px-1.5 py-0.5 rounded bg-[var(--color-brand-surface)] text-[var(--color-brand-text)] border border-[var(--color-brand-border)]">
                   Biomedical AI
                 </span>
               </div>
             </Link>
 
-            {/* Workspace Context Badge (When logged in) */}
-            {user ? (
-              <div className="hidden lg:flex items-center gap-2 pl-4 border-l border-[var(--color-border-subtle)]">
-                <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
-                  {currentRoleMeta?.label || 'Workspace'}
-                </span>
-                <span className="w-1 h-1 rounded-full bg-[var(--color-border-strong)]" />
-                <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
-                  Active Session
-                </span>
-              </div>
-            ) : (
+            {/* Navigation Links (When logged out) */}
+            {!user && (
               <nav className="hidden md:flex items-center gap-1.5">
                 <Link
                   to="/evidence"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
                   <BookOpen className="w-3.5 h-3.5" />
                   <span>Evidence Explorer</span>
                 </Link>
                 <Link
                   to="/knowledge-graph"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
                   <Share2 className="w-3.5 h-3.5" />
                   <span>Knowledge Graph</span>
                 </Link>
                 <Link
                   to="/about"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
                   <Info className="w-3.5 h-3.5" />
                   <span>About</span>
@@ -115,15 +110,8 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* Right Actions: Role Switcher + Search + Theme + User Menu */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            {/* Verified Role Badge (Enforced single-role session) */}
-            {user && (
-              <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)] text-xs font-semibold select-none">
-                <RoleIcon className="w-3.5 h-3.5" style={{ color: currentRoleMeta?.color }} />
-                <span className="text-[var(--color-text-primary)] font-bold">{currentRoleMeta?.shortLabel}</span>
-              </div>
-            )}
+          {/* Right Actions: Search + Theme + User Menu */}
+          <div className="flex items-center gap-2 sm:gap-3">
 
             {/* Quick Search Shortcut (Logged In) */}
             {user && (
@@ -235,7 +223,7 @@ export const Navbar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-[#0284C7] hover:bg-[#0369A1] transition-colors shadow-xs"
+                  className="inline-flex items-center justify-center px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary-hover)] transition-all shadow-xs"
                 >
                   Register
                 </Link>

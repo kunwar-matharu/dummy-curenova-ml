@@ -14,7 +14,7 @@ export default function Button({
   onClick,
   ...props
 }) {
-  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-150 select-none disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[#0284C7] cursor-pointer';
+  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-150 select-none disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[var(--color-brand-primary)] cursor-pointer';
 
   const sizeStyles = {
     sm: 'text-xs px-2.5 py-1.5 rounded-md gap-1.5',
@@ -25,11 +25,11 @@ export default function Button({
   };
 
   const variantStyles = {
-    primary: 'bg-[#0284C7] hover:bg-[#0369A1] text-white shadow-sm hover:shadow active:scale-[0.99] border border-transparent font-semibold',
-    navy: 'bg-[#0A2540] hover:bg-[#071927] text-white shadow-sm hover:shadow active:scale-[0.99] border border-transparent font-semibold',
+    primary: 'bg-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary-hover)] text-white shadow-sm hover:shadow active:scale-[0.99] border border-transparent font-semibold',
+    navy: 'bg-[var(--color-brand-secondary)] hover:bg-[#0A1A28] text-white shadow-sm hover:shadow active:scale-[0.99] border border-transparent font-semibold',
     secondary: 'bg-[var(--color-surface-card)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-primary)] border border-[var(--color-border-subtle)] shadow-xs hover:border-[var(--color-border-strong)]',
     subtle: 'bg-[var(--color-surface-sunken)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] border border-transparent',
-    destructive: 'bg-[#DC2626] hover:bg-[#B91C1C] text-white shadow-sm hover:shadow active:scale-[0.99] border border-transparent dark:bg-[#EF4444]',
+    destructive: 'bg-[var(--color-status-critical)] hover:opacity-90 text-white shadow-sm hover:shadow active:scale-[0.99] border border-transparent',
     ghost: 'bg-transparent hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
     outline: 'bg-transparent hover:bg-[var(--color-surface-hover)] text-[var(--color-brand-primary)] border border-[var(--color-brand-border)]'
   };

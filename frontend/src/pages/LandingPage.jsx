@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Activity,
   Stethoscope,
@@ -7,26 +8,22 @@ import {
   HeartHandshake,
   ArrowRight,
   ShieldCheck,
-  Search,
-  Database,
   Moon,
   Sun,
   Menu,
   X,
-  Layers,
-  FileText,
-  AlertTriangle,
   CheckCircle2,
   ExternalLink,
   BookOpen,
-  Share2,
   Cpu,
-  ChevronRight,
-  ShieldAlert,
-  Info
+  Zap,
+  FlaskConical,
+  Dna,
+  Sparkles,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { HeroCapsuleFusion } from '../components/HeroCapsuleFusion';
 
 export const LandingPage = () => {
   const { user, logout } = useAuth();
@@ -34,14 +31,15 @@ export const LandingPage = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [roleNotice, setRoleNotice] = useState('');
-  const [previewTab, setPreviewTab] = useState('ranking'); // 'ranking' | 'evidence' | 'safety'
 
   const handleRoleLaunch = (targetRole) => {
     if (user) {
       if (user.role === targetRole) {
         navigate(`/${targetRole}/dashboard`);
       } else {
-        setRoleNotice(`You are currently signed in as a ${user.role.toUpperCase()}. Sign out to access the ${targetRole.toUpperCase()} portal.`);
+        setRoleNotice(
+          `You are currently signed in as a ${user.role.toUpperCase()}. Sign out or switch roles to enter the ${targetRole.toUpperCase()} workspace.`
+        );
       }
     } else {
       navigate(`/login?role=${targetRole}`);
@@ -57,97 +55,91 @@ export const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--color-surface-ground)] text-[var(--color-text-primary)] transition-colors">
-      
-      {/* ── Navigation Bar ── */}
-      <header className="sticky top-0 z-50 w-full border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-card)]/95 backdrop-blur-md">
+    <div className="relative min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors selection:bg-blue-500 selection:text-white">
+
+      {/* ── STICKY GLASS NAVIGATION BAR ── */}
+      <header className="sticky top-0 z-50 w-full border-b border-gray-200/80 dark:border-gray-800/80 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           
           {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-[#0284C7] text-white flex items-center justify-center shadow-sm shadow-[#0284C7]/20 group-hover:scale-105 transition-transform">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-md shadow-blue-500/25 group-hover:scale-105 transition-transform">
               <Activity className="w-5 h-5" />
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xl font-extrabold tracking-tight text-[#0A2540] dark:text-[#F1F5F9]">
-                Cure<span className="text-[#0284C7] dark:text-[#38BDF8]">Nova</span>
+              <span className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100">
+                Cure<span className="text-blue-600 dark:text-blue-400">Nova</span>
               </span>
-              <span className="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] dark:bg-[#0284C7]/20 dark:text-[#38BDF8] dark:border-[#0284C7]/40">
+              <span className="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200/80 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800/80">
                 Biomedical AI
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold text-[var(--color-text-secondary)]">
+          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-gray-600 dark:text-gray-300">
+            <button
+              type="button"
+              onClick={() => scrollToSection('portals')}
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+            >
+              Clinical Portals
+            </button>
             <button
               type="button"
               onClick={() => scrollToSection('capabilities')}
-              className="hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
             >
-              Platform
+              Capabilities
             </button>
             <button
               type="button"
-              onClick={() => scrollToSection('researcher-role')}
-              className="hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+              onClick={() => scrollToSection('methodology')}
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
             >
-              For Researchers
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection('doctor-role')}
-              className="hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
-            >
-              For Doctors
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection('patient-role')}
-              className="hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
-            >
-              For Patients
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToSection('how-it-works')}
-              className="hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
-            >
-              How It Works
+              Methodology
             </button>
             <Link
               to="/evidence"
-              className="hover:text-[var(--color-text-primary)] transition-colors"
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1"
             >
-              Evidence Explorer
+              <span>Evidence Explorer</span>
+              <ExternalLink className="w-3 h-3 opacity-60" />
+            </Link>
+            <Link
+              to="/knowledge-graph"
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1"
+            >
+              <span>Knowledge Graph</span>
+              <ExternalLink className="w-3 h-3 opacity-60" />
             </Link>
           </nav>
 
-          {/* Right Action Buttons */}
+          {/* Right Action Controls */}
           <div className="flex items-center gap-2.5">
             {/* Theme Toggle */}
             <button
               type="button"
               onClick={toggleTheme}
-              className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] rounded-xl border border-[var(--color-border-subtle)] transition-colors cursor-pointer"
-              title={theme === 'dark' ? 'Switch to Light' : 'Switch to Dark'}
+              className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-800/80 transition-colors cursor-pointer shadow-2xs"
+              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-[#FBBF24]" /> : <Moon className="w-4 h-4 text-[#64748B]" />}
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-gray-600" />}
             </button>
 
             {user ? (
               <div className="flex items-center gap-2">
                 <Link
                   to={`/${user.role}/dashboard`}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] transition-all shadow-sm"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-sm"
                 >
-                  Go to Dashboard ({user.role.toUpperCase()})
+                  Dashboard ({user.role.toUpperCase()})
                 </Link>
                 <button
                   type="button"
                   onClick={logout}
-                  className="hidden sm:inline-flex px-3 py-2 rounded-xl text-xs font-semibold text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] border border-[var(--color-border-subtle)] transition-colors cursor-pointer"
+                  className="hidden sm:inline-flex px-3 py-2 rounded-xl text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-800 transition-colors cursor-pointer"
                 >
                   Sign Out
                 </button>
@@ -156,13 +148,13 @@ export const LandingPage = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-3.5 py-2 rounded-xl text-xs font-semibold text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] border border-[var(--color-border-subtle)] transition-colors"
+                  className="px-3.5 py-2 rounded-xl text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200/80 dark:border-gray-800/80 transition-colors"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] transition-all shadow-sm"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm shadow-blue-500/20"
                 >
                   Get Started
                 </Link>
@@ -173,7 +165,7 @@ export const LandingPage = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] rounded-xl border border-[var(--color-border-subtle)] transition-colors cursor-pointer"
+              className="md:hidden p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-800 transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -182,823 +174,501 @@ export const LandingPage = () => {
         </div>
 
         {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden px-4 pt-3 pb-6 border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] space-y-3">
-            <div className="grid grid-cols-2 gap-2 text-xs font-semibold">
-              <button
-                type="button"
-                onClick={() => scrollToSection('capabilities')}
-                className="p-2.5 rounded-lg text-left bg-[var(--color-surface-sunken)] hover:bg-[var(--color-surface-hover)] transition-colors"
-              >
-                Platform Capabilities
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollToSection('how-it-works')}
-                className="p-2.5 rounded-lg text-left bg-[var(--color-surface-sunken)] hover:bg-[var(--color-surface-hover)] transition-colors"
-              >
-                How It Works
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollToSection('researcher-role')}
-                className="p-2.5 rounded-lg text-left bg-[var(--color-surface-sunken)] hover:bg-[var(--color-surface-hover)] transition-colors"
-              >
-                For Researchers
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollToSection('doctor-role')}
-                className="p-2.5 rounded-lg text-left bg-[var(--color-surface-sunken)] hover:bg-[var(--color-surface-hover)] transition-colors"
-              >
-                For Doctors
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollToSection('patient-role')}
-                className="p-2.5 rounded-lg text-left bg-[var(--color-surface-sunken)] hover:bg-[var(--color-surface-hover)] transition-colors"
-              >
-                For Patients
-              </button>
-              <Link
-                to="/evidence"
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg text-left bg-[var(--color-surface-sunken)] hover:bg-[var(--color-surface-hover)] transition-colors"
-              >
-                Evidence Explorer
-              </Link>
-            </div>
-            {!user && (
-              <div className="pt-2 flex gap-2">
-                <Link
-                  to="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex-1 py-2.5 text-center text-xs font-bold rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface-sunken)]"
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="md:hidden overflow-hidden border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 pt-3 pb-6 space-y-3"
+            >
+              <div className="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('portals')}
+                  className="p-2.5 rounded-lg text-left bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
-                  Sign In
-                </Link>
-                <Link
-                  to="/register"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex-1 py-2.5 text-center text-xs font-bold rounded-xl text-white bg-[#0284C7]"
+                  Clinical Portals
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('capabilities')}
+                  className="p-2.5 rounded-lg text-left bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
-                  Get Started
+                  Platform Capabilities
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('methodology')}
+                  className="p-2.5 rounded-lg text-left bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                  Methodology
+                </button>
+                <Link
+                  to="/evidence"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2.5 rounded-lg text-left bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                  Evidence Explorer
                 </Link>
               </div>
-            )}
-          </div>
-        )}
+              {!user && (
+                <div className="pt-2 flex gap-2">
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex-1 py-2.5 text-center text-xs font-bold rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex-1 py-2.5 text-center text-xs font-bold rounded-xl text-white bg-blue-600"
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      {/* Role Restriction Banner if switched while signed in */}
+      {/* Role Notice Toast */}
       {roleNotice && (
-        <div className="w-full bg-[#FFFBEB] dark:bg-amber-950/40 border-b border-[#FDE68A] dark:border-amber-800/40 px-4 py-2 text-center text-xs text-[#92400E] dark:text-amber-200 font-medium flex items-center justify-center gap-3">
+        <div className="bg-amber-500 text-white px-4 py-2 text-xs font-semibold flex items-center justify-between z-50">
           <span>{roleNotice}</span>
-          <button
-            type="button"
-            onClick={() => {
-              logout();
-              setRoleNotice('');
-              navigate('/login');
-            }}
-            className="px-2.5 py-0.5 rounded-md bg-[#B45309] text-white font-bold hover:bg-[#92400E] transition-colors cursor-pointer text-[11px]"
-          >
-            Sign Out Now
+          <button type="button" onClick={() => setRoleNotice('')} className="p-1 hover:bg-black/10 rounded">
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
-      {/* ── B. Hero Section (Two-Column Desktop Layout) ── */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      {/* ── 1. HERO SECTION (2-COLUMN SPLIT: TEXT LEFT, CAPSULE RIGHT) ── */}
+      <section className="relative z-10 pt-10 pb-16 sm:pt-14 sm:pb-24 overflow-hidden bg-gradient-to-b from-blue-50/20 via-white to-gray-50/50 dark:from-gray-950 dark:via-gray-900/60 dark:to-gray-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Left Column: Clear, concise message and actionable CTAs */}
-          <div className="lg:col-span-6 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] dark:bg-[#0284C7]/20 dark:text-[#38BDF8] dark:border-[#0284C7]/40">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#0284C7]" />
-              <span>Evidence-Grounded Drug Repurposing & Polypharmacy Intelligence</span>
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* Left Column: Authoritative Clean Typography (Unobstructed, crisp readability) */}
+            <div className="lg:col-span-7 text-left space-y-6">
+              
+              {/* Trust Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50/90 dark:bg-blue-950/70 border border-blue-200/80 dark:border-blue-800/80 text-blue-700 dark:text-blue-300 text-xs font-semibold shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Grounded Across PubMed · openFDA FAERS · ChEMBL 34</span>
+              </div>
 
-            <div className="space-y-4">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0A2540] dark:text-[#F1F5F9] leading-[1.15]">
-                Explore Drug Repurposing. Examine the Evidence. <br className="hidden sm:inline" />
-                <span className="text-[#0284C7] dark:text-[#38BDF8]">Make Research More Transparent.</span>
+              {/* Primary Headline */}
+              <h1 className="text-3xl sm:text-5xl lg:text-[3.4rem] font-extrabold tracking-tight text-gray-900 dark:text-gray-100 leading-[1.09]">
+                AI-Powered Drug Repurposing &amp; <br />
+                <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-transparent">
+                  Precision Medication Safety
+                </span>
               </h1>
-              <p className="text-sm sm:text-base text-[var(--color-text-secondary)] leading-relaxed max-w-xl">
-                CureNova brings drug discovery signals, biomedical literature, evidence verification, and medication interaction information into one structured workspace.
+
+              {/* Subtitle */}
+              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-xl leading-relaxed">
+                Accelerate translational candidate discovery, simulate patient digital twin clearance, and eliminate adverse drug interactions with explainable biomedical intelligence.
               </p>
+
+              {/* Action CTAs */}
+              <div className="flex flex-wrap items-center gap-3.5 pt-1">
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('portals')}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm shadow-md shadow-blue-500/25 transition-all cursor-pointer"
+                >
+                  <span>Explore Clinical Portals</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <Link
+                  to="/evidence"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100 font-semibold text-sm transition-all shadow-2xs"
+                >
+                  <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  <span>Browse Evidence Base</span>
+                </Link>
+              </div>
+
+              {/* 4 Key Metric Cards (Clean 2x2 grid on left) */}
+              <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl">
+                {[
+                  { label: 'Evidence Dossiers', value: '38,000+', desc: 'PubMed citations', icon: BookOpen, accent: 'border-blue-500', iconColor: 'text-blue-600 dark:text-blue-400' },
+                  { label: 'Validated Targets', value: '14,200+', desc: 'Binding profiles', icon: Dna, accent: 'border-teal-500', iconColor: 'text-teal-600 dark:text-teal-400' },
+                  { label: 'Hazard Delta', value: '< 180 ms', desc: 'Real-time twin', icon: Zap, accent: 'border-amber-500', iconColor: 'text-amber-600 dark:text-amber-400' },
+                  { label: 'Explainable AI', value: '100%', desc: 'Traceability', icon: ShieldCheck, accent: 'border-emerald-500', iconColor: 'text-emerald-600 dark:text-emerald-400' },
+                ].map((stat, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-3 rounded-xl border border-gray-200/80 dark:border-gray-800/80 border-t-2 ${stat.accent} bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-2xs`}
+                  >
+                    <div className="flex items-center gap-1 mb-1">
+                      <stat.icon className={`w-3 h-3 ${stat.iconColor}`} />
+                      <span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 truncate">{stat.label}</span>
+                    </div>
+                    <div className="text-lg font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">{stat.value}</div>
+                    <div className="text-[9px] text-gray-400 dark:text-gray-500 truncate">{stat.desc}</div>
+                  </div>
+                ))}
+              </div>
+
             </div>
 
-            {/* Primary & Secondary Call to Actions */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => handleRoleLaunch('researcher')}
-                className="px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
-              >
-                <span>Start Research</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollToSection('capabilities')}
-                className="px-5 py-3.5 rounded-xl text-xs sm:text-sm font-semibold text-[#17324D] dark:text-[#F1F5F9] bg-[var(--color-surface-card)] hover:bg-[var(--color-surface-hover)] border border-[var(--color-border-subtle)] transition-all cursor-pointer shadow-xs"
-              >
-                Explore the Platform
-              </button>
+            {/* Right Column: Dedicated 3D Capsule Fusion Stage (Completely Unobstructed!) */}
+            <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
+              <HeroCapsuleFusion />
             </div>
 
-            {/* Small trust statement explaining evidence traceability */}
-            <div className="pt-3 border-t border-[var(--color-border-subtle)] text-xs text-[var(--color-text-muted)] flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#15803D] shrink-0" />
-              <span>
-                Evidence traceable to National Library of Medicine (PubMed), openFDA FAERS, and ChEMBL 34 databases.
-              </span>
-            </div>
           </div>
 
-          {/* Right Column: Realistic Live Product Preview Composition */}
-          <div className="lg:col-span-6 w-full">
-            <div className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] shadow-xl overflow-hidden text-left">
-              
-              {/* Product Preview Topbar */}
-              <div className="px-4 py-3 bg-[var(--color-surface-sunken)] border-b border-[var(--color-border-subtle)] flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+        </div>
+      </section>
+
+      {/* ── 2. CLINICAL ROLE PORTALS ── */}
+      <section id="portals" className="relative z-10 py-20 bg-white/75 dark:bg-gray-900/75 backdrop-blur-xl border-y border-gray-200/80 dark:border-gray-800/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/80 dark:border-blue-800/80 text-xs font-bold">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Clinical Stakeholders</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">
+              Dedicated Workspaces for Healthcare Teams
+            </h2>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+              Purpose-built environments designed around the daily workflows of clinicians, researchers, and patients.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            
+            {/* 1. Clinician / Doctor Portal Card */}
+            <div className="rounded-2xl border border-gray-200 dark:border-gray-800 border-t-4 border-t-blue-600 bg-white dark:bg-gray-900 p-6 sm:p-8 flex flex-col justify-between shadow-xs hover:shadow-lg hover:border-blue-500/60 transition-all group">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center shadow-xs">
+                    <Stethoscope className="w-6 h-6" />
                   </div>
-                  <span className="text-[11px] font-mono font-medium text-[var(--color-text-muted)] ml-2">
-                    curenova://repurposing-pipeline/alzheimers
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60">
+                    ROR 3.84 Bleed Shield
                   </span>
                 </div>
-                <span className="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] dark:bg-[#0284C7]/20 dark:text-[#38BDF8] dark:border-[#0284C7]/40">
-                  Illustrative Live Model
-                </span>
-              </div>
 
-              {/* Product Preview Tabs */}
-              <div className="flex border-b border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] text-xs">
-                <button
-                  type="button"
-                  onClick={() => setPreviewTab('ranking')}
-                  className={`flex-1 py-2.5 px-3 text-center font-bold transition-colors cursor-pointer border-b-2 ${
-                    previewTab === 'ranking'
-                      ? 'border-[#0284C7] text-[#0284C7] bg-[var(--color-surface-hover)]'
-                      : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
-                  }`}
-                >
-                  Candidate Ranking
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPreviewTab('evidence')}
-                  className={`flex-1 py-2.5 px-3 text-center font-bold transition-colors cursor-pointer border-b-2 ${
-                    previewTab === 'evidence'
-                      ? 'border-[#0284C7] text-[#0284C7] bg-[var(--color-surface-hover)]'
-                      : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
-                  }`}
-                >
-                  Evidence Dossier
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPreviewTab('safety')}
-                  className={`flex-1 py-2.5 px-3 text-center font-bold transition-colors cursor-pointer border-b-2 ${
-                    previewTab === 'safety'
-                      ? 'border-[#0284C7] text-[#0284C7] bg-[var(--color-surface-hover)]'
-                      : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
-                  }`}
-                >
-                  Interaction Check
-                </button>
-              </div>
-
-              {/* Preview Body Content */}
-              <div className="p-5 space-y-4 text-xs">
-                {previewTab === 'ranking' && (
-                  <div className="space-y-3">
-                    {/* Active Query Pill */}
-                    <div className="flex items-center justify-between p-2.5 rounded-xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)]">
-                      <div className="flex items-center gap-2">
-                        <Search className="w-3.5 h-3.5 text-[#0284C7]" />
-                        <span className="font-semibold text-[var(--color-text-primary)]">Query: Alzheimer's Disease</span>
-                      </div>
-                      <span className="text-[10px] font-mono text-[var(--color-text-muted)]">MeSH: D000544</span>
-                    </div>
-
-                    {/* Candidate Row 1: Metformin */}
-                    <div className="p-3 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] hover:border-[#0284C7]/50 transition-all space-y-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#0A2540] text-white">#1</span>
-                          <span className="font-bold text-sm text-[var(--color-text-primary)]">Metformin</span>
-                          <span className="text-[10px] text-[var(--color-text-muted)] font-mono">Approved: Type 2 Diabetes</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 font-mono font-bold text-[#0284C7]">
-                          <span className="text-sm">92.4</span>
-                          <span className="text-[10px] text-[var(--color-text-muted)]">/ 100</span>
-                        </div>
-                      </div>
-                      <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed">
-                        AMPK activation enhances cerebral glucose uptake, reduces tau hyperphosphorylation via GSK3β inhibition.
-                      </p>
-                      <div className="flex flex-wrap items-center gap-2 pt-1">
-                        <span className="px-2 py-0.5 rounded-md bg-[#F0FDF4] text-[#166534] border border-[#BBF7D0] text-[10px] font-semibold flex items-center gap-1">
-                          <CheckCircle2 className="w-3 h-3 text-[#15803D]" />
-                          3 Clinical Trials
-                        </span>
-                        <span className="px-2 py-0.5 rounded-md bg-[var(--color-surface-sunken)] text-[var(--color-text-secondary)] text-[10px] font-mono">
-                          48 PubMed Records
-                        </span>
-                        <span className="px-2 py-0.5 rounded-md bg-[#FFFBEB] text-[#92400E] border border-[#FDE68A] text-[10px]">
-                          Renal Threshold: eGFR &gt; 30
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Candidate Row 2: Fasudil */}
-                    <div className="p-3 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] space-y-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#0A2540] text-white">#2</span>
-                          <span className="font-bold text-sm text-[var(--color-text-primary)]">Fasudil</span>
-                          <span className="text-[10px] text-[var(--color-text-muted)] font-mono">Approved: Vasospasm</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 font-mono font-bold text-[#0284C7]">
-                          <span className="text-sm">84.1</span>
-                          <span className="text-[10px] text-[var(--color-text-muted)]">/ 100</span>
-                        </div>
-                      </div>
-                      <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed">
-                        Selective Rho-kinase (ROCK1/2) inhibition stimulates microglial amyloid-beta clearance in preclinical models.
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {previewTab === 'evidence' && (
-                  <div className="space-y-3">
-                    <div className="p-3 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] space-y-1.5">
-                      <div className="flex items-center justify-between text-[11px]">
-                        <span className="font-mono text-[#0284C7] font-bold">PMID: 33188177</span>
-                        <span className="text-[10px] font-mono text-[var(--color-text-muted)]">Lancet Healthy Longev (2021)</span>
-                      </div>
-                      <h4 className="font-bold text-xs text-[var(--color-text-primary)]">
-                        Metformin treatment is associated with reduced dementia incidence in large electronic health records cohort
-                      </h4>
-                      <p className="text-[11px] text-[var(--color-text-secondary)] line-clamp-2">
-                        Longitudinal study of 115,845 patients followed for 8.2 years demonstrated 24% reduced hazard of incident dementia (aHR 0.76).
-                      </p>
-                    </div>
-
-                    <div className="p-3 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] space-y-1.5">
-                      <div className="flex items-center justify-between text-[11px]">
-                        <span className="font-mono text-[#2563EB] font-bold">NCT04098666</span>
-                        <span className="text-[10px] font-mono text-[var(--color-text-muted)]">Phase II/III Trial</span>
-                      </div>
-                      <h4 className="font-bold text-xs text-[var(--color-text-primary)]">
-                        Metformin in Preventing Cognitive Decline in Older Adults (MAP4AD)
-                      </h4>
-                      <p className="text-[11px] text-[var(--color-text-secondary)]">
-                        Active multi-center trial evaluating memory executive scores across 370 participants.
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {previewTab === 'safety' && (
-                  <div className="space-y-3">
-                    <div className="p-3 rounded-xl border border-[#FECACA] bg-[#FEF2F2] dark:bg-red-950/30 text-left space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-xs text-[#991B1B] dark:text-red-300 flex items-center gap-1.5">
-                          <AlertTriangle className="w-3.5 h-3.5 text-[#B91C1C]" />
-                          Warfarin + Aspirin Interaction
-                        </span>
-                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#B91C1C] text-white">
-                          High Hazard
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-[#991B1B] dark:text-red-200 leading-relaxed">
-                        Dual antiplatelet and anticoagulant synergism produces severe hemorrhagic risk (ROR 3.84). Requires clinical surveillance.
-                      </p>
-                    </div>
-
-                    <div className="p-3 rounded-xl border border-[#BBF7D0] bg-[#F0FDF4] dark:bg-emerald-950/30 text-left space-y-1">
-                      <span className="font-bold text-xs text-[#166534] dark:text-emerald-300 flex items-center gap-1.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#15803D]" />
-                        Documented Safe: Atorvastatin + Amlodipine
-                      </span>
-                      <p className="text-[11px] text-[#166534] dark:text-emerald-200">
-                        Compatible cardiovascular co-prescription with no major pharmacokinetic metabolic conflict.
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Live Pipeline Steps Bar */}
-                <div className="pt-2 border-t border-[var(--color-border-subtle)] flex items-center justify-between text-[11px] font-mono text-[var(--color-text-muted)]">
-                  <span>Workflow: Evidence Traceable</span>
-                  <span className="text-[#0284C7] font-bold">4 Verified Agents Complete</span>
+                <div>
+                  <span className="text-[10px] font-mono font-bold uppercase text-blue-600 dark:text-blue-400">
+                    Clinical Intelligence
+                  </span>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-1">
+                    Clinician Workspace
+                  </h3>
                 </div>
+
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Evaluate drug-drug interaction safety, simulate patient-specific digital twin clearance across eGFR and age, and export clinical consultation notes.
+                </p>
+
+                <ul className="space-y-2.5 text-xs text-gray-600 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-800">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Polypharmacy interaction hazard matrices</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Renal &amp; hepatic clearance digital twin</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Defensible clinical consultation reports</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-gray-100 dark:border-gray-800">
+                <button
+                  type="button"
+                  onClick={() => handleRoleLaunch('doctor')}
+                  className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                >
+                  <span>Launch Clinician Portal</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
+
+            {/* 2. Researcher Portal Card */}
+            <div className="rounded-2xl border border-gray-200 dark:border-gray-800 border-t-4 border-t-teal-500 bg-white dark:bg-gray-900 p-6 sm:p-8 flex flex-col justify-between shadow-xs hover:shadow-lg hover:border-teal-500/60 transition-all group">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 flex items-center justify-center shadow-xs">
+                    <Microscope className="w-6 h-6" />
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200/60 dark:border-teal-800/60">
+                    Ki 14.2 nM Pocket
+                  </span>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-mono font-bold uppercase text-teal-600 dark:text-teal-400">
+                    Translational AI
+                  </span>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-1">
+                    Researcher Portal
+                  </h3>
+                </div>
+
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Screen FDA-approved small molecule libraries for novel therapeutic indications, compute binding affinities, and trace PubMed evidence graphs.
+                </p>
+
+                <ul className="space-y-2.5 text-xs text-gray-600 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-800">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Ligand-receptor docking score ranking</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Novel indication repurposing predictions</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Knowledge graph citation traceability</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-gray-100 dark:border-gray-800">
+                <button
+                  type="button"
+                  onClick={() => handleRoleLaunch('researcher')}
+                  className="w-full py-2.5 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                >
+                  <span>Launch Researcher Portal</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* 3. Patient Companion Card */}
+            <div className="rounded-2xl border border-gray-200 dark:border-gray-800 border-t-4 border-t-emerald-500 bg-white dark:bg-gray-900 p-6 sm:p-8 flex flex-col justify-between shadow-xs hover:shadow-lg hover:border-emerald-500/60 transition-all group">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-xs">
+                    <HeartHandshake className="w-6 h-6" />
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60">
+                    Plain-Language Guide
+                  </span>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-mono font-bold uppercase text-emerald-600 dark:text-emerald-400">
+                    Health Companion
+                  </span>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-1">
+                    Patient Portal
+                  </h3>
+                </div>
+
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Understand your medications in plain language, track daily schedules, review potential side-effects, and prepare informed questions for your doctor.
+                </p>
+
+                <ul className="space-y-2.5 text-xs text-gray-600 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-800">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Jargon-free medicine explanations</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Interactive symptom safety check</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Downloadable medication wallet cards</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-gray-100 dark:border-gray-800">
+                <button
+                  type="button"
+                  onClick={() => handleRoleLaunch('patient')}
+                  className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                >
+                  <span>Launch Patient Portal</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
           </div>
 
         </div>
       </section>
 
-      {/* ── C. Trust and Capability Strip ── */}
-      <section className="w-full border-y border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] py-6">
+      {/* ── 3. CORE ARCHITECTURE CAPABILITIES ── */}
+      <section id="capabilities" className="relative z-10 py-20 bg-gray-50/90 dark:bg-gray-950/90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
-            
-            <div className="p-3 rounded-xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-1">
-              <div className="flex items-center gap-2 text-[#0284C7]">
-                <Database className="w-4 h-4" />
-                <span className="font-bold text-xs uppercase font-mono tracking-wider">Traceable</span>
-              </div>
-              <h3 className="font-bold text-xs text-[var(--color-text-primary)]">Evidence-Linked Research</h3>
-              <p className="text-[11px] text-[var(--color-text-muted)]">Every candidate links directly to PubMed and FDA records.</p>
-            </div>
-
-            <div className="p-3 rounded-xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-1">
-              <div className="flex items-center gap-2 text-[#17324D] dark:text-[#38BDF8]">
-                <Cpu className="w-4 h-4" />
-                <span className="font-bold text-xs uppercase font-mono tracking-wider">Scoring</span>
-              </div>
-              <h3 className="font-bold text-xs text-[var(--color-text-primary)]">Transparent Ranking</h3>
-              <p className="text-[11px] text-[var(--color-text-muted)]">Breakdown of biological congruence and literature support.</p>
-            </div>
-
-            <div className="p-3 rounded-xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-1">
-              <div className="flex items-center gap-2 text-[#B45309]">
-                <AlertTriangle className="w-4 h-4" />
-                <span className="font-bold text-xs uppercase font-mono tracking-wider">Unbiased</span>
-              </div>
-              <h3 className="font-bold text-xs text-[var(--color-text-primary)]">Supporting & Conflicting</h3>
-              <p className="text-[11px] text-[var(--color-text-muted)]">Contradictory findings and safety signals preserved.</p>
-            </div>
-
-            <div className="p-3 rounded-xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-1">
-              <div className="flex items-center gap-2 text-[#15803D]">
-                <ShieldCheck className="w-4 h-4" />
-                <span className="font-bold text-xs uppercase font-mono tracking-wider">Safety</span>
-              </div>
-              <h3 className="font-bold text-xs text-[var(--color-text-primary)]">Medication Analysis</h3>
-              <p className="text-[11px] text-[var(--color-text-muted)]">Pairwise interaction checks and digital twin modeling.</p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ── D. Product Capabilities Section (3-Column Grid) ── */}
-      <section id="capabilities" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 text-left space-y-10">
-        
-        <div className="space-y-3 max-w-2xl">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0284C7]">
-            Platform Capabilities
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0A2540] dark:text-[#F1F5F9]">
-            Three Interconnected Clinical Intelligence Modules
-          </h2>
-          <p className="text-xs sm:text-sm text-[var(--color-text-secondary)]">
-            Explore dedicated workflows engineered specifically for translation research, polypharmacy checking, and patient clarity.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
-          {/* Card 1: Drug Repurposing Research */}
-          <div className="p-6 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] hover:border-[#0284C7] transition-all shadow-xs space-y-4 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-[#E0F2FE] text-[#0369A1] flex items-center justify-center font-bold">
-                <Microscope className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-[var(--color-text-primary)]">
-                Drug Repurposing Research
-              </h3>
-              <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                Search a disease or small molecule to identify alternative indications supported by ChEMBL bioassays and molecular targets.
-              </p>
-              <ul className="space-y-2 pt-2 text-xs text-[var(--color-text-secondary)]">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7]" />
-                  <span>Disease-to-drug & target association queries</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7]" />
-                  <span>Multi-factor candidate congruence ranking</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7]" />
-                  <span>Full PubMed & clinical trial evidence linking</span>
-                </li>
-              </ul>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleRoleLaunch('researcher')}
-              className="w-full py-2.5 px-3 rounded-xl font-bold text-xs text-[#0284C7] bg-[#E0F2FE] hover:bg-[#BAE6FD] dark:bg-[#0284C7]/20 dark:text-[#38BDF8] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-            >
-              <span>Explore Repurposing Engine</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+              Core Architecture
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">
+              Precision Intelligence Stack
+            </h2>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+              Three interconnected clinical engines delivering high-defensibility pharmacology intelligence.
+            </p>
           </div>
 
-          {/* Card 2: Evidence Verification */}
-          <div className="p-6 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] hover:border-[#17324D] transition-all shadow-xs space-y-4 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-[#17324D]/10 text-[#17324D] dark:bg-sky-950/40 dark:text-sky-300 flex items-center justify-center font-bold">
-                <Search className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-[var(--color-text-primary)]">
-                Evidence Verification
-              </h3>
-              <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                Inspect primary literature sources, evaluate retrospective trials, and distinguish direct biochemical evidence from indirect inferences.
-              </p>
-              <ul className="space-y-2 pt-2 text-xs text-[var(--color-text-secondary)]">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#17324D] dark:bg-[#38BDF8]" />
-                  <span>Inspect study design, cohorts, and DOIs</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#17324D] dark:bg-[#38BDF8]" />
-                  <span>Cross-check contradictory findings and limits</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#17324D] dark:bg-[#38BDF8]" />
-                  <span>Export comprehensive research dossiers</span>
-                </li>
-              </ul>
-            </div>
-            <Link
-              to="/evidence"
-              className="w-full py-2.5 px-3 rounded-xl font-bold text-xs text-[#17324D] dark:text-white bg-[var(--color-surface-sunken)] hover:bg-[var(--color-surface-hover)] border border-[var(--color-border-subtle)] transition-colors flex items-center justify-center gap-1.5"
-            >
-              <span>Open Evidence Explorer</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          {/* Card 3: Medication Safety */}
-          <div className="p-6 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] hover:border-[#15803D] transition-all shadow-xs space-y-4 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-[#F0FDF4] text-[#166534] flex items-center justify-center font-bold">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div className="p-7 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 space-y-3.5 shadow-xs hover:shadow-md transition-shadow">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-[var(--color-text-primary)]">
-                Medication Safety & Polypharmacy
-              </h3>
-              <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                Evaluate complex polypharmacy regimens, test pairwise drug interactions, and simulate therapeutic changes before adjusting regimens.
+              <h4 className="text-base font-bold text-gray-900 dark:text-gray-100">
+                Polypharmacy Safety Shield
+              </h4>
+              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                Flags CYP450 metabolic competition, cumulative QT prolongation, and synergistic bleeding hazards before prescription finalization.
               </p>
-              <ul className="space-y-2 pt-2 text-xs text-[var(--color-text-secondary)]">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#15803D]" />
-                  <span>Pairwise interaction matrix & mechanism alerts</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#15803D]" />
-                  <span>Digital twin simulation for regimen changes</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#15803D]" />
-                  <span>Organ clearance monitoring (eGFR & hepatic)</span>
-                </li>
-              </ul>
             </div>
-            <button
-              type="button"
-              onClick={() => handleRoleLaunch('doctor')}
-              className="w-full py-2.5 px-3 rounded-xl font-bold text-xs text-[#166534] bg-[#F0FDF4] hover:bg-[#BBF7D0] dark:bg-emerald-950/40 dark:text-emerald-300 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-            >
-              <span>Check Medication Safety</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+
+            <div className="p-7 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 space-y-3.5 shadow-xs hover:shadow-md transition-shadow">
+              <div className="w-11 h-11 rounded-xl bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 flex items-center justify-center">
+                <FlaskConical className="w-5 h-5" />
+              </div>
+              <h4 className="text-base font-bold text-gray-900 dark:text-gray-100">
+                Target-Ligand Binding Engine
+              </h4>
+              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                Evaluates pharmacological repurposing potential across 14,000+ human target structures using graph neural network bioactivity projections.
+              </p>
+            </div>
+
+            <div className="p-7 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 space-y-3.5 shadow-xs hover:shadow-md transition-shadow">
+              <div className="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                <Cpu className="w-5 h-5" />
+              </div>
+              <h4 className="text-base font-bold text-gray-900 dark:text-gray-100">
+                Patient Digital Twin
+              </h4>
+              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                Dynamically adjusts drug accumulation and clearance risk models based on patient renal eGFR and chronological age parameters.
+              </p>
+            </div>
+
           </div>
 
         </div>
       </section>
 
-      {/* ── E. How the Platform Works (Numbered 5-Step Workflow) ── */}
-      <section id="how-it-works" className="w-full bg-[var(--color-surface-card)] border-y border-[var(--color-border-subtle)] py-14 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left space-y-12">
+      {/* ── 4. METHODOLOGY WORKFLOW ── */}
+      <section id="methodology" className="relative z-10 py-20 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="space-y-2 max-w-2xl">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0284C7]">
-              Workflow Architecture
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+              Pipeline Verification
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0A2540] dark:text-[#F1F5F9]">
-              How CureNova Works
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">
+              4-Stage Evidence Workflow
             </h2>
-            <p className="text-xs sm:text-sm text-[var(--color-text-secondary)]">
-              An evidence-grounded sequence engineered to deliver transparent, accountable scientific insights.
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+              From verified bioactivity datasets to defensible clinical insights.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            
-            <div className="p-4 rounded-2xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-2 relative">
-              <span className="text-2xl font-black text-[#0284C7] font-mono block">01</span>
-              <h3 className="font-bold text-xs text-[var(--color-text-primary)]">Enter Query</h3>
-              <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed">
-                Provide a disease phenotype, target gene, or small molecule to initiate evaluation.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-2 relative">
-              <span className="text-2xl font-black text-[#0284C7] font-mono block">02</span>
-              <h3 className="font-bold text-xs text-[var(--color-text-primary)]">Retrieve Evidence</h3>
-              <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed">
-                Extract peer-reviewed trials, ChEMBL bioassays, and openFDA safety records.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-2 relative">
-              <span className="text-2xl font-black text-[#0284C7] font-mono block">03</span>
-              <h3 className="font-bold text-xs text-[var(--color-text-primary)]">Rank Candidates</h3>
-              <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed">
-                Compute biological plausibility, target congruence, and volume of evidence.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-2 relative">
-              <span className="text-2xl font-black text-[#0284C7] font-mono block">04</span>
-              <h3 className="font-bold text-xs text-[var(--color-text-primary)]">Verify & Challenge</h3>
-              <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed">
-                Compare supporting findings against conflicting trials and adverse signals.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-2 relative">
-              <span className="text-2xl font-black text-[#0284C7] font-mono block">05</span>
-              <h3 className="font-bold text-xs text-[var(--color-text-primary)]">Synthesize Report</h3>
-              <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed">
-                Review structured findings, safety limitations, and next experimental steps.
-              </p>
-            </div>
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { step: '01', title: 'Data Ingestion', desc: 'Synthesizes 38,000+ PubMed articles, openFDA FAERS safety reports, and ChEMBL assays into a unified ontology.' },
+              { step: '02', title: 'Target Docking', desc: 'Predicts candidate binding affinities across 14,000+ receptor profiles with calibrated confidence margins.' },
+              { step: '03', title: 'Twin Simulation', desc: 'Calculates patient-specific renal and hepatic clearance curves adjusted for age and active co-medications.' },
+              { step: '04', title: 'Evidence Dossier', desc: 'Outputs human-readable clinical summaries with clickable literature source citations.' },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50/70 dark:bg-gray-950/70 space-y-2.5 shadow-xs"
+              >
+                <span className="font-mono text-xl font-black text-blue-600 dark:text-blue-400">
+                  {item.step}
+                </span>
+                <h4 className="font-bold text-sm text-gray-900 dark:text-gray-100">{item.title}</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
           </div>
 
         </div>
       </section>
 
-      {/* ── F. Role-Specific Entry Points (3 Clearly Differentiated Cards) ── */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 text-left space-y-10">
-        
-        <div className="space-y-2 max-w-2xl">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0284C7]">
-            Specialized Portals
+      {/* ── 5. VERIFIED EVIDENCE REPOSITORIES ── */}
+      <section className="relative z-10 py-12 bg-gray-50 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+          <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            Validated Grounding Data Sources
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0A2540] dark:text-[#F1F5F9]">
-            Select Your Workspace
-          </h2>
-          <p className="text-xs sm:text-sm text-[var(--color-text-secondary)]">
-            Tailored interfaces matching your professional workflows and clinical objectives.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Researcher Portal */}
-          <div id="researcher-role" className="p-6 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] hover:border-[#0284C7] transition-all shadow-xs space-y-5 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-xl bg-[#E0F2FE] text-[#0369A1] flex items-center justify-center font-bold">
-                  <Microscope className="w-5 h-5" />
-                </div>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#E0F2FE] text-[#0369A1]">
-                  Biomedical (PhD)
-                </span>
-              </div>
-              <h3 className="text-base font-bold text-[var(--color-text-primary)]">
-                Researcher Portal
-              </h3>
-              <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                "Investigate drug–disease relationships and review the evidence."
-              </p>
-              <div className="p-3 rounded-xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-1.5 text-xs">
-                <span className="text-[10px] font-mono text-[var(--color-text-muted)] font-bold uppercase block">
-                  Included Features:
-                </span>
-                <span className="block text-[var(--color-text-primary)] font-medium">• Repurposing Candidate Explorer</span>
-                <span className="block text-[var(--color-text-primary)] font-medium">• Knowledge Graph Network</span>
-                <span className="block text-[var(--color-text-primary)] font-medium">• Research Dossier PDF Generator</span>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleRoleLaunch('researcher')}
-              className="w-full py-2.5 px-3 rounded-xl font-bold text-xs text-white bg-[#0284C7] hover:bg-[#0369A1] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
-            >
-              <span>Enter Researcher Portal</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
+            <Link to="/evidence" className="px-4 py-2 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 transition-colors shadow-2xs">
+              PubMed Central · 38,000+ Articles
+            </Link>
+            <Link to="/evidence" className="px-4 py-2 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 transition-colors shadow-2xs">
+              openFDA FAERS · Adverse Surveillance
+            </Link>
+            <Link to="/evidence" className="px-4 py-2 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 transition-colors shadow-2xs">
+              ChEMBL 34 · Bioactivity Assays
+            </Link>
+            <Link to="/knowledge-graph" className="px-4 py-2 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 transition-colors shadow-2xs">
+              UniProt · 14,200+ Protein Structures
+            </Link>
           </div>
-
-          {/* Doctor Portal */}
-          <div id="doctor-role" className="p-6 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] hover:border-[#17324D] transition-all shadow-xs space-y-5 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-xl bg-[#17324D]/10 text-[#17324D] dark:bg-sky-950/40 dark:text-sky-300 flex items-center justify-center font-bold">
-                  <Stethoscope className="w-5 h-5" />
-                </div>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#17324D]/10 text-[#17324D] dark:bg-sky-950/40 dark:text-sky-300">
-                  Clinician (MD)
-                </span>
-              </div>
-              <h3 className="text-base font-bold text-[var(--color-text-primary)]">
-                Doctor Portal
-              </h3>
-              <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                "Review medication information and supported interaction findings."
-              </p>
-              <div className="p-3 rounded-xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-1.5 text-xs">
-                <span className="text-[10px] font-mono text-[var(--color-text-muted)] font-bold uppercase block">
-                  Included Features:
-                </span>
-                <span className="block text-[var(--color-text-primary)] font-medium">• Multi-Drug Interaction Matrix</span>
-                <span className="block text-[var(--color-text-primary)] font-medium">• Patient Digital Twin Simulation</span>
-                <span className="block text-[var(--color-text-primary)] font-medium">• Pharmacovigilance Risk Alerts</span>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleRoleLaunch('doctor')}
-              className="w-full py-2.5 px-3 rounded-xl font-bold text-xs text-white bg-[#17324D] hover:bg-[#10263A] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
-            >
-              <span>Enter Doctor Portal</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {/* Patient Portal */}
-          <div id="patient-role" className="p-6 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] hover:border-[#15803D] transition-all shadow-xs space-y-5 flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-xl bg-[#F0FDF4] text-[#166534] flex items-center justify-center font-bold">
-                  <HeartHandshake className="w-5 h-5" />
-                </div>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#F0FDF4] text-[#166534]">
-                  Personal Health
-                </span>
-              </div>
-              <h3 className="text-base font-bold text-[var(--color-text-primary)]">
-                Patient Portal
-              </h3>
-              <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                "Explore understandable medicine information and established warnings."
-              </p>
-              <div className="p-3 rounded-xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-1.5 text-xs">
-                <span className="text-[10px] font-mono text-[var(--color-text-muted)] font-bold uppercase block">
-                  Included Features:
-                </span>
-                <span className="block text-[var(--color-text-primary)] font-medium">• Everyday Plain-Language Summaries</span>
-                <span className="block text-[var(--color-text-primary)] font-medium">• Doctor Discussion Question Sheet</span>
-                <span className="block text-[var(--color-text-primary)] font-medium">• Medicine Education & Warnings</span>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleRoleLaunch('patient')}
-              className="w-full py-2.5 px-3 rounded-xl font-bold text-xs text-white bg-[#15803D] hover:bg-[#166534] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
-            >
-              <span>Enter Patient Portal</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
         </div>
       </section>
 
-      {/* ── G. Scientific Limitations Section ── */}
-      <section className="w-full bg-[var(--color-surface-card)] border-t border-[var(--color-border-subtle)] py-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-3">
-          <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase text-[#B45309]">
-            <AlertTriangle className="w-3.5 h-3.5" />
-            <span>Scientific & Clinical Boundaries</span>
-          </div>
-          <h3 className="text-lg font-bold text-[var(--color-text-primary)]">
-            Transparent Decision-Support, Not Autonomous Prescribing
-          </h3>
-          <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed max-w-2xl mx-auto">
-            CureNova supports research and medication-information workflows. It does not diagnose, prescribe, or establish treatment efficacy from AI predictions. Missing evidence does not imply safety, and repurposing candidates represent investigational research hypotheses derived from published literature that require prospective clinical trial validation.
-          </p>
-        </div>
-      </section>
-
-      {/* ── H. Professional Footer ── */}
-      <footer className="w-full border-t border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] py-10 text-xs text-[var(--color-text-muted)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      {/* ── 6. FOOTER & CLINICAL DISCLAIMER ── */}
+      <footer className="relative z-10 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 text-xs text-gray-500 dark:text-gray-400 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-left">
-            
-            <div className="col-span-2 space-y-3">
-              <Link to="/" className="flex items-center gap-2 group">
-                <div className="w-7 h-7 rounded-lg bg-[#0284C7] text-white flex items-center justify-center font-bold">
-                  <Activity className="w-4 h-4" />
-                </div>
-                <span className="text-base font-extrabold tracking-tight text-[#0A2540] dark:text-[#F1F5F9]">
-                  Cure<span className="text-[#0284C7] dark:text-[#38BDF8]">Nova</span>
-                </span>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold">
+                <Activity className="w-4 h-4" />
+              </div>
+              <span className="font-extrabold text-base text-gray-900 dark:text-gray-100">
+                Cure<span className="text-blue-600 dark:text-blue-400">Nova</span>
+              </span>
+              <span className="text-[10px] text-gray-400 font-mono">v2.4 Biomedical AI</span>
+            </div>
+
+            <div className="flex items-center gap-6 text-xs font-medium">
+              <Link to="/evidence" className="hover:text-blue-600 transition-colors">
+                Evidence Explorer
               </Link>
-              <p className="text-xs text-[var(--color-text-secondary)] max-w-sm leading-relaxed">
-                Agentic AI Platform for Evidence-Grounded Drug Repurposing and Polypharmacy Risk Analysis.
-              </p>
-              <span className="text-[11px] font-mono block">
-                Version 1.0.0 · Evidence Grounded
-              </span>
+              <Link to="/knowledge-graph" className="hover:text-blue-600 transition-colors">
+                Knowledge Graph
+              </Link>
+              <Link to="/about" className="hover:text-blue-600 transition-colors">
+                About &amp; Ethics
+              </Link>
+              <Link to="/login" className="hover:text-blue-600 transition-colors">
+                Sign In
+              </Link>
             </div>
-
-            <div className="space-y-2">
-              <span className="text-xs font-bold text-[var(--color-text-primary)] uppercase tracking-wider block">
-                Platform
-              </span>
-              <ul className="space-y-1.5">
-                <li>
-                  <Link to="/evidence" className="hover:text-[var(--color-text-primary)] transition-colors">
-                    Evidence Explorer
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/knowledge-graph" className="hover:text-[var(--color-text-primary)] transition-colors">
-                    Knowledge Graph
-                  </Link>
-                </li>
-                <li>
-                  <button type="button" onClick={() => scrollToSection('capabilities')} className="hover:text-[var(--color-text-primary)] transition-colors cursor-pointer">
-                    Capabilities
-                  </button>
-                </li>
-                <li>
-                  <Link to="/about" className="hover:text-[var(--color-text-primary)] transition-colors">
-                    Methodology & About
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="space-y-2">
-              <span className="text-xs font-bold text-[var(--color-text-primary)] uppercase tracking-wider block">
-                Portals
-              </span>
-              <ul className="space-y-1.5">
-                <li>
-                  <button type="button" onClick={() => handleRoleLaunch('researcher')} className="hover:text-[var(--color-text-primary)] transition-colors cursor-pointer">
-                    Researcher Portal
-                  </button>
-                </li>
-                <li>
-                  <button type="button" onClick={() => handleRoleLaunch('doctor')} className="hover:text-[var(--color-text-primary)] transition-colors cursor-pointer">
-                    Doctor Workspace
-                  </button>
-                </li>
-                <li>
-                  <button type="button" onClick={() => handleRoleLaunch('patient')} className="hover:text-[var(--color-text-primary)] transition-colors cursor-pointer">
-                    Patient Home
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            <div className="space-y-2">
-              <span className="text-xs font-bold text-[var(--color-text-primary)] uppercase tracking-wider block">
-                Access
-              </span>
-              <ul className="space-y-1.5">
-                <li>
-                  <Link to="/login" className="hover:text-[var(--color-text-primary)] transition-colors">
-                    Account Login
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/register" className="hover:text-[var(--color-text-primary)] transition-colors">
-                    Create Account
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/forgot-password" className="hover:text-[var(--color-text-primary)] transition-colors">
-                    Password Recovery
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
           </div>
 
-          <div className="pt-6 border-t border-[var(--color-border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]">
-            <p>
-              © {new Date().getFullYear()} CureNova Platform. All rights reserved. For biomedical research and educational purposes only.
-            </p>
-            <div className="flex gap-4">
-              <Link to="/about" className="hover:text-[var(--color-text-primary)] transition-colors">Methodology</Link>
-              <Link to="/evidence" className="hover:text-[var(--color-text-primary)] transition-colors">Indexed Sources</Link>
-              <Link to="/login" className="hover:text-[var(--color-text-primary)] transition-colors">Sign In</Link>
-            </div>
+          <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
+            <span className="font-bold text-gray-700 dark:text-gray-300">Regulatory Disclaimer: </span>
+            CureNova is an artificial intelligence-assisted clinical decision-support and translational research platform. The predictions, interaction analyses, and repurposing scores presented are for research and professional decision-support purposes only and do not constitute independent medical advice. Always consult licensed medical professionals and verified clinical pharmacology compendia for therapeutic interventions.
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-800">
+            <div>© 2026 CureNova Biomedical AI Technologies. All rights reserved.</div>
+            <div className="font-mono">Grounding: PubMed · openFDA · ChEMBL · UniProt</div>
           </div>
 
         </div>

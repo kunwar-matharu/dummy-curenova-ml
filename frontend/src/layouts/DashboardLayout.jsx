@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ShieldAlert, RefreshCw } from 'lucide-react';
 import Sidebar from '../components/Sidebar';
 import { useAuth } from '../context/AuthContext';
@@ -19,9 +20,9 @@ export const DashboardLayout = ({ role }) => {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-4.25rem)] bg-[var(--color-surface-ground)] text-[var(--color-text-primary)] transition-colors duration-200">
+    <div className="flex min-h-[calc(100vh-3.5rem)] sm:min-h-[calc(100vh-4rem)] bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       <Sidebar role={currentRole} />
-      <main className="flex-1 min-w-0 w-full px-4 sm:px-6 lg:px-8 py-6 max-w-[1600px] mx-auto overflow-y-auto">
+      <main className="flex-1 min-w-0 w-full px-4 sm:px-6 lg:px-8 py-8 max-w-[1600px] mx-auto">
         {user?.approval_status === 'pending' && (
           <div className="mb-6 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-amber-900 dark:text-amber-200 text-xs">
             <div className="flex items-center gap-2.5">
@@ -41,7 +42,13 @@ export const DashboardLayout = ({ role }) => {
             </button>
           </div>
         )}
-        <Outlet />
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <Outlet />
+        </motion.div>
       </main>
     </div>
   );

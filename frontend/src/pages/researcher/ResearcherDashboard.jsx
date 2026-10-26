@@ -67,132 +67,147 @@ export const ResearcherDashboard = () => {
   const completedCount = savedRuns.filter((r) => r.status !== 'failed').length;
 
   return (
-    <div className="space-y-6 w-full pb-8 text-left max-w-7xl mx-auto">
-      {/* ── Page Heading ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[var(--color-border-subtle)]">
+    <div className="space-y-8 w-full text-left">
+      {/* ── Demo-Style Header ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#17324D] dark:text-[#F1F5F9]">
-            Research Overview
-          </h1>
-          <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1">
-            Explore drug candidates and review the evidence.
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Research Overview</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            Explore drug repurposing candidates and investigate biological evidence
           </p>
         </div>
-
-        {/* Primary Action Button */}
-        <button
-          type="button"
-          onClick={() => navigate('/researcher/drug-repurposing')}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] transition-all shadow-xs cursor-pointer self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>New Research</span>
-        </button>
-      </div>
-
-      {/* ── Search and Research Entry using ClinicalHighlightBox ── */}
-      <ClinicalHighlightBox
-        variant="primary"
-        title="What would you like to investigate?"
-        subtitle="Enter a disease to discover repurposing candidates, or a drug name to examine alternative indications."
-        icon={Microscope}
-      >
-        <form onSubmit={handleQuickSubmit} className="flex flex-col sm:flex-row gap-2.5 pt-1">
-          <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)] pointer-events-none" />
-            <input
-              id="research-search-input"
-              type="text"
-              value={quickQuery}
-              onChange={(e) => setQuickQuery(e.target.value)}
-              placeholder="Enter a disease or drug name..."
-              className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface-card)] text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[#0284C7]"
-            />
-          </div>
+        <div className="flex items-center gap-3">
           <button
-            type="submit"
-            disabled={!quickQuery.trim()}
-            className="px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-[#0284C7] hover:bg-[#0369A1] disabled:opacity-50 transition-colors cursor-pointer shrink-0 shadow-2xs flex items-center justify-center gap-1.5"
+            type="button"
+            onClick={() => navigate('/researcher/drug-repurposing')}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-medium text-sm shadow-sm transition-colors cursor-pointer"
           >
-            <Sparkles className="w-4 h-4" />
-            <span>Start Research</span>
+            <Plus className="h-4 w-4" />
+            <span>New Research</span>
           </button>
-        </form>
-
-        {/* Quick Suggestion Chips */}
-        {exampleQueries.length > 0 && (
-          <div className="flex flex-wrap items-center gap-1.5 pt-1">
-            <span className="text-[11px] font-semibold text-[var(--color-text-muted)] mr-1">
-              Suggestions:
-            </span>
-            {exampleQueries.map((ex) => (
-              <button
-                key={ex}
-                type="button"
-                onClick={() => navigate('/researcher/drug-repurposing', { state: { prefilledQuery: ex } })}
-                className="px-2.5 py-1 text-xs rounded-lg bg-[var(--color-surface-card)] hover:bg-[#E0F2FE] dark:hover:bg-[#0284C7]/20 hover:text-[#0369A1] dark:hover:text-[#38BDF8] hover:border-[#BAE6FD] dark:hover:border-[#0284C7]/40 text-[var(--color-text-secondary)] border border-[var(--color-border-subtle)] transition-colors cursor-pointer"
-              >
-                + {ex}
-              </button>
-            ))}
-          </div>
-        )}
-      </ClinicalHighlightBox>
-
-      {/* ── Genuine User Activity Statistics (No Fake Numbers) ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs space-y-1">
-          <span className="text-[11px] font-bold uppercase text-[var(--color-text-muted)] block">
-            Research Runs
-          </span>
-          <div className="text-2xl font-extrabold text-[#17324D] dark:text-[#F1F5F9]">
-            {savedRuns.length}
-          </div>
-          <span className="text-[11px] text-[var(--color-text-muted)]">
-            Saved user inquiries
-          </span>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs space-y-1">
-          <span className="text-[11px] font-bold uppercase text-[var(--color-text-muted)] block">
-            Completed Analyses
-          </span>
-          <div className="text-2xl font-extrabold text-[#0284C7] dark:text-[#38BDF8]">
-            {completedCount}
-          </div>
-          <span className="text-[11px] text-[var(--color-text-muted)]">
-            Evidence dossiers evaluated
-          </span>
-        </div>
-
-        <div className="p-4 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs space-y-1">
-          <span className="text-[11px] font-bold uppercase text-[var(--color-text-muted)] block">
-            Target Disease Models
-          </span>
-          <div className="text-2xl font-extrabold text-[#0A2540] dark:text-[#F1F5F9]">
-            {diseases.length}
-          </div>
-          <span className="text-[11px] text-[var(--color-text-muted)]">
-            Curated in reference catalog
-          </span>
         </div>
       </div>
 
-      {/* ── Main Workspace Grid (7 cols + 5 cols) ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Target Profiles & Disease Models (7 cols) */}
-        <div className="lg:col-span-7 space-y-6">
-          <div className="p-5 sm:p-6 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs space-y-4">
+      {/* ── Demo-Style 4 Stats Grid ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Total Research Runs */}
+        <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded-lg">
+              <Microscope className="h-5 w-5 text-teal-600 dark:text-teal-400" />
+            </div>
+            <span className="text-xs text-teal-600 dark:text-teal-400 font-medium">Inquiries</span>
+          </div>
+          <h3 className="font-medium text-gray-600 dark:text-gray-400 mb-1">Research Runs</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{savedRuns.length}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Saved user inquiries</p>
+        </div>
+
+        {/* Completed Analyses */}
+        <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            </div>
+            <span className="text-xs text-blue-600 dark:text-blue-400 font-medium">Verified</span>
+          </div>
+          <h3 className="font-medium text-gray-600 dark:text-gray-400 mb-1">Completed Analyses</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{completedCount}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Evidence dossiers evaluated</p>
+        </div>
+
+        {/* Disease Models */}
+        <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+              <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+            </div>
+            <span className="text-xs text-purple-600 dark:text-purple-400 font-medium">Profiles</span>
+          </div>
+          <h3 className="font-medium text-gray-600 dark:text-gray-400 mb-1">Target Models</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{diseases.length}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Curated reference models</p>
+        </div>
+
+        {/* Small Molecule Candidates */}
+        <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+              <Share2 className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+            </div>
+            <span className="text-xs text-orange-600 dark:text-orange-400 font-medium">Screened</span>
+          </div>
+          <h3 className="font-medium text-gray-600 dark:text-gray-400 mb-1">Drug Candidates</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            {diseases.reduce((acc, d) => acc + (d.candidate_count || 3), 0)}
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Potential indications</p>
+        </div>
+      </div>
+
+      {/* ── Main Content Grid (2-to-1 demo split) ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        {/* Left Column (2 cols): Search & Target Profiles */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Quick Investigation Box */}
+          <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm space-y-4">
+            <div>
+              <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">
+                Investigate Pathology or Compound
+              </h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                Enter a target disease or drug name to screen repurposing mechanisms.
+              </p>
+            </div>
+            <form onSubmit={handleQuickSubmit} className="flex gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                <input
+                  type="text"
+                  value={quickQuery}
+                  onChange={(e) => setQuickQuery(e.target.value)}
+                  placeholder="e.g. Type 2 Diabetes, Metformin, Alzheimer's..."
+                  className="w-full pl-10 pr-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={!quickQuery.trim()}
+                className="px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-white bg-teal-600 hover:bg-teal-700 disabled:opacity-50 transition-colors cursor-pointer shrink-0 shadow-sm flex items-center gap-1.5"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Search</span>
+              </button>
+            </form>
+            {exampleQueries.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                <span className="text-[11px] font-medium text-gray-400">Suggestions:</span>
+                {exampleQueries.map((ex) => (
+                  <button
+                    key={ex}
+                    type="button"
+                    onClick={() => navigate('/researcher/drug-repurposing', { state: { prefilledQuery: ex } })}
+                    className="px-2.5 py-1 text-xs rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-900/30 text-gray-600 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-300 border border-gray-200 dark:border-gray-700 transition-colors cursor-pointer"
+                  >
+                    + {ex}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Curated Target Profiles */}
+          <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-base font-bold text-[#0A2540] dark:text-[#F1F5F9]">
+                <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">
                   Curated Target Profiles
                 </h2>
-                <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                   Select a disease model to inspect biological targets and small molecule candidates.
                 </p>
               </div>
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-lg bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD] dark:bg-[#0369A1]/20 dark:text-[#38BDF8]">
+              <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-teal-50 text-teal-700 border border-teal-200 dark:bg-teal-950/40 dark:text-teal-300 dark:border-teal-800">
                 {diseases.length} Available
               </span>
             </div>
@@ -293,38 +308,38 @@ export const ResearcherDashboard = () => {
           </div>
         </div>
 
-        {/* Right Column: Recent Research & Tools (5 cols) */}
-        <div className="lg:col-span-5 space-y-6">
+        {/* Right Column: Recent Research & Tools */}
+        <div className="space-y-6">
           {/* Recent Research Runs Card */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs space-y-4">
+          <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[#0284C7] dark:text-[#38BDF8]" />
-                <h3 className="text-base font-bold text-[#0A2540] dark:text-[#F1F5F9]">
+                <Clock className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                <h3 className="text-base font-bold text-gray-900 dark:text-gray-100">
                   Recent Research
                 </h3>
               </div>
               {savedRuns.length > 0 && (
-                <span className="text-xs text-[var(--color-text-muted)]">
+                <span className="text-xs text-gray-400">
                   {savedRuns.length} run{savedRuns.length !== 1 ? 's' : ''}
                 </span>
               )}
             </div>
 
             {savedRuns.length > 0 ? (
-              <div className="divide-y divide-[var(--color-border-subtle)]">
+              <div className="divide-y divide-gray-100 dark:divide-gray-800">
                 {savedRuns.slice(0, 5).map((item) => (
                   <div key={item.id} className="py-3 flex items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <span className="text-xs font-bold text-[var(--color-text-primary)] truncate block">
+                      <span className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate block">
                         {item.query}
                       </span>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[11px] text-[var(--color-text-muted)]">
+                        <span className="text-[11px] text-gray-500">
                           {item.top_candidate ? `Top: ${item.top_candidate}` : 'Evaluated'}
                         </span>
-                        <span className="text-[10px] text-[var(--color-text-muted)]">·</span>
-                        <span className="text-[11px] text-[var(--color-text-muted)]">
+                        <span className="text-[10px] text-gray-400">·</span>
+                        <span className="text-[11px] text-gray-400">
                           {new Date(item.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                         </span>
                       </div>
@@ -332,7 +347,7 @@ export const ResearcherDashboard = () => {
                     <button
                       type="button"
                       onClick={() => navigate('/researcher/drug-repurposing', { state: { prefilledQuery: item.query } })}
-                      className="text-xs font-bold text-[#0284C7] dark:text-[#38BDF8] hover:underline shrink-0 cursor-pointer"
+                      className="text-xs font-medium text-teal-600 dark:text-teal-400 hover:underline shrink-0 cursor-pointer"
                     >
                       Re-open
                     </button>
@@ -342,21 +357,21 @@ export const ResearcherDashboard = () => {
             ) : (
               /* Clean Honest Empty State */
               <div className="py-8 text-center space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[var(--color-surface-sunken)] text-[var(--color-text-muted)] flex items-center justify-center mx-auto">
+                <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-800 text-gray-400 flex items-center justify-center mx-auto">
                   <Microscope className="w-5 h-5" />
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-xs font-bold text-[var(--color-text-primary)]">
+                  <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100">
                     No research yet
                   </h4>
-                  <p className="text-xs text-[var(--color-text-muted)] max-w-xs mx-auto">
+                  <p className="text-xs text-gray-500 max-w-xs mx-auto">
                     Start your first query to see results here.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => navigate('/researcher/drug-repurposing')}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium text-white bg-teal-600 hover:bg-teal-700 transition-colors cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Start Research</span>
@@ -366,26 +381,26 @@ export const ResearcherDashboard = () => {
           </div>
 
           {/* Supporting Evidence Exploration Tools */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs space-y-3">
-            <h3 className="text-sm font-bold text-[#0A2540] dark:text-[#F1F5F9]">
+          <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm space-y-3">
+            <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100">
               Biomedical Intelligence Tools
             </h3>
-            <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
+            <p className="text-xs text-gray-500 leading-relaxed">
               Explore evidence references and network relationships across biological pathways.
             </p>
             <div className="grid grid-cols-2 gap-2 pt-1">
               <Link
                 to="/evidence"
-                className="p-3 rounded-xl bg-[var(--color-surface-sunken)] hover:bg-[#EFF6FF] dark:hover:bg-[#0284C7]/20 hover:text-[#0369A1] dark:hover:text-[#38BDF8] border border-[var(--color-border-subtle)] transition-all text-xs font-semibold text-[var(--color-text-secondary)] flex items-center gap-2"
+                className="p-3 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-700 dark:hover:text-teal-300 border border-gray-200 dark:border-gray-700 transition-all text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
               >
-                <BookOpen className="w-4 h-4 text-[#0284C7] dark:text-[#38BDF8]" />
+                <BookOpen className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                 <span>Evidence</span>
               </Link>
               <Link
                 to="/knowledge-graph"
-                className="p-3 rounded-xl bg-[var(--color-surface-sunken)] hover:bg-[#EFF6FF] dark:hover:bg-[#0284C7]/20 hover:text-[#0369A1] dark:hover:text-[#38BDF8] border border-[var(--color-border-subtle)] transition-all text-xs font-semibold text-[var(--color-text-secondary)] flex items-center gap-2"
+                className="p-3 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-700 dark:hover:text-teal-300 border border-gray-200 dark:border-gray-700 transition-all text-xs font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
               >
-                <Share2 className="w-4 h-4 text-[#0284C7] dark:text-[#38BDF8]" />
+                <Share2 className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                 <span>Graph Network</span>
               </Link>
             </div>

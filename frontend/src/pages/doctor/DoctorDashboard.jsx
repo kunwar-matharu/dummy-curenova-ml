@@ -193,71 +193,55 @@ export const DoctorDashboard = () => {
   }, [enabledMeds, patientEgfr, patientAge]);
 
   return (
-    <div className="space-y-6 w-full pb-8">
-      {/* ── Top Header ── */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-4 border-b border-[var(--color-border-subtle)]">
+    <div className="space-y-8 w-full text-left">
+      {/* ── Header ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-text-primary)]">
-              Clinical Command Center
-            </h1>
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Live Clinical Engine
-            </span>
-          </div>
-          <p className="text-xs sm:text-sm text-[var(--color-text-muted)] mt-1">
-            Logged in as <strong>{user?.name || 'Dr. Sarah Lin'}</strong> • Clinical decision-support protocol active.
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Clinical Dashboard</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            Real-time multi-drug interaction screening & patient digital twin
           </p>
         </div>
-
-        {/* Live Regimen Counter */}
-        <div className="flex items-center gap-3 bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] px-3.5 py-2 rounded-2xl shadow-2xs">
-          <Pill className="w-4 h-4 text-[#0284C7]" />
-          <div>
-            <span className="text-[10px] font-mono uppercase font-bold text-[var(--color-text-muted)] block leading-none">
-              Active Regimen
-            </span>
-            <span className="text-xs font-bold text-[var(--color-text-primary)]">
-              {enabledMeds.length} Medication{enabledMeds.length !== 1 ? 's' : ''} Loaded
-            </span>
-          </div>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => navigate('/doctor/medication-safety')}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm shadow-sm transition-colors cursor-pointer"
+          >
+            <Plus className="h-4 w-4" />
+            <span>New Safety Run</span>
+          </button>
         </div>
       </div>
 
-      {/* ── Live Vitals Gauges ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+      {/* ── Demo-Style 4 Stats Grid ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Safety Score Meter */}
-        <div className="p-4 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs flex flex-col justify-between space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-bold uppercase text-[var(--color-text-muted)] flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#0284C7]" />
-              Safety Index
-            </span>
-            <span className={`text-[9px] font-bold font-mono px-2 py-0.5 rounded-full ${
+        <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <ShieldCheck className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            </div>
+            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
               vitals.riskColor === 'rose'
                 ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300'
                 : vitals.riskColor === 'amber'
                 ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
                 : vitals.riskColor === 'emerald'
                 ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
-                : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'
             }`}>
               {vitals.riskStatus}
             </span>
           </div>
-          <div className="flex items-baseline justify-between">
-            <span className="text-3xl font-black tabular-nums text-[var(--color-text-primary)]">
-              {vitals.score !== null ? vitals.score : '--'}
-              <span className="text-xs text-[var(--color-text-muted)] font-mono font-normal">/100</span>
-            </span>
-            <svg className="w-14 h-6 text-[#0284C7] opacity-80" viewBox="0 0 100 30" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M0,15 L20,15 L28,5 L38,25 L46,8 L54,18 L62,15 L100,15" />
-            </svg>
-          </div>
-          <div className="w-full h-1.5 rounded-full bg-[var(--color-surface-sunken)] overflow-hidden">
+          <h3 className="font-medium text-gray-600 dark:text-gray-400 mb-1">Safety Index</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            {vitals.score !== null ? vitals.score : '--'}
+            <span className="text-sm font-normal text-gray-500"> /100</span>
+          </p>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-3 overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-full transition-all duration-300 ${
                 vitals.riskColor === 'rose' ? 'bg-rose-500' : vitals.riskColor === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'
               }`}
               style={{ width: `${vitals.score ?? 0}%` }}
@@ -266,115 +250,93 @@ export const DoctorDashboard = () => {
         </div>
 
         {/* Kidney eGFR Capacity */}
-        <div className="p-4 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs flex flex-col justify-between space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-bold uppercase text-[var(--color-text-muted)] flex items-center gap-1">
-              <HeartPulse className="w-3.5 h-3.5 text-sky-600" />
-              Renal (eGFR)
-            </span>
-            <span className="text-[10px] font-mono font-bold text-sky-700 dark:text-sky-300">
+        <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-sky-50 dark:bg-sky-900/20 rounded-lg">
+              <HeartPulse className="h-5 w-5 text-sky-600 dark:text-sky-400" />
+            </div>
+            <span className="text-xs font-mono font-medium text-sky-600 dark:text-sky-400">
               {patientEgfr} mL/min
             </span>
           </div>
-          <div>
-            <span className="text-2xl font-black text-[var(--color-text-primary)] tabular-nums">
-              {vitals.renalCapacity}%
-            </span>
-            <span className="text-[10px] text-[var(--color-text-muted)] block">
-              {patientEgfr < 60 ? 'Clearance Reduction' : 'Normal Glomerular Flow'}
-            </span>
-          </div>
-          <div className="w-full h-1.5 rounded-full bg-[var(--color-surface-sunken)] overflow-hidden">
-            <div className="h-full rounded-full bg-sky-500 transition-all duration-300" style={{ width: `${vitals.renalCapacity}%` }} />
+          <h3 className="font-medium text-gray-600 dark:text-gray-400 mb-1">Renal Capacity</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{vitals.renalCapacity}%</p>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-3 overflow-hidden">
+            <div className="bg-sky-500 h-2 rounded-full transition-all duration-300" style={{ width: `${vitals.renalCapacity}%` }} />
           </div>
         </div>
 
         {/* Liver CYP450 Capacity */}
-        <div className="p-4 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs flex flex-col justify-between space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-bold uppercase text-[var(--color-text-muted)] flex items-center gap-1">
-              <Activity className="w-3.5 h-3.5 text-[#0284C7]" />
-              Hepatic CYP
-            </span>
-            <span className="text-[10px] font-mono font-bold text-[#0369A1] dark:text-[#38BDF8]">
+        <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+              <Activity className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <span className="text-xs font-mono font-medium text-emerald-600 dark:text-emerald-400">
               CYP3A4 / 2D6
             </span>
           </div>
-          <div>
-            <span className="text-2xl font-black text-[var(--color-text-primary)] tabular-nums">
-              {vitals.hepaticCapacity}%
-            </span>
-            <span className="text-[10px] text-[var(--color-text-muted)] block">
-              Isoform Clearance Margin
-            </span>
-          </div>
-          <div className="w-full h-1.5 rounded-full bg-[var(--color-surface-sunken)] overflow-hidden">
-            <div className="h-full rounded-full bg-[#0284C7] transition-all duration-300" style={{ width: `${vitals.hepaticCapacity}%` }} />
+          <h3 className="font-medium text-gray-600 dark:text-gray-400 mb-1">Hepatic CYP</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{vitals.hepaticCapacity}%</p>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-3 overflow-hidden">
+            <div className="bg-emerald-500 h-2 rounded-full transition-all duration-300" style={{ width: `${vitals.hepaticCapacity}%` }} />
           </div>
         </div>
 
         {/* Cardiac Tolerance */}
-        <div className="p-4 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs flex flex-col justify-between space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-bold uppercase text-[var(--color-text-muted)] flex items-center gap-1">
-              <Zap className="w-3.5 h-3.5 text-purple-600" />
-              Cardiac Margin
-            </span>
-            <span className="text-[10px] font-mono font-bold text-purple-700 dark:text-purple-300">
-              QT Interval
-            </span>
-          </div>
-          <div>
-            <span className="text-2xl font-black text-[var(--color-text-primary)] tabular-nums">
-              {vitals.cardiacTolerance}%
-            </span>
-            <span className="text-[10px] text-[var(--color-text-muted)] block">
-              Repolarization Buffer
+        <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+              <Zap className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+            </div>
+            <span className="text-xs font-mono font-medium text-purple-600 dark:text-purple-400">
+              QT Margin
             </span>
           </div>
-          <div className="w-full h-1.5 rounded-full bg-[var(--color-surface-sunken)] overflow-hidden">
-            <div className="h-full rounded-full bg-purple-500 transition-all duration-300" style={{ width: `${vitals.cardiacTolerance}%` }} />
+          <h3 className="font-medium text-gray-600 dark:text-gray-400 mb-1">Cardiac Tolerance</h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{vitals.cardiacTolerance}%</p>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-3 overflow-hidden">
+            <div className="bg-purple-500 h-2 rounded-full transition-all duration-300" style={{ width: `${vitals.cardiacTolerance}%` }} />
           </div>
         </div>
       </div>
 
-      {/* ── Main Layout (7 cols + 5 cols) ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
-        {/* Left Column: Interactive Digital Twin Sandbox & 2D Matrix Grid */}
-        <div className="lg:col-span-7 space-y-6">
+      {/* ── Main Content Grid (2-to-1 demo split) ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        {/* Left Column (2 cols): Medication List & Matrix Grid */}
+        <div className="lg:col-span-2 space-y-6">
           
           {/* Patient Medication List with Clinical Highlighting */}
-          <div className="p-5 sm:p-6 rounded-3xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs space-y-4">
+          <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-base font-bold text-[var(--color-text-primary)]">
+                <h2 className="text-base font-bold text-gray-900 dark:text-gray-100">
                   Patient Medication List
                 </h2>
-                <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                   Add current patient medicines or select from common prescriptions below to review safety and warnings.
                 </p>
               </div>
-              <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-lg bg-[#E0F2FE] dark:bg-[#0369A1]/20 text-[#0369A1] dark:text-[#38BDF8] border border-[#BAE6FD] dark:border-[#0284C7]/40">
-                {enabledMeds.length} Selected for Safety Check
+              <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                {enabledMeds.length} Selected
               </span>
             </div>
 
             {/* Input Form with Medication Catalog Search */}
             <form onSubmit={(e) => { e.preventDefault(); handleAddDrug(); }} className="flex gap-2">
               <div className="relative flex-1">
-                <Pill className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)]" />
+                <Pill className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
                   type="text"
                   value={newDrugInput}
                   onChange={(e) => setNewDrugInput(e.target.value)}
                   placeholder="Type or select a medication to add..."
-                  className="w-full pl-10 pr-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface-sunken)] text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[#0284C7] transition-all"
+                  className="w-full pl-10 pr-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                 />
               </div>
               <button
                 type="submit"
-                className="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-[#0284C7] hover:bg-[#0369A1] transition-colors cursor-pointer flex items-center gap-1 shrink-0 shadow-2xs"
+                className="px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors cursor-pointer flex items-center gap-1 shrink-0 shadow-sm"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add</span>
@@ -383,7 +345,7 @@ export const DoctorDashboard = () => {
 
             {/* Quick Catalog Drug Pills (Tap to add) */}
             <div className="space-y-1.5">
-              <span className="text-[10px] font-mono font-bold uppercase text-[var(--color-text-muted)]">
+              <span className="text-[11px] font-medium text-gray-400">
                 Common Clinical Medications (Tap to add):
               </span>
               <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
@@ -392,7 +354,7 @@ export const DoctorDashboard = () => {
                     key={c.id}
                     type="button"
                     onClick={() => handleAddDrug(c.canonical_name)}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-[var(--color-surface-sunken)] hover:bg-[var(--color-surface-hover)] border border-[var(--color-border-subtle)] hover:border-[#0284C7] dark:hover:border-[#38BDF8] text-[var(--color-text-secondary)] dark:text-[#E2E8F0] hover:text-[#0284C7] dark:hover:text-[#38BDF8] transition-colors cursor-pointer"
+                    className="text-xs px-2.5 py-1 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-gray-200 dark:border-gray-700 hover:border-blue-400 text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-300 transition-colors cursor-pointer"
                   >
                     + {c.canonical_name}
                   </button>
@@ -573,10 +535,10 @@ export const DoctorDashboard = () => {
         </div>
 
         {/* Right Column: Interactive Sliders & Organ Systems */}
-        <div className="lg:col-span-5 space-y-6">
+        <div className="space-y-6">
           
           {/* Patient Physiology Sliders */}
-          <div className="p-5 rounded-3xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs space-y-4">
+          <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-[#0284C7]" />
@@ -727,11 +689,11 @@ export const DoctorDashboard = () => {
 
       {/* ── Recent Safety Checks History ── */}
       {recentChecks.length > 0 && (
-        <div className="p-6 rounded-3xl bg-[var(--color-surface-card)] border border-[var(--color-border-subtle)] shadow-xs space-y-4">
+        <div className="p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-[#0284C7]" />
-              <h3 className="text-base font-bold text-[var(--color-text-primary)]">
+              <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              <h3 className="text-base font-bold text-gray-900 dark:text-gray-100">
                 Recent Patient Medication Safety Checks
               </h3>
             </div>

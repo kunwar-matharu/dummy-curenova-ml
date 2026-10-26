@@ -38,7 +38,7 @@ export const DoctorResults = () => {
     return (
       <div className="max-w-2xl mx-auto py-12 px-4">
         <Card className="p-8 border border-[var(--color-border-subtle)] bg-[var(--color-surface-card)] text-center space-y-6">
-          <div className="w-16 h-16 rounded-2xl bg-[#0284C7]/10 border border-[#0284C7]/20 text-[#0284C7] flex items-center justify-center mx-auto">
+          <div className="w-16 h-16 rounded-2xl bg-[var(--color-brand-surface)] border border-[var(--color-brand-border)] text-[var(--color-brand-primary)] flex items-center justify-center mx-auto">
             <Stethoscope className="w-8 h-8" />
           </div>
           <div className="space-y-2">

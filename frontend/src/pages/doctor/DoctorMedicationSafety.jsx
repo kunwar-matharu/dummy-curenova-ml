@@ -581,7 +581,7 @@ export const DoctorMedicationSafety = () => {
                     ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-200'
                     : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-200'
                 }`}>
-                  {twinResult.delta_score ?? -24 > 0 ? `+${twinResult.delta_score}` : `${twinResult.delta_score ?? -24}`}% Hazard Delta
+                  {(twinResult.delta_score ?? -24) > 0 ? `+${twinResult.delta_score}` : `${twinResult.delta_score ?? -24}`}% Hazard Delta
                 </div>
               </div>
 
