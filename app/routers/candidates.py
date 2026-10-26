@@ -48,6 +48,7 @@ def get_candidates(
     return query.all()
 
 @router.post("/investigate", response_model=AgentWorkflowResponse)
+@router.get("/investigate", response_model=AgentWorkflowResponse)
 async def investigate_query(
     query: str = Query(..., min_length=2, max_length=150, description="Disease or Drug to investigate"),
     db: Session = Depends(get_db),

@@ -39,6 +39,52 @@ def sanitize_and_deidentify(text: str) -> str:
     return sanitized.strip()
 
 
+def extract_json_from_llm_text(text: str) -> Any:
+    """
+    Safely extracts and parses JSON payload from LLM responses.
+    Handles raw JSON, markdown-wrapped blocks (```json ... ```),
+    and outer-bracketed dictionaries.
+    """
+    if not text:
+        raise LLMServiceError("Empty response content from LLM provider.")
+
+    clean = text.strip()
+    try:
+        return json.loads(clean)
+    except json.JSONDecodeError:
+        pass
+
+    # Handle markdown code block fences
+    if "```" in clean:
+        lines = clean.splitlines()
+        extracted = []
+        inside_fence = False
+        for line in lines:
+            stripped_line = line.strip()
+            if stripped_line.startswith("```"):
+                inside_fence = not inside_fence
+                continue
+            if inside_fence:
+                extracted.append(line)
+        if extracted:
+            try:
+                return json.loads("\n".join(extracted).strip())
+            except json.JSONDecodeError:
+                pass
+
+    # Extract outermost JSON object matching { ... }
+    first_brace = clean.find("{")
+    last_brace = clean.rfind("}")
+    if first_brace != -1 and last_brace != -1 and last_brace > first_brace:
+        candidate = clean[first_brace:last_brace + 1]
+        try:
+            return json.loads(candidate)
+        except json.JSONDecodeError:
+            pass
+
+    raise LLMServiceError(f"Malformed JSON from LLM: unable to parse valid JSON from content: {clean[:200]}")
+
+
 class LLMServiceError(Exception):
     """Base exception for LLM provider errors."""
     pass
@@ -125,10 +171,7 @@ class OpenAILLMClient(BaseLLMClient):
                         )
 
                         if response_json:
-                            try:
-                                return json.loads(message_content)
-                            except json.JSONDecodeError as jde:
-                                raise LLMServiceError(f"Malformed JSON from LLM: {str(jde)}") from jde
+                            return extract_json_from_llm_text(message_content)
                         return {"content": message_content}
 
                     elif resp.status_code in (429, 500, 502, 503, 504):
@@ -209,3 +252,68 @@ def get_llm_client() -> Optional[BaseLLMClient]:
     else:
         logger.warning("Unrecognized LLM_PROVIDER '%s'; falling back to deterministic.", provider)
         return None
+
+
+async def verify_gemini_connectivity() -> Dict[str, Any]:
+    """
+    Minimal, non-sensitive provider verification smoke test.
+    Attempts a minimal test prompt to the configured Gemini endpoint.
+    Guarantees no API keys or secrets are ever exposed in return values or logs.
+    """
+    client = get_llm_client()
+    if not client:
+        api_key = (settings.LLM_API_KEY or "").strip()
+        if not settings.LLM_BACKEND_ENABLED:
+            return {
+                "status": "pending_unverified",
+                "verified": False,
+                "reason": "LLM_BACKEND_ENABLED is false; running in deterministic fallback mode",
+                "model": settings.LLM_MODEL,
+                "provider": settings.LLM_PROVIDER
+            }
+        if not api_key or api_key in PLACEHOLDER_KEYS:
+            return {
+                "status": "pending_unverified",
+                "verified": False,
+                "reason": "No valid LLM_API_KEY configured in environment (.env is absent or key is placeholder)",
+                "model": settings.LLM_MODEL,
+                "provider": settings.LLM_PROVIDER
+            }
+        return {
+            "status": "pending_unverified",
+            "verified": False,
+            "reason": f"Provider '{settings.LLM_PROVIDER}' could not be initialized",
+            "model": settings.LLM_MODEL,
+            "provider": settings.LLM_PROVIDER
+        }
+
+    try:
+        res = await client.chat_completion(
+            system_prompt="You are CureNova health check probe. Return JSON: {\"status\": \"ok\"}.",
+            user_prompt="ping",
+            max_tokens=30,
+            response_json=True
+        )
+        return {
+            "status": "live_verified",
+            "verified": True,
+            "model": settings.LLM_MODEL,
+            "provider": settings.LLM_PROVIDER,
+            "response": res
+        }
+    except LLMServiceError as lse:
+        return {
+            "status": "failed",
+            "verified": False,
+            "model": settings.LLM_MODEL,
+            "provider": settings.LLM_PROVIDER,
+            "error": str(lse)
+        }
+    except Exception as e:
+        return {
+            "status": "failed",
+            "verified": False,
+            "model": settings.LLM_MODEL,
+            "provider": settings.LLM_PROVIDER,
+            "error": f"Unexpected error during live verification: {type(e).__name__}"
+        }

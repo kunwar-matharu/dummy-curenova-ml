@@ -53,12 +53,15 @@ class Settings(BaseModel):
     OPENFDA_API_KEY: str | None = os.getenv("OPENFDA_API_KEY", None)
 
     # LLM Provider Configuration
-    LLM_BACKEND_ENABLED: bool = os.getenv("LLM_BACKEND_ENABLED", "false").lower() in ("true", "1")
+    LLM_API_KEY: str | None = os.getenv("LLM_API_KEY") or os.getenv("GEMINI_API_KEY") or None
+    LLM_BACKEND_ENABLED: bool = os.getenv(
+        "LLM_BACKEND_ENABLED",
+        "true" if (os.getenv("LLM_API_KEY") or os.getenv("GEMINI_API_KEY")) else "false"
+    ).lower() in ("true", "1")
     LLM_PROVIDER: str = os.getenv("LLM_PROVIDER", "openai").lower()
-    LLM_BASE_URL: str = os.getenv("LLM_BASE_URL", "https://api.openai.com/v1")
-    LLM_MODEL: str = os.getenv("LLM_MODEL", "gpt-4o-mini")
-    LLM_API_KEY: str | None = os.getenv("LLM_API_KEY", None)
-    LLM_TIMEOUT_SECONDS: float = float(os.getenv("LLM_TIMEOUT_SECONDS", "15.0"))
+    LLM_BASE_URL: str = os.getenv("LLM_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/")
+    LLM_MODEL: str = os.getenv("LLM_MODEL", "gemini-2.5-flash")
+    LLM_TIMEOUT_SECONDS: float = float(os.getenv("LLM_TIMEOUT_SECONDS", "30.0"))
     PROMPT_VERSION: str = os.getenv("PROMPT_VERSION", "v2.5.0")
 
     # CORS Configuration

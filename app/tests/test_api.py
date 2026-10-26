@@ -1691,3 +1691,145 @@ def test_pending_researcher_swagger_workflow():
     allowed_res = client.post("/api/candidates/investigate?query=Imatinib", headers=swagger_headers)
     assert allowed_res.status_code == 200
     assert allowed_res.json()["query_entity"] != ""
+
+
+def test_liveness_and_readiness_probes():
+    """Verifies that liveness and readiness probes respond accurately without requiring external network calls."""
+    # 1. Root liveness probe
+    live_res = client.get("/health")
+    assert live_res.status_code == 200
+    live_data = live_res.json()
+    assert live_data["status"] == "healthy"
+    assert "timestamp" in live_data
+    assert "version" in live_data
+
+    # 2. System router liveness probe
+    sys_live_res = client.get("/api/system/health")
+    assert sys_live_res.status_code == 200
+    assert sys_live_res.json()["status"] == "healthy"
+
+    # 3. Root readiness probe
+    ready_res = client.get("/ready")
+    assert ready_res.status_code == 200
+    ready_data = ready_res.json()
+    assert ready_data["status"] == "ready"
+    assert ready_data["database"]["status"] == "connected"
+    assert "llm_service" in ready_data
+    assert ready_data["llm_service"]["live_inference_tested"] is False
+
+    # 4. System router readiness probe
+    sys_ready_res = client.get("/api/system/ready")
+    assert sys_ready_res.status_code == 200
+    assert sys_ready_res.json()["status"] == "ready"
+
+
+def test_llm_json_extraction_resilience():
+    """Verifies that extract_json_from_llm_text handles raw, markdown-fenced, and preamble-wrapped JSON."""
+    from app.services.llm_service import extract_json_from_llm_text, LLMServiceError
+
+    # 1. Standard raw JSON
+    raw_json = '{"drug": "Imatinib", "score": 0.95}'
+    assert extract_json_from_llm_text(raw_json) == {"drug": "Imatinib", "score": 0.95}
+
+    # 2. Markdown fenced with ```json
+    fenced_json = '```json\n{"proposed_mechanism": "BCR-ABL inhibition", "is_established": true}\n```'
+    parsed = extract_json_from_llm_text(fenced_json)
+    assert parsed["proposed_mechanism"] == "BCR-ABL inhibition"
+    assert parsed["is_established"] is True
+
+    # 3. Markdown fenced without language tag
+    fenced_plain = '```\n{"safety_concerns": ["Thrombocytopenia"]}\n```'
+    assert extract_json_from_llm_text(fenced_plain) == {"safety_concerns": ["Thrombocytopenia"]}
+
+    # 4. Conversational preamble and postamble surrounding JSON
+    wrapped_json = 'Here is the requested analysis:\n{"result": "viable", "epistemic": 0.12}\nPlease review carefully.'
+    assert extract_json_from_llm_text(wrapped_json) == {"result": "viable", "epistemic": 0.12}
+
+    # 5. Invalid text raises LLMServiceError
+    with pytest.raises(LLMServiceError, match="Malformed JSON from LLM"):
+        extract_json_from_llm_text("This text contains no json brackets at all.")
+
+
+def test_verify_gemini_connectivity_smoke_test():
+    """Verifies the Gemini smoke test utility reports pending when key is unconfigured."""
+    import asyncio
+    from app.services.llm_service import verify_gemini_connectivity
+    from app.config import settings
+
+    # Run when no key is set (the current environment state)
+    orig_key = settings.LLM_API_KEY
+    orig_enabled = settings.LLM_BACKEND_ENABLED
+    try:
+        settings.LLM_BACKEND_ENABLED = True
+        settings.LLM_API_KEY = "your_llm_api_key_here"
+
+        res = asyncio.run(verify_gemini_connectivity())
+        assert res["verified"] is False
+        assert res["status"] == "pending_unverified"
+        assert "No valid LLM_API_KEY" in res["reason"]
+        assert res["model"] == settings.LLM_MODEL
+    finally:
+        settings.LLM_API_KEY = orig_key
+        settings.LLM_BACKEND_ENABLED = orig_enabled
+
+
+def test_investigate_get_and_post_methods_and_aliases():
+    """
+    Verifies that investigation is supported across both GET and POST,
+    and root-level convenience aliases (/me, /investigate) function with strict authorization.
+    """
+    researcher_headers = get_auth_headers("dr.elena.vance@curenova-research.org")
+
+    # Sign up a pending researcher for this test
+    client.post("/api/auth/signup", json={
+        "email": "pending.alias.test@curenova.org",
+        "full_name": "Dr. Pending Test",
+        "password": "CureNova2026!Secure",
+        "role": "researcher"
+    })
+    p_login = client.post("/api/auth/login", json={
+        "email": "pending.alias.test@curenova.org",
+        "password": "CureNova2026!Secure"
+    })
+    pending_headers = {"Authorization": f"Bearer {p_login.json()['access_token']}"}
+
+    # 1. GET on /api/candidates/investigate
+    r_get = client.get("/api/candidates/investigate?query=Imatinib", headers=researcher_headers)
+    assert r_get.status_code == 200
+    assert "workflow_id" in r_get.json()
+
+    # 2. GET on /api/candidates/investigate for pending researcher must be 403
+    r_get_pending = client.get("/api/candidates/investigate?query=Imatinib", headers=pending_headers)
+    assert r_get_pending.status_code == 403
+    assert "Approval required" in r_get_pending.json()["detail"]
+
+    # 3. Direct root aliases
+    r_me = client.get("/me", headers=researcher_headers)
+    assert r_me.status_code == 200
+    assert r_me.json()["email"] == "dr.elena.vance@curenova-research.org"
+
+    r_inv_alias = client.get("/investigate?query=Imatinib", headers=researcher_headers)
+    assert r_inv_alias.status_code == 200
+    assert "workflow_id" in r_inv_alias.json()
+
+
+def test_layman_plain_language_explanation_and_dossier_reports():
+    """Verifies plain language explanation service and markdown dossier generation."""
+    researcher_headers = get_auth_headers("dr.elena.vance@curenova-research.org")
+
+    # 1. Patient Plain Language Explanation
+    explain_payload = {
+        "study_title": "Phase 3 Randomized Evaluation of Kinase Inhibitor in Solid Tumors",
+        "abstract_text": "We conducted a phase 3 randomized controlled trial evaluating progression-free survival."
+    }
+    r_exp = client.post("/api/patient/explain-research", json=explain_payload)
+    assert r_exp.status_code == 200
+    exp_data = r_exp.json()
+    assert "Human Clinical Trial" in exp_data["study_model"]
+    assert "DO NOT start, stop, or change any medication" in exp_data["disclaimer"]
+
+    # 2. Markdown Dossier Report Export
+    r_rep = client.get("/api/reports/candidate/1/markdown", headers=researcher_headers)
+    assert r_rep.status_code == 200
+    assert "CURENOVA 2.0" in r_rep.text
+    assert "BIOLOGICAL MECHANISM OF ACTION" in r_rep.text

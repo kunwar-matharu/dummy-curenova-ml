@@ -1,7 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
 from .config import settings
-from .database import engine, Base, SessionLocal
+from .database import engine, Base, SessionLocal, get_db
 from .services.seed_data import seed_database
 from .routers import (
     auth, candidates, stress_tests, graph,
@@ -58,3 +59,32 @@ def root():
         "api_status": "healthy",
         "demo_mode": settings.DEMO_MODE
     }
+
+@app.get("/health")
+def liveness_probe():
+    """Root liveness probe conforming to standard container health checks."""
+    return system.get_system_health()
+
+@app.get("/ready")
+def readiness_probe(db: Session = Depends(get_db)):
+    """Root readiness probe confirming DB and configuration readiness."""
+    return system.get_system_readiness(db)
+
+# Convenience aliases for root-level and un-prefixed client requests
+@app.get("/me", tags=["Authentication & Roles"])
+@app.get("/api/me", tags=["Authentication & Roles"])
+def direct_me(current_user=Depends(auth.get_current_active_user)):
+    """Direct alias for /api/auth/me."""
+    return auth.get_current_user_profile(current_user)
+
+@app.post("/investigate", tags=["Candidate Hypotheses"])
+@app.get("/investigate", tags=["Candidate Hypotheses"])
+@app.post("/api/investigate", tags=["Candidate Hypotheses"])
+@app.get("/api/investigate", tags=["Candidate Hypotheses"])
+async def direct_investigate(
+    query: str,
+    db: Session = Depends(get_db),
+    current_user=Depends(candidates.require_researcher)
+):
+    """Direct alias for /api/candidates/investigate."""
+    return await candidates.investigate_query(query=query, db=db, current_user=current_user)
