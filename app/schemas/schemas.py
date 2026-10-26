@@ -88,11 +88,11 @@ class CandidateSummaryOut(BaseModel):
     model_name: str
     model_version: str
     prediction_score: float
-    confidence_interval_low: float
-    confidence_interval_high: float
+    confidence_interval_low: Optional[float] = None
+    confidence_interval_high: Optional[float] = None
     calibration_status: str
-    epistemic_uncertainty: float
-    aleatoric_uncertainty: float
+    epistemic_uncertainty: Optional[float] = None
+    aleatoric_uncertainty: Optional[float] = None
     rank: int
     rationale: Optional[str] = None
     status: str
@@ -100,6 +100,9 @@ class CandidateSummaryOut(BaseModel):
     evidence_count: int
     is_bookmarked: bool
     last_updated: datetime
+    score_type: Optional[str] = "ranking_score"
+    stress_score: Optional[float] = None
+    stress_interpretation: Optional[str] = None
     model_config = ConfigDict(from_attributes=True)
 
 class CandidateDetailOut(CandidateSummaryOut):

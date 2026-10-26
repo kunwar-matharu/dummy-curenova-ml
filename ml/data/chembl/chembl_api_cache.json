@@ -1,0 +1,3182 @@
+{
+  "CHEMBL1079742": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1079742",
+    "drug_name": "ERLOTINIB HYDROCHLORIDE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 91,
+    "usable_activity_count": 11,
+    "target_count": 7,
+    "strong_target_count": 3,
+    "max_pchembl": 8.7,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL203",
+        "target_name": "Epidermal growth factor receptor",
+        "max_pchembl": 8.7,
+        "median_pchembl": 7.82,
+        "activity_count": 4,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL6066739",
+        "target_name": "DiFi",
+        "max_pchembl": 7.7,
+        "median_pchembl": 7.7,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2331061",
+        "target_name": "Serine/threonine-protein kinase B-raf",
+        "max_pchembl": 7.4,
+        "median_pchembl": 7.4,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1824",
+        "target_name": "Receptor tyrosine-protein kinase erbB-2",
+        "max_pchembl": 5.82,
+        "median_pchembl": 5.82,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL395",
+        "target_name": "HepG2",
+        "max_pchembl": 4.85,
+        "median_pchembl": 4.85,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614913",
+        "target_name": "SK-LU-1",
+        "max_pchembl": 4.51,
+        "median_pchembl": 4.51,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL398",
+        "target_name": "KB",
+        "max_pchembl": 4.3,
+        "median_pchembl": 4.3,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1489": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1489",
+    "drug_name": "AZACITIDINE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 738,
+    "usable_activity_count": 41,
+    "target_count": 14,
+    "strong_target_count": 5,
+    "max_pchembl": 6.52,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1993",
+        "target_name": "DNA (cytosine-5)-methyltransferase 1",
+        "max_pchembl": 6.52,
+        "median_pchembl": 6.52,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366181",
+        "target_name": "DOHH-2",
+        "max_pchembl": 6.47,
+        "median_pchembl": 6.47,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL386",
+        "target_name": "L1210",
+        "max_pchembl": 6.39,
+        "median_pchembl": 6.39,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 6.3,
+        "median_pchembl": 4.91,
+        "activity_count": 28,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614515",
+        "target_name": "A-427",
+        "max_pchembl": 6.2,
+        "median_pchembl": 6.2,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL397",
+        "target_name": "Jurkat",
+        "max_pchembl": 5.97,
+        "median_pchembl": 5.97,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL3879801",
+        "target_name": "NON-PROTEIN TARGET",
+        "max_pchembl": 5.8,
+        "median_pchembl": 5.8,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612565",
+        "target_name": "5637",
+        "max_pchembl": 5.76,
+        "median_pchembl": 5.76,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4296507",
+        "target_name": "U2932",
+        "max_pchembl": 5.74,
+        "median_pchembl": 5.74,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4296503",
+        "target_name": "TMD8",
+        "max_pchembl": 5.55,
+        "median_pchembl": 5.55,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL384",
+        "target_name": "HT-29",
+        "max_pchembl": 5.42,
+        "median_pchembl": 5.42,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL389",
+        "target_name": "P388",
+        "max_pchembl": 5.3,
+        "median_pchembl": 5.3,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL387",
+        "target_name": "MCF7",
+        "max_pchembl": 5.17,
+        "median_pchembl": 5.17,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL378",
+        "target_name": "Human immunodeficiency virus 1",
+        "max_pchembl": 4.28,
+        "median_pchembl": 4.28,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3647420": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3647420",
+    "drug_name": "PYROTINIB",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 34,
+    "usable_activity_count": 28,
+    "target_count": 14,
+    "strong_target_count": 10,
+    "max_pchembl": 9.32,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL203",
+        "target_name": "Epidermal growth factor receptor",
+        "max_pchembl": 9.32,
+        "median_pchembl": 7.89,
+        "activity_count": 8,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614197",
+        "target_name": "NCI-N87",
+        "max_pchembl": 9.07,
+        "median_pchembl": 9.07,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1824",
+        "target_name": "Receptor tyrosine-protein kinase erbB-2",
+        "max_pchembl": 8.62,
+        "median_pchembl": 8.18,
+        "activity_count": 7,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614529",
+        "target_name": "BT-474",
+        "max_pchembl": 8.4,
+        "median_pchembl": 8.4,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613834",
+        "target_name": "SK-BR-3",
+        "max_pchembl": 7.85,
+        "median_pchembl": 7.85,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614524",
+        "target_name": "BaF3",
+        "max_pchembl": 7.82,
+        "median_pchembl": 7.82,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5251",
+        "target_name": "Tyrosine-protein kinase BTK",
+        "max_pchembl": 7.5,
+        "median_pchembl": 7.5,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613519",
+        "target_name": "NUGC-4",
+        "max_pchembl": 7.22,
+        "median_pchembl": 7.22,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614335",
+        "target_name": "MDA-MB-468",
+        "max_pchembl": 6.18,
+        "median_pchembl": 6.18,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5058622",
+        "target_name": "ES-2",
+        "max_pchembl": 6.11,
+        "median_pchembl": 6.11,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075502",
+        "target_name": "MFE-280",
+        "max_pchembl": 5.81,
+        "median_pchembl": 5.81,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 5.77,
+        "median_pchembl": 5.77,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1075425",
+        "target_name": "COLO-678",
+        "max_pchembl": 5.74,
+        "median_pchembl": 5.74,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1075542",
+        "target_name": "NCI-H441",
+        "max_pchembl": 5.72,
+        "median_pchembl": 5.72,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3545110": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3545110",
+    "drug_name": "RIBOCICLIB",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 606,
+    "usable_activity_count": 80,
+    "target_count": 34,
+    "strong_target_count": 14,
+    "max_pchembl": 8.7,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL331",
+        "target_name": "Cyclin-dependent kinase 4",
+        "max_pchembl": 8.7,
+        "median_pchembl": 8.0,
+        "activity_count": 11,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2508",
+        "target_name": "Cyclin-dependent kinase 6",
+        "max_pchembl": 8.22,
+        "median_pchembl": 7.41,
+        "activity_count": 12,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1907601",
+        "target_name": "Cyclin-dependent kinase 4/cyclin D1",
+        "max_pchembl": 8.0,
+        "median_pchembl": 7.65,
+        "activity_count": 8,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 8.0,
+        "median_pchembl": 8.0,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3038472",
+        "target_name": "CDK4/Cyclin D3",
+        "max_pchembl": 7.89,
+        "median_pchembl": 7.89,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2111455",
+        "target_name": "CDK6/cyclin D1",
+        "max_pchembl": 7.71,
+        "median_pchembl": 7.71,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2111448",
+        "target_name": "CDK6/cyclin D3",
+        "max_pchembl": 7.55,
+        "median_pchembl": 7.41,
+        "activity_count": 4,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2111389",
+        "target_name": "CDK9/cyclin T1",
+        "max_pchembl": 6.71,
+        "median_pchembl": 6.71,
+        "activity_count": 4,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3829",
+        "target_name": "Calcium/calmodulin-dependent protein kinase type II subunit gamma",
+        "max_pchembl": 6.61,
+        "median_pchembl": 6.61,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL395",
+        "target_name": "HepG2",
+        "max_pchembl": 6.54,
+        "median_pchembl": 6.54,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2801",
+        "target_name": "Calcium/calmodulin-dependent protein kinase type II subunit delta",
+        "max_pchembl": 6.53,
+        "median_pchembl": 6.53,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4296493",
+        "target_name": "SEM",
+        "max_pchembl": 6.34,
+        "median_pchembl": 6.34,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4296456",
+        "target_name": "KOPN-8",
+        "max_pchembl": 6.3,
+        "median_pchembl": 6.3,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4355",
+        "target_name": "Cyclin-G-associated kinase",
+        "max_pchembl": 6.18,
+        "median_pchembl": 6.18,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612255",
+        "target_name": "NCI-H1299",
+        "max_pchembl": 5.63,
+        "median_pchembl": 5.12,
+        "activity_count": 5,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL5699",
+        "target_name": "Serine/threonine-protein kinase SIK2",
+        "max_pchembl": 5.6,
+        "median_pchembl": 5.6,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL3116",
+        "target_name": "Cyclin-dependent kinase 9",
+        "max_pchembl": 5.43,
+        "median_pchembl": 5.43,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4597",
+        "target_name": "Cyclin-dependent kinase 16",
+        "max_pchembl": 5.42,
+        "median_pchembl": 5.42,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614102",
+        "target_name": "PC-9",
+        "max_pchembl": 5.27,
+        "median_pchembl": 5.27,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614361",
+        "target_name": "T47D",
+        "max_pchembl": 5.21,
+        "median_pchembl": 5.21,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612794",
+        "target_name": "U-937",
+        "max_pchembl": 5.19,
+        "median_pchembl": 5.19,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL392",
+        "target_name": "A549",
+        "max_pchembl": 5.13,
+        "median_pchembl": 5.13,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4105933",
+        "target_name": "Uncharacterized protein FLJ45252",
+        "max_pchembl": 5.03,
+        "median_pchembl": 5.03,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4296437",
+        "target_name": "Hep 3B2",
+        "max_pchembl": 5.03,
+        "median_pchembl": 5.03,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL396",
+        "target_name": "NCI-H460",
+        "max_pchembl": 4.99,
+        "median_pchembl": 4.99,
+        "activity_count": 2,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1201129": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1201129",
+    "drug_name": "DECITABINE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 240,
+    "usable_activity_count": 12,
+    "target_count": 5,
+    "strong_target_count": 3,
+    "max_pchembl": 7.52,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1993",
+        "target_name": "DNA (cytosine-5)-methyltransferase 1",
+        "max_pchembl": 7.52,
+        "median_pchembl": 7.52,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 7.3,
+        "median_pchembl": 4.46,
+        "activity_count": 8,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL386",
+        "target_name": "L1210",
+        "max_pchembl": 6.41,
+        "median_pchembl": 6.41,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL213",
+        "target_name": "Beta-1 adrenergic receptor",
+        "max_pchembl": 4.72,
+        "median_pchembl": 4.72,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1075452",
+        "target_name": "H4",
+        "max_pchembl": 4.02,
+        "median_pchembl": 4.02,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL180022": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL180022",
+    "drug_name": "NERATINIB",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1000,
+    "usable_activity_count": 134,
+    "target_count": 103,
+    "strong_target_count": 56,
+    "max_pchembl": 10.1,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL203",
+        "target_name": "Epidermal growth factor receptor",
+        "max_pchembl": 10.1,
+        "median_pchembl": 9.03,
+        "activity_count": 17,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4852",
+        "target_name": "Mitogen-activated protein kinase kinase kinase kinase 5",
+        "max_pchembl": 9.19,
+        "median_pchembl": 9.19,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1824",
+        "target_name": "Receptor tyrosine-protein kinase erbB-2",
+        "max_pchembl": 9.0,
+        "median_pchembl": 8.22,
+        "activity_count": 8,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613834",
+        "target_name": "SK-BR-3",
+        "max_pchembl": 8.74,
+        "median_pchembl": 8.74,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3009",
+        "target_name": "Receptor tyrosine-protein kinase erbB-4",
+        "max_pchembl": 8.62,
+        "median_pchembl": 8.62,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3879801",
+        "target_name": "NON-PROTEIN TARGET",
+        "max_pchembl": 8.46,
+        "median_pchembl": 8.46,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5082",
+        "target_name": "Serine/threonine-protein kinase 24",
+        "max_pchembl": 8.19,
+        "median_pchembl": 8.19,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5941",
+        "target_name": "Serine/threonine-protein kinase 26",
+        "max_pchembl": 8.13,
+        "median_pchembl": 8.13,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5838",
+        "target_name": "Receptor tyrosine-protein kinase erbB-3",
+        "max_pchembl": 8.11,
+        "median_pchembl": 8.11,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5432",
+        "target_name": "Mitogen-activated protein kinase kinase kinase kinase 3",
+        "max_pchembl": 8.11,
+        "median_pchembl": 8.11,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5552",
+        "target_name": "Serine/threonine-protein kinase 25",
+        "max_pchembl": 7.92,
+        "median_pchembl": 7.92,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3981",
+        "target_name": "Serine/threonine-protein kinase 10",
+        "max_pchembl": 7.89,
+        "median_pchembl": 7.89,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3587",
+        "target_name": "Dual specificity mitogen-activated protein kinase kinase 1",
+        "max_pchembl": 7.85,
+        "median_pchembl": 7.85,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL6191",
+        "target_name": "Mitogen-activated protein kinase kinase kinase 19",
+        "max_pchembl": 7.8,
+        "median_pchembl": 7.8,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2964",
+        "target_name": "Dual specificity mitogen-activated protein kinase kinase 2",
+        "max_pchembl": 7.58,
+        "median_pchembl": 7.58,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5518",
+        "target_name": "Misshapen-like kinase 1",
+        "max_pchembl": 7.54,
+        "median_pchembl": 7.54,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4853",
+        "target_name": "Mitogen-activated protein kinase kinase kinase 4",
+        "max_pchembl": 7.41,
+        "median_pchembl": 7.41,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4708",
+        "target_name": "Serine/threonine-protein kinase 3",
+        "max_pchembl": 7.24,
+        "median_pchembl": 7.24,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4948",
+        "target_name": "Dual specificity mitogen-activated protein kinase kinase 5",
+        "max_pchembl": 7.2,
+        "median_pchembl": 7.2,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4202",
+        "target_name": "STE20-like serine/threonine-protein kinase",
+        "max_pchembl": 7.18,
+        "median_pchembl": 7.18,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4487",
+        "target_name": "Serine/threonine-protein kinase PAK 2",
+        "max_pchembl": 7.1,
+        "median_pchembl": 7.1,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614069",
+        "target_name": "A-431",
+        "max_pchembl": 7.07,
+        "median_pchembl": 7.07,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2250",
+        "target_name": "Tyrosine-protein kinase Blk",
+        "max_pchembl": 7.07,
+        "median_pchembl": 7.07,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5749",
+        "target_name": "Mitogen-activated protein kinase kinase kinase kinase 1",
+        "max_pchembl": 7.03,
+        "median_pchembl": 7.03,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5358",
+        "target_name": "eIF-2-alpha kinase GCN2",
+        "max_pchembl": 7.02,
+        "median_pchembl": 7.02,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1946170": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1946170",
+    "drug_name": "REGORAFENIB",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 794,
+    "usable_activity_count": 164,
+    "target_count": 69,
+    "strong_target_count": 34,
+    "max_pchembl": 9.3,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL2409",
+        "target_name": "Bifunctional epoxide hydrolase 2",
+        "max_pchembl": 9.3,
+        "median_pchembl": 9.3,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5145",
+        "target_name": "Serine/threonine-protein kinase B-raf",
+        "max_pchembl": 8.82,
+        "median_pchembl": 7.55,
+        "activity_count": 7,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2041",
+        "target_name": "Proto-oncogene tyrosine-protein kinase receptor Ret",
+        "max_pchembl": 8.82,
+        "median_pchembl": 7.92,
+        "activity_count": 20,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1868",
+        "target_name": "Vascular endothelial growth factor receptor 1",
+        "max_pchembl": 8.82,
+        "median_pchembl": 7.89,
+        "activity_count": 6,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4128",
+        "target_name": "Angiopoietin-1 receptor",
+        "max_pchembl": 8.82,
+        "median_pchembl": 8.82,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4758",
+        "target_name": "Vascular endothelial growth factor receptor 3",
+        "max_pchembl": 8.82,
+        "median_pchembl": 7.34,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3337",
+        "target_name": "Vascular endothelial growth factor receptor 2",
+        "max_pchembl": 8.82,
+        "median_pchembl": 8.38,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1913",
+        "target_name": "Platelet-derived growth factor receptor beta",
+        "max_pchembl": 8.82,
+        "median_pchembl": 7.66,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1906",
+        "target_name": "RAF proto-oncogene serine/threonine-protein kinase",
+        "max_pchembl": 8.82,
+        "median_pchembl": 8.6,
+        "activity_count": 5,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3650",
+        "target_name": "Fibroblast growth factor receptor 1",
+        "max_pchembl": 8.82,
+        "median_pchembl": 8.82,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614524",
+        "target_name": "BaF3",
+        "max_pchembl": 8.41,
+        "median_pchembl": 8.41,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL279",
+        "target_name": "Vascular endothelial growth factor receptor 2",
+        "max_pchembl": 8.4,
+        "median_pchembl": 8.38,
+        "activity_count": 10,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613979",
+        "target_name": "HUVEC",
+        "max_pchembl": 8.38,
+        "median_pchembl": 8.38,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2007",
+        "target_name": "Platelet-derived growth factor receptor alpha",
+        "max_pchembl": 8.38,
+        "median_pchembl": 6.73,
+        "activity_count": 4,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1936",
+        "target_name": "Mast/stem cell growth factor receptor Kit",
+        "max_pchembl": 8.21,
+        "median_pchembl": 6.88,
+        "activity_count": 13,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5810",
+        "target_name": "Ephrin type-A receptor 1",
+        "max_pchembl": 8.15,
+        "median_pchembl": 8.15,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 7.66,
+        "median_pchembl": 5.39,
+        "activity_count": 17,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5014",
+        "target_name": "Receptor-interacting serine/threonine-protein kinase 2",
+        "max_pchembl": 7.39,
+        "median_pchembl": 7.39,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1955",
+        "target_name": "Vascular endothelial growth factor receptor 3",
+        "max_pchembl": 7.38,
+        "median_pchembl": 7.38,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1974",
+        "target_name": "Receptor-type tyrosine-protein kinase FLT3",
+        "max_pchembl": 7.09,
+        "median_pchembl": 7.09,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL394",
+        "target_name": "HCT-116",
+        "max_pchembl": 6.8,
+        "median_pchembl": 5.87,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3886",
+        "target_name": "Mitogen-activated protein kinase kinase kinase 20",
+        "max_pchembl": 6.56,
+        "median_pchembl": 6.56,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5319",
+        "target_name": "Epithelial discoidin domain-containing receptor 1",
+        "max_pchembl": 6.45,
+        "median_pchembl": 6.45,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1795199",
+        "target_name": "Receptor-interacting serine/threonine-protein kinase 3",
+        "max_pchembl": 6.43,
+        "median_pchembl": 6.43,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5122",
+        "target_name": "Discoidin domain-containing receptor 2",
+        "max_pchembl": 6.38,
+        "median_pchembl": 6.38,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL4594515": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL4594515",
+    "drug_name": "LOSATUXIZUMAB VEDOTIN",
+    "molecule_type": "Antibody drug conjugate",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1908360": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1908360",
+    "drug_name": "EVEROLIMUS",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 509,
+    "usable_activity_count": 27,
+    "target_count": 17,
+    "strong_target_count": 3,
+    "max_pchembl": 10.3,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL4296661",
+        "target_name": "mTORC1",
+        "max_pchembl": 10.3,
+        "median_pchembl": 10.3,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5314314",
+        "target_name": "Cortical neurone",
+        "max_pchembl": 9.82,
+        "median_pchembl": 9.82,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2842",
+        "target_name": "Serine/threonine-protein kinase mTOR",
+        "max_pchembl": 8.8,
+        "median_pchembl": 8.3,
+        "activity_count": 8,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL6020",
+        "target_name": "Bile salt export pump",
+        "max_pchembl": 5.7,
+        "median_pchembl": 5.7,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614939",
+        "target_name": "SQ20B",
+        "max_pchembl": 5.26,
+        "median_pchembl": 5.26,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613508",
+        "target_name": "DU-145",
+        "max_pchembl": 5.1,
+        "median_pchembl": 5.1,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL3879801",
+        "target_name": "NON-PROTEIN TARGET",
+        "max_pchembl": 5.06,
+        "median_pchembl": 5.06,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL5748",
+        "target_name": "ATP-binding cassette sub-family C member 2",
+        "max_pchembl": 4.95,
+        "median_pchembl": 4.95,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL394",
+        "target_name": "HCT-116",
+        "max_pchembl": 4.92,
+        "median_pchembl": 4.92,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614067",
+        "target_name": "CAKI-1",
+        "max_pchembl": 4.85,
+        "median_pchembl": 4.85,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL384",
+        "target_name": "HT-29",
+        "max_pchembl": 4.82,
+        "median_pchembl": 4.82,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614213",
+        "target_name": "OVCAR-3",
+        "max_pchembl": 4.8,
+        "median_pchembl": 4.8,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614643",
+        "target_name": "HOP-62",
+        "max_pchembl": 4.72,
+        "median_pchembl": 4.72,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614561",
+        "target_name": "COLO 205",
+        "max_pchembl": 4.7,
+        "median_pchembl": 4.7,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL5918",
+        "target_name": "ATP-binding cassette sub-family C member 3",
+        "max_pchembl": 4.08,
+        "median_pchembl": 4.08,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1743128",
+        "target_name": "ATP-binding cassette sub-family C member 4",
+        "max_pchembl": 4.02,
+        "median_pchembl": 4.02,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL2221347",
+        "target_name": "Voltage-gated potassium channel, IKs; KCNQ1(Kv7.1)/KCNE1(MinK)",
+        "max_pchembl": 4.0,
+        "median_pchembl": 4.0,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3989887": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3989887",
+    "drug_name": "TACROLIMUS",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 340,
+    "usable_activity_count": 1,
+    "target_count": 1,
+    "strong_target_count": 1,
+    "max_pchembl": 8.0,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1902",
+        "target_name": "Peptidyl-prolyl cis-trans isomerase FKBP1A",
+        "max_pchembl": 8.0,
+        "median_pchembl": 8.0,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1311": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1311",
+    "drug_name": "ISOSORBIDE MONONITRATE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 253,
+    "usable_activity_count": 2,
+    "target_count": 2,
+    "strong_target_count": 0,
+    "max_pchembl": 5.02,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL3879801",
+        "target_name": "NON-PROTEIN TARGET",
+        "max_pchembl": 5.02,
+        "median_pchembl": 5.02,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL374",
+        "target_name": "Oryctolagus cuniculus",
+        "max_pchembl": 4.97,
+        "median_pchembl": 4.97,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1928262": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1928262",
+    "drug_name": "GISADENAFIL",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 25,
+    "usable_activity_count": 1,
+    "target_count": 1,
+    "strong_target_count": 1,
+    "max_pchembl": 8.91,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1827",
+        "target_name": "cGMP-specific 3',5'-cyclic phosphodiesterase",
+        "max_pchembl": 8.91,
+        "median_pchembl": 8.91,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1017": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1017",
+    "drug_name": "TELMISARTAN",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 864,
+    "usable_activity_count": 84,
+    "target_count": 39,
+    "strong_target_count": 12,
+    "max_pchembl": 9.64,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL329",
+        "target_name": "Type-1 angiotensin II receptor A",
+        "max_pchembl": 9.64,
+        "median_pchembl": 9.64,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4607",
+        "target_name": "Type-2 angiotensin II receptor",
+        "max_pchembl": 9.48,
+        "median_pchembl": 9.48,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL227",
+        "target_name": "Type-1 angiotensin II receptor",
+        "max_pchembl": 9.31,
+        "median_pchembl": 9.0,
+        "activity_count": 11,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 8.56,
+        "median_pchembl": 8.42,
+        "activity_count": 6,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL263",
+        "target_name": "Type-1 angiotensin II receptor B",
+        "max_pchembl": 8.52,
+        "median_pchembl": 8.52,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4483224",
+        "target_name": "A2780/Taxol",
+        "max_pchembl": 7.7,
+        "median_pchembl": 7.7,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612653",
+        "target_name": "Plasmodium berghei",
+        "max_pchembl": 7.6,
+        "median_pchembl": 7.6,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4888483",
+        "target_name": "Plasmodium",
+        "max_pchembl": 7.6,
+        "median_pchembl": 7.6,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613642",
+        "target_name": "Liver",
+        "max_pchembl": 7.15,
+        "median_pchembl": 7.15,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3491",
+        "target_name": "Cytochrome P450 2J2",
+        "max_pchembl": 7.0,
+        "median_pchembl": 6.38,
+        "activity_count": 5,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL235",
+        "target_name": "Peroxisome proliferator-activated receptor gamma",
+        "max_pchembl": 6.16,
+        "median_pchembl": 5.47,
+        "activity_count": 16,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1743121",
+        "target_name": "Solute carrier organic anion transporter family member 1B3",
+        "max_pchembl": 6.02,
+        "median_pchembl": 6.02,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1697668",
+        "target_name": "Solute carrier organic anion transporter family member 1B1",
+        "max_pchembl": 5.99,
+        "median_pchembl": 5.99,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL364",
+        "target_name": "Plasmodium falciparum",
+        "max_pchembl": 5.79,
+        "median_pchembl": 5.79,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1901",
+        "target_name": "Cholecystokinin receptor type A",
+        "max_pchembl": 5.62,
+        "median_pchembl": 5.62,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL233",
+        "target_name": "Mu-type opioid receptor",
+        "max_pchembl": 5.59,
+        "median_pchembl": 5.43,
+        "activity_count": 3,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL229",
+        "target_name": "Alpha-1A adrenergic receptor",
+        "max_pchembl": 5.52,
+        "median_pchembl": 5.52,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL5845",
+        "target_name": "Glycine receptor subunit alpha-1",
+        "max_pchembl": 5.5,
+        "median_pchembl": 5.5,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1867",
+        "target_name": "Alpha-2A adrenergic receptor",
+        "max_pchembl": 5.4,
+        "median_pchembl": 5.4,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL2459",
+        "target_name": "Peroxisome proliferator-activated receptor gamma",
+        "max_pchembl": 5.39,
+        "median_pchembl": 5.39,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL3397",
+        "target_name": "Cytochrome P450 2C9",
+        "max_pchembl": 5.32,
+        "median_pchembl": 5.32,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL6020",
+        "target_name": "Bile salt export pump",
+        "max_pchembl": 5.3,
+        "median_pchembl": 4.79,
+        "activity_count": 4,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL211",
+        "target_name": "Muscarinic acetylcholine receptor M2",
+        "max_pchembl": 5.29,
+        "median_pchembl": 5.29,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1808",
+        "target_name": "Angiotensin-converting enzyme",
+        "max_pchembl": 5.22,
+        "median_pchembl": 5.22,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1833",
+        "target_name": "5-hydroxytryptamine receptor 2B",
+        "max_pchembl": 5.2,
+        "median_pchembl": 5.2,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL23261": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL23261",
+    "drug_name": "DARUSENTAN",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 23,
+    "usable_activity_count": 5,
+    "target_count": 3,
+    "strong_target_count": 3,
+    "max_pchembl": 9.1,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL252",
+        "target_name": "Endothelin-1 receptor",
+        "max_pchembl": 9.1,
+        "median_pchembl": 9.1,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4566",
+        "target_name": "Endothelin-1 receptor",
+        "max_pchembl": 8.22,
+        "median_pchembl": 8.22,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1785",
+        "target_name": "Endothelin receptor type B",
+        "max_pchembl": 7.8,
+        "median_pchembl": 7.8,
+        "activity_count": 2,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1339": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1339",
+    "drug_name": "VARDENAFIL HYDROCHLORIDE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 12,
+    "usable_activity_count": 2,
+    "target_count": 2,
+    "strong_target_count": 2,
+    "max_pchembl": 9.15,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1827",
+        "target_name": "cGMP-specific 3',5'-cyclic phosphodiesterase",
+        "max_pchembl": 9.15,
+        "median_pchembl": 9.15,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2097166",
+        "target_name": "Phosphodiesterase 1",
+        "max_pchembl": 6.75,
+        "median_pchembl": 6.75,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1016": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1016",
+    "drug_name": "CANDESARTAN",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1000,
+    "usable_activity_count": 32,
+    "target_count": 16,
+    "strong_target_count": 7,
+    "max_pchembl": 9.77,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 9.77,
+        "median_pchembl": 8.02,
+        "activity_count": 4,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL374",
+        "target_name": "Oryctolagus cuniculus",
+        "max_pchembl": 9.7,
+        "median_pchembl": 9.7,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3948",
+        "target_name": "Type-1 angiotensin II receptor",
+        "max_pchembl": 9.19,
+        "median_pchembl": 9.19,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL227",
+        "target_name": "Type-1 angiotensin II receptor",
+        "max_pchembl": 9.16,
+        "median_pchembl": 7.98,
+        "activity_count": 5,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL329",
+        "target_name": "Type-1 angiotensin II receptor A",
+        "max_pchembl": 8.5,
+        "median_pchembl": 8.5,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3374",
+        "target_name": "Type-1 angiotensin II receptor",
+        "max_pchembl": 6.96,
+        "median_pchembl": 6.96,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL256",
+        "target_name": "Adenosine receptor A3",
+        "max_pchembl": 6.16,
+        "median_pchembl": 6.16,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1942",
+        "target_name": "Alpha-2B adrenergic receptor",
+        "max_pchembl": 5.76,
+        "median_pchembl": 5.76,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL222",
+        "target_name": "Sodium-dependent noradrenaline transporter",
+        "max_pchembl": 5.52,
+        "median_pchembl": 5.52,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL3397",
+        "target_name": "Cytochrome P450 2C9",
+        "max_pchembl": 5.52,
+        "median_pchembl": 5.52,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1835",
+        "target_name": "Thromboxane-A synthase",
+        "max_pchembl": 5.51,
+        "median_pchembl": 5.51,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL246",
+        "target_name": "Beta-3 adrenergic receptor",
+        "max_pchembl": 5.5,
+        "median_pchembl": 5.5,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL203",
+        "target_name": "Epidermal growth factor receptor",
+        "max_pchembl": 5.49,
+        "median_pchembl": 5.49,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1824",
+        "target_name": "Receptor tyrosine-protein kinase erbB-2",
+        "max_pchembl": 5.23,
+        "median_pchembl": 5.23,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL340",
+        "target_name": "Cytochrome P450 3A4",
+        "max_pchembl": 5.05,
+        "median_pchembl": 5.05,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL3191",
+        "target_name": "Leukotriene B4 receptor 2",
+        "max_pchembl": 4.82,
+        "median_pchembl": 4.82,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL4210847": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL4210847",
+    "drug_name": "PF-00489791",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1,
+    "usable_activity_count": 1,
+    "target_count": 1,
+    "strong_target_count": 1,
+    "max_pchembl": 9.3,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1827",
+        "target_name": "cGMP-specific 3',5'-cyclic phosphodiesterase",
+        "max_pchembl": 9.3,
+        "median_pchembl": 9.3,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1963681": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1963681",
+    "drug_name": "AVANAFIL",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 114,
+    "usable_activity_count": 35,
+    "target_count": 5,
+    "strong_target_count": 2,
+    "max_pchembl": 8.3,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1827",
+        "target_name": "cGMP-specific 3',5'-cyclic phosphodiesterase",
+        "max_pchembl": 8.3,
+        "median_pchembl": 7.76,
+        "activity_count": 27,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2304402",
+        "target_name": "cGMP-specific 3',5'-cyclic phosphodiesterase",
+        "max_pchembl": 8.28,
+        "median_pchembl": 8.28,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612255",
+        "target_name": "NCI-H1299",
+        "max_pchembl": 5.15,
+        "median_pchembl": 5.15,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1075544",
+        "target_name": "NCI-H661",
+        "max_pchembl": 5.09,
+        "median_pchembl": 4.79,
+        "activity_count": 3,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL392",
+        "target_name": "A549",
+        "max_pchembl": 4.91,
+        "median_pchembl": 4.91,
+        "activity_count": 2,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3707277": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3707277",
+    "drug_name": "DEPATUXIZUMAB MAFODOTIN",
+    "molecule_type": "Antibody drug conjugate",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL5095273": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL5095273",
+    "drug_name": "DISITAMAB VEDOTIN",
+    "molecule_type": "Antibody drug conjugate",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL4297892": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL4297892",
+    "drug_name": "ANVATABART OPADOTIN",
+    "molecule_type": "Antibody drug conjugate",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL467": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL467",
+    "drug_name": "HYDROXYUREA",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1000,
+    "usable_activity_count": 13,
+    "target_count": 9,
+    "strong_target_count": 0,
+    "max_pchembl": 4.67,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL386",
+        "target_name": "L1210",
+        "max_pchembl": 4.67,
+        "median_pchembl": 4.09,
+        "activity_count": 3,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL3594",
+        "target_name": "Carbonic anhydrase 9",
+        "max_pchembl": 4.64,
+        "median_pchembl": 4.64,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL378",
+        "target_name": "Human immunodeficiency virus 1",
+        "max_pchembl": 4.59,
+        "median_pchembl": 4.59,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL205",
+        "target_name": "Carbonic anhydrase 2",
+        "max_pchembl": 4.55,
+        "median_pchembl": 4.55,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4789",
+        "target_name": "Carbonic anhydrase 5A, mitochondrial",
+        "max_pchembl": 4.51,
+        "median_pchembl": 4.51,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL389",
+        "target_name": "P388",
+        "max_pchembl": 4.5,
+        "median_pchembl": 4.5,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 4.43,
+        "median_pchembl": 4.43,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL391",
+        "target_name": "Vero",
+        "max_pchembl": 4.0,
+        "median_pchembl": 4.0,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612888",
+        "target_name": "Toxoplasma gondii",
+        "max_pchembl": 4.0,
+        "median_pchembl": 4.0,
+        "activity_count": 2,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3545401": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3545401",
+    "drug_name": "X-82",
+    "molecule_type": "Unknown",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3545200": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3545200",
+    "drug_name": "S-222611",
+    "molecule_type": "Unknown",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1201179": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1201179",
+    "drug_name": "LAPATINIB DITOSYLATE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 47,
+    "usable_activity_count": 21,
+    "target_count": 5,
+    "strong_target_count": 5,
+    "max_pchembl": 8.52,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1824",
+        "target_name": "Receptor tyrosine-protein kinase erbB-2",
+        "max_pchembl": 8.52,
+        "median_pchembl": 8.05,
+        "activity_count": 7,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL203",
+        "target_name": "Epidermal growth factor receptor",
+        "max_pchembl": 8.3,
+        "median_pchembl": 7.96,
+        "activity_count": 7,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614828",
+        "target_name": "HN5",
+        "max_pchembl": 7.82,
+        "median_pchembl": 7.82,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614529",
+        "target_name": "BT-474",
+        "max_pchembl": 7.7,
+        "median_pchembl": 7.43,
+        "activity_count": 4,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614197",
+        "target_name": "NCI-N87",
+        "max_pchembl": 7.33,
+        "median_pchembl": 7.33,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3545402": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3545402",
+    "drug_name": "XL-820",
+    "molecule_type": "Unknown",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL803": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL803",
+    "drug_name": "CYTARABINE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3545263": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3545263",
+    "drug_name": "LGX-806",
+    "molecule_type": "Unknown",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL2105729": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL2105729",
+    "drug_name": "DABRAFENIB MESYLATE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL4303729": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL4303729",
+    "drug_name": "PLIXORAFENIB",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 16,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1637": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1637",
+    "drug_name": "GEMCITABINE HYDROCHLORIDE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 61,
+    "usable_activity_count": 13,
+    "target_count": 9,
+    "strong_target_count": 5,
+    "max_pchembl": 8.67,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL396",
+        "target_name": "NCI-H460",
+        "max_pchembl": 8.67,
+        "median_pchembl": 8.67,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613541",
+        "target_name": "C2G cell line",
+        "max_pchembl": 8.43,
+        "median_pchembl": 8.43,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614369",
+        "target_name": "TRAMP-C2H",
+        "max_pchembl": 8.33,
+        "median_pchembl": 8.33,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614367",
+        "target_name": "TRAMP-C1A",
+        "max_pchembl": 8.05,
+        "median_pchembl": 8.05,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614368",
+        "target_name": "C2D cell line",
+        "max_pchembl": 7.92,
+        "median_pchembl": 7.92,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614004",
+        "target_name": "A2780",
+        "max_pchembl": 5.9,
+        "median_pchembl": 5.9,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL392",
+        "target_name": "A549",
+        "max_pchembl": 5.64,
+        "median_pchembl": 5.64,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4296457",
+        "target_name": "L02",
+        "max_pchembl": 5.35,
+        "median_pchembl": 5.35,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL387",
+        "target_name": "MCF7",
+        "max_pchembl": 5.2,
+        "median_pchembl": 5.2,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL632": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL632",
+    "drug_name": "BETAMETHASONE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 980,
+    "usable_activity_count": 13,
+    "target_count": 7,
+    "strong_target_count": 4,
+    "max_pchembl": 8.45,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL2034",
+        "target_name": "Glucocorticoid receptor",
+        "max_pchembl": 8.45,
+        "median_pchembl": 8.45,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614245",
+        "target_name": "THP-1",
+        "max_pchembl": 7.89,
+        "median_pchembl": 7.89,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613995",
+        "target_name": "Keratinocyte",
+        "max_pchembl": 6.52,
+        "median_pchembl": 6.52,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613416",
+        "target_name": "Blood",
+        "max_pchembl": 6.0,
+        "median_pchembl": 6.0,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1871",
+        "target_name": "Androgen receptor",
+        "max_pchembl": 5.32,
+        "median_pchembl": 5.32,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL364",
+        "target_name": "Plasmodium falciparum",
+        "max_pchembl": 5.0,
+        "median_pchembl": 4.9,
+        "activity_count": 5,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL208",
+        "target_name": "Progesterone receptor",
+        "max_pchembl": 4.94,
+        "median_pchembl": 4.94,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3545252": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3545252",
+    "drug_name": "DOCETAXEL",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1000,
+    "usable_activity_count": 403,
+    "target_count": 259,
+    "strong_target_count": 252,
+    "max_pchembl": 10.94,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL3879801",
+        "target_name": "NON-PROTEIN TARGET",
+        "max_pchembl": 10.94,
+        "median_pchembl": 7.78,
+        "activity_count": 26,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL398",
+        "target_name": "KB",
+        "max_pchembl": 10.0,
+        "median_pchembl": 9.52,
+        "activity_count": 19,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2032",
+        "target_name": "Growth hormone-releasing hormone receptor",
+        "max_pchembl": 9.85,
+        "median_pchembl": 9.85,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612565",
+        "target_name": "5637",
+        "max_pchembl": 9.84,
+        "median_pchembl": 9.84,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL394",
+        "target_name": "HCT-116",
+        "max_pchembl": 9.74,
+        "median_pchembl": 9.28,
+        "activity_count": 17,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366336",
+        "target_name": "D-566MG",
+        "max_pchembl": 9.74,
+        "median_pchembl": 9.74,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075413",
+        "target_name": "CAL-62",
+        "max_pchembl": 9.73,
+        "median_pchembl": 9.73,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366212",
+        "target_name": "NB14",
+        "max_pchembl": 9.59,
+        "median_pchembl": 9.59,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075396",
+        "target_name": "BFTC-905",
+        "max_pchembl": 9.57,
+        "median_pchembl": 9.57,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614516",
+        "target_name": "A498",
+        "max_pchembl": 9.55,
+        "median_pchembl": 9.55,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075466",
+        "target_name": "HO-1-N-1",
+        "max_pchembl": 9.55,
+        "median_pchembl": 9.55,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL384",
+        "target_name": "HT-29",
+        "max_pchembl": 9.48,
+        "median_pchembl": 8.92,
+        "activity_count": 10,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075408",
+        "target_name": "CAL-27",
+        "max_pchembl": 9.47,
+        "median_pchembl": 9.47,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366224",
+        "target_name": "COLO-800",
+        "max_pchembl": 9.41,
+        "median_pchembl": 9.41,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614647",
+        "target_name": "WiDr",
+        "max_pchembl": 9.37,
+        "median_pchembl": 9.37,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075404",
+        "target_name": "Ca9-22",
+        "max_pchembl": 9.37,
+        "median_pchembl": 9.37,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612447",
+        "target_name": "RPMI-7951",
+        "max_pchembl": 9.35,
+        "median_pchembl": 9.35,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL392",
+        "target_name": "A549",
+        "max_pchembl": 9.3,
+        "median_pchembl": 9.0,
+        "activity_count": 17,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614004",
+        "target_name": "A2780",
+        "max_pchembl": 9.3,
+        "median_pchembl": 8.85,
+        "activity_count": 10,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL383",
+        "target_name": "HL-60",
+        "max_pchembl": 9.3,
+        "median_pchembl": 9.3,
+        "activity_count": 5,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614925",
+        "target_name": "SK-OV-3",
+        "max_pchembl": 9.29,
+        "median_pchembl": 8.47,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366272",
+        "target_name": "GI-1",
+        "max_pchembl": 9.28,
+        "median_pchembl": 9.28,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366300",
+        "target_name": "CGTH-W-1",
+        "max_pchembl": 9.27,
+        "median_pchembl": 9.27,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613503",
+        "target_name": "A2058",
+        "max_pchembl": 9.26,
+        "median_pchembl": 9.26,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366240",
+        "target_name": "EC-GI-10",
+        "max_pchembl": 9.23,
+        "median_pchembl": 9.23,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1278146": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1278146",
+    "drug_name": "FAMITINIB",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 14,
+    "usable_activity_count": 4,
+    "target_count": 3,
+    "strong_target_count": 3,
+    "max_pchembl": 8.7,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL279",
+        "target_name": "Vascular endothelial growth factor receptor 2",
+        "max_pchembl": 8.7,
+        "median_pchembl": 8.7,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1936",
+        "target_name": "Mast/stem cell growth factor receptor Kit",
+        "max_pchembl": 8.7,
+        "median_pchembl": 8.7,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1913",
+        "target_name": "Platelet-derived growth factor receptor beta",
+        "max_pchembl": 8.4,
+        "median_pchembl": 8.4,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1201733": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1201733",
+    "drug_name": "PAZOPANIB HYDROCHLORIDE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1201182": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1201182",
+    "drug_name": "TEMSIROLIMUS",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1000,
+    "usable_activity_count": 590,
+    "target_count": 582,
+    "strong_target_count": 416,
+    "max_pchembl": 9.95,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1075469",
+        "target_name": "HSC-4",
+        "max_pchembl": 9.95,
+        "median_pchembl": 9.95,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366267",
+        "target_name": "L-363",
+        "max_pchembl": 9.62,
+        "median_pchembl": 9.62,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366170",
+        "target_name": "Ramos-2G6-4C10",
+        "max_pchembl": 9.47,
+        "median_pchembl": 9.47,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366327",
+        "target_name": "SBC-1",
+        "max_pchembl": 9.35,
+        "median_pchembl": 9.35,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612518",
+        "target_name": "LNCaP",
+        "max_pchembl": 9.3,
+        "median_pchembl": 9.3,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366127",
+        "target_name": "MHH-PREB-1",
+        "max_pchembl": 9.3,
+        "median_pchembl": 9.3,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366310",
+        "target_name": "HH",
+        "max_pchembl": 9.18,
+        "median_pchembl": 9.18,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075601",
+        "target_name": "TYK-nu",
+        "max_pchembl": 9.11,
+        "median_pchembl": 9.11,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075452",
+        "target_name": "H4",
+        "max_pchembl": 8.97,
+        "median_pchembl": 8.97,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366152",
+        "target_name": "K5",
+        "max_pchembl": 8.88,
+        "median_pchembl": 8.88,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075580",
+        "target_name": "SK-NEP-1",
+        "max_pchembl": 8.83,
+        "median_pchembl": 8.83,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614949",
+        "target_name": "PA-1",
+        "max_pchembl": 8.83,
+        "median_pchembl": 8.83,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366253",
+        "target_name": "697",
+        "max_pchembl": 8.77,
+        "median_pchembl": 8.77,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366344",
+        "target_name": "CTB-1",
+        "max_pchembl": 8.53,
+        "median_pchembl": 8.53,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366331",
+        "target_name": "DB",
+        "max_pchembl": 8.51,
+        "median_pchembl": 8.51,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366211",
+        "target_name": "MLMA",
+        "max_pchembl": 8.48,
+        "median_pchembl": 8.48,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075447",
+        "target_name": "GAMG",
+        "max_pchembl": 8.42,
+        "median_pchembl": 8.42,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366372",
+        "target_name": "JVM-3",
+        "max_pchembl": 8.4,
+        "median_pchembl": 8.4,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366090",
+        "target_name": "LAMA-84",
+        "max_pchembl": 8.39,
+        "median_pchembl": 8.39,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614882",
+        "target_name": "RPMI-8226",
+        "max_pchembl": 8.38,
+        "median_pchembl": 8.38,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614177",
+        "target_name": "MOLT-4",
+        "max_pchembl": 8.37,
+        "median_pchembl": 8.37,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075416",
+        "target_name": "CAMA-1",
+        "max_pchembl": 8.32,
+        "median_pchembl": 8.32,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075595",
+        "target_name": "SW780",
+        "max_pchembl": 8.32,
+        "median_pchembl": 8.32,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614931",
+        "target_name": "SNU1",
+        "max_pchembl": 8.32,
+        "median_pchembl": 8.32,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366303",
+        "target_name": "BE-13",
+        "max_pchembl": 8.31,
+        "median_pchembl": 8.31,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1200686": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1200686",
+    "drug_name": "PIMECROLIMUS",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 53,
+    "usable_activity_count": 2,
+    "target_count": 2,
+    "strong_target_count": 0,
+    "max_pchembl": 5.29,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL256",
+        "target_name": "Adenosine receptor A3",
+        "max_pchembl": 5.29,
+        "median_pchembl": 5.29,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL6020",
+        "target_name": "Bile salt export pump",
+        "max_pchembl": 5.0,
+        "median_pchembl": 5.0,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL131": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL131",
+    "drug_name": "PREDNISOLONE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1000,
+    "usable_activity_count": 139,
+    "target_count": 23,
+    "strong_target_count": 19,
+    "max_pchembl": 9.54,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1994",
+        "target_name": "Mineralocorticoid receptor",
+        "max_pchembl": 9.54,
+        "median_pchembl": 7.43,
+        "activity_count": 7,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614840",
+        "target_name": "Cell line",
+        "max_pchembl": 9.4,
+        "median_pchembl": 8.44,
+        "activity_count": 6,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2034",
+        "target_name": "Glucocorticoid receptor",
+        "max_pchembl": 9.28,
+        "median_pchembl": 8.13,
+        "activity_count": 89,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3144",
+        "target_name": "Glucocorticoid receptor",
+        "max_pchembl": 8.47,
+        "median_pchembl": 8.47,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1795129",
+        "target_name": "Interleukin-6",
+        "max_pchembl": 8.38,
+        "median_pchembl": 8.38,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL375",
+        "target_name": "Mus musculus",
+        "max_pchembl": 8.24,
+        "median_pchembl": 8.24,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 8.23,
+        "median_pchembl": 7.86,
+        "activity_count": 5,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614071",
+        "target_name": "HFF",
+        "max_pchembl": 8.18,
+        "median_pchembl": 8.18,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3879801",
+        "target_name": "NON-PROTEIN TARGET",
+        "max_pchembl": 8.14,
+        "median_pchembl": 7.89,
+        "activity_count": 6,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3706",
+        "target_name": "Disintegrin and metalloproteinase domain-containing protein 17",
+        "max_pchembl": 7.83,
+        "median_pchembl": 7.83,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL399",
+        "target_name": "HeLa",
+        "max_pchembl": 7.8,
+        "median_pchembl": 7.8,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614347",
+        "target_name": "MG-63",
+        "max_pchembl": 7.72,
+        "median_pchembl": 7.72,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3368",
+        "target_name": "Glucocorticoid receptor",
+        "max_pchembl": 7.71,
+        "median_pchembl": 7.71,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2421",
+        "target_name": "Corticosteroid-binding globulin",
+        "max_pchembl": 7.51,
+        "median_pchembl": 7.51,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4612",
+        "target_name": "Glutamine synthetase",
+        "max_pchembl": 7.5,
+        "median_pchembl": 7.5,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612599",
+        "target_name": "Lymphocyte",
+        "max_pchembl": 7.11,
+        "median_pchembl": 7.11,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613416",
+        "target_name": "Blood",
+        "max_pchembl": 7.05,
+        "median_pchembl": 6.98,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL5409",
+        "target_name": "G-protein coupled bile acid receptor 1",
+        "max_pchembl": 6.6,
+        "median_pchembl": 6.6,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL383",
+        "target_name": "HL-60",
+        "max_pchembl": 6.12,
+        "median_pchembl": 6.12,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL208",
+        "target_name": "Progesterone receptor",
+        "max_pchembl": 5.68,
+        "median_pchembl": 5.68,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1871",
+        "target_name": "Androgen receptor",
+        "max_pchembl": 5.6,
+        "median_pchembl": 5.56,
+        "activity_count": 3,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL5738",
+        "target_name": "Fatty acid-binding protein, liver",
+        "max_pchembl": 5.58,
+        "median_pchembl": 5.58,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612557",
+        "target_name": "RAW264.7",
+        "max_pchembl": 4.59,
+        "median_pchembl": 4.59,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1643": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1643",
+    "drug_name": "RIBAVIRIN",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1000,
+    "usable_activity_count": 76,
+    "target_count": 34,
+    "strong_target_count": 2,
+    "max_pchembl": 8.3,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL614149",
+        "target_name": "E6SM",
+        "max_pchembl": 8.3,
+        "median_pchembl": 4.4,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612558",
+        "target_name": "ADMET",
+        "max_pchembl": 6.17,
+        "median_pchembl": 6.17,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614527",
+        "target_name": "BHK-21",
+        "max_pchembl": 5.96,
+        "median_pchembl": 5.96,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL399",
+        "target_name": "HeLa",
+        "max_pchembl": 5.82,
+        "median_pchembl": 5.82,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614068",
+        "target_name": "MDCK",
+        "max_pchembl": 5.43,
+        "median_pchembl": 5.31,
+        "activity_count": 3,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613129",
+        "target_name": "Influenza B virus",
+        "max_pchembl": 5.4,
+        "median_pchembl": 5.32,
+        "activity_count": 4,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612571",
+        "target_name": "Bovine viral diarrhea virus 1",
+        "max_pchembl": 5.33,
+        "median_pchembl": 5.33,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613740",
+        "target_name": "Influenza A virus",
+        "max_pchembl": 5.3,
+        "median_pchembl": 5.06,
+        "activity_count": 8,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614177",
+        "target_name": "MOLT-4",
+        "max_pchembl": 5.24,
+        "median_pchembl": 5.24,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL2366902",
+        "target_name": "Influenza A virus H3N2",
+        "max_pchembl": 5.09,
+        "median_pchembl": 5.09,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL375",
+        "target_name": "Mus musculus",
+        "max_pchembl": 5.08,
+        "median_pchembl": 4.49,
+        "activity_count": 3,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612679",
+        "target_name": "Respiratory syncytial virus",
+        "max_pchembl": 5.0,
+        "median_pchembl": 4.78,
+        "activity_count": 10,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613131",
+        "target_name": "Tacaribe virus",
+        "max_pchembl": 5.0,
+        "median_pchembl": 5.0,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4523072",
+        "target_name": "Junin virus",
+        "max_pchembl": 4.96,
+        "median_pchembl": 4.96,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613742",
+        "target_name": "Pichinde virus",
+        "max_pchembl": 4.89,
+        "median_pchembl": 4.89,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL386",
+        "target_name": "L1210",
+        "max_pchembl": 4.78,
+        "median_pchembl": 4.78,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613730",
+        "target_name": "West Nile virus",
+        "max_pchembl": 4.75,
+        "median_pchembl": 4.75,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL382",
+        "target_name": "CCRF-CEM",
+        "max_pchembl": 4.72,
+        "median_pchembl": 4.72,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613739",
+        "target_name": "Vesicular stomatitis virus",
+        "max_pchembl": 4.66,
+        "median_pchembl": 4.66,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL388",
+        "target_name": "MT4",
+        "max_pchembl": 4.64,
+        "median_pchembl": 4.64,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL379",
+        "target_name": "Hepatitis C virus",
+        "max_pchembl": 4.54,
+        "median_pchembl": 4.43,
+        "activity_count": 8,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL391",
+        "target_name": "Vero",
+        "max_pchembl": 4.4,
+        "median_pchembl": 4.19,
+        "activity_count": 6,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614819",
+        "target_name": "HEL 299",
+        "max_pchembl": 4.35,
+        "median_pchembl": 4.35,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL614031",
+        "target_name": "CHO-K1",
+        "max_pchembl": 4.3,
+        "median_pchembl": 4.3,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613741",
+        "target_name": "Punta Toro virus",
+        "max_pchembl": 4.3,
+        "median_pchembl": 4.3,
+        "activity_count": 2,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  }
+}

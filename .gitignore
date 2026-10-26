@@ -46,3 +46,7 @@ pnpm-debug.log*
 *.swo
 .DS_Store
 Thumbs.db
+
+# CureNova ML large/local data
+ml/data/training/drug_disease_features_v4.parquet
+ml/data/chembl/chembl_drug_evidence.json
