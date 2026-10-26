@@ -28,6 +28,17 @@ htmlcov/
 # Logs
 *.log
 
+# Frontend & Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
 # IDE & OS files
 .vscode/
 .idea/

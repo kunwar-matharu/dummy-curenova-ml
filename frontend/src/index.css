@@ -1,0 +1,371 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: 'Inter Tight', 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-surface-ground: var(--color-surface-ground);
+  --color-surface-card: var(--color-surface-card);
+  --color-surface-overlay: var(--color-surface-overlay);
+  --color-surface-hover: var(--color-surface-hover);
+  --color-surface-sunken: var(--color-surface-sunken);
+
+  --color-border-subtle: var(--color-border-subtle);
+  --color-border-strong: var(--color-border-strong);
+  --color-border-focus: var(--color-border-focus);
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-inverse: var(--color-text-inverse);
+
+  --color-brand-primary: var(--color-brand-primary);
+  --color-brand-primary-hover: var(--color-brand-primary-hover);
+  --color-brand-secondary: var(--color-brand-secondary);
+  --color-brand-surface: var(--color-brand-surface);
+  --color-brand-border: var(--color-brand-border);
+  --color-brand-text: var(--color-brand-text);
+
+  --color-status-critical: var(--color-status-critical);
+  --color-status-critical-bg: var(--color-status-critical-bg);
+  --color-status-critical-border: var(--color-status-critical-border);
+  --color-status-critical-text: var(--color-status-critical-text);
+  --color-status-critical-rail: var(--color-status-critical-rail);
+
+  --color-status-warning: var(--color-status-warning);
+  --color-status-warning-bg: var(--color-status-warning-bg);
+  --color-status-warning-border: var(--color-status-warning-border);
+  --color-status-warning-text: var(--color-status-warning-text);
+  --color-status-warning-rail: var(--color-status-warning-rail);
+
+  --color-status-safe: var(--color-status-safe);
+  --color-status-safe-bg: var(--color-status-safe-bg);
+  --color-status-safe-border: var(--color-status-safe-border);
+  --color-status-safe-text: var(--color-status-safe-text);
+  --color-status-safe-rail: var(--color-status-safe-rail);
+
+  --color-status-info: var(--color-status-info);
+  --color-status-info-bg: var(--color-status-info-bg);
+  --color-status-info-border: var(--color-status-info-border);
+  --color-status-info-text: var(--color-status-info-text);
+  --color-status-info-rail: var(--color-status-info-rail);
+
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-light: var(--color-accent-light);
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+
+  --shadow-base: var(--shadow-base);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-overlay: var(--shadow-overlay);
+}
+
+@utility bg-surface-ground { background-color: var(--color-surface-ground); }
+@utility bg-surface-card { background-color: var(--color-surface-card); }
+@utility bg-surface-overlay { background-color: var(--color-surface-overlay); }
+@utility bg-surface-hover { background-color: var(--color-surface-hover); }
+@utility bg-surface-sunken { background-color: var(--color-surface-sunken); }
+
+@utility border-subtle { border-color: var(--color-border-subtle); }
+@utility border-strong { border-color: var(--color-border-strong); }
+@utility border-focus { border-color: var(--color-border-focus); }
+
+@utility text-status-critical { color: var(--color-status-critical); }
+@utility text-status-warning { color: var(--color-status-warning); }
+@utility text-status-safe { color: var(--color-status-safe); }
+@utility text-status-info { color: var(--color-status-info); }
+
+@utility bg-status-critical-bg { background-color: var(--color-status-critical-bg); }
+@utility bg-status-warning-bg { background-color: var(--color-status-warning-bg); }
+@utility bg-status-safe-bg { background-color: var(--color-status-safe-bg); }
+@utility bg-status-info-bg { background-color: var(--color-status-info-bg); }
+
+@utility bg-primary-navy { background-color: #0A2540; }
+@utility bg-deep-navy { background-color: #071927; }
+@utility bg-teal-accent { background-color: #0284C7; }
+@utility text-primary-navy { color: #0A2540; }
+@utility text-teal-accent { color: #0284C7; }
+@utility border-teal-accent { border-color: #0284C7; }
+
+@utility bg-medical-blue { background-color: #0284C7; }
+@utility text-medical-blue { color: #0284C7; }
+@utility border-medical-blue { border-color: #0284C7; }
+
+.card-3d-hover {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
+
+.card-3d-hover:hover {
+  transform: perspective(1000px) translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(10, 37, 64, 0.08), 0 4px 8px -2px rgba(10, 37, 64, 0.04);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+
+    /* Semantic Surfaces (Light) — Professional Clinical SaaS Palette */
+    --color-surface-ground: #F8FAFC;
+    --color-surface-card: #FFFFFF;
+    --color-surface-overlay: #FFFFFF;
+    --color-surface-hover: #F1F5F9;
+    --color-surface-sunken: #F1F5F9;
+
+    /* Semantic Borders (Light) */
+    --color-border-subtle: #E2E8F0;
+    --color-border-strong: #CBD5E1;
+    --color-border-focus: #0284C7;
+
+    /* Semantic Text (Light) */
+    --color-text-primary: #0F172A;
+    --color-text-secondary: #475569;
+    --color-text-muted: #94A3B8;
+    --color-text-inverse: #FFFFFF;
+
+    /* Master Medical Palette Tokens */
+    --color-primary: #0A2540;
+    --color-primary-hover: #071927;
+    --color-primary-dark: #051421;
+    --color-accent: #0284C7;
+    --color-accent-hover: #0369A1;
+    --color-accent-light: #E0F2FE;
+    --color-background: #F8FAFC;
+    --color-surface: #FFFFFF;
+
+    /* Brand Primary / Medical Blue Action Colors */
+    --color-brand-primary: #0284C7;
+    --color-brand-primary-hover: #0369A1;
+    --color-brand-secondary: #0A2540;
+    --color-brand-surface: #EFF6FF;
+    --color-brand-border: #BAE6FD;
+    --color-brand-text: #0369A1;
+
+    /* Status: Critical Hazard / Error */
+    --color-status-critical: #DC2626;
+    --color-status-critical-bg: #FEE2E2;
+    --color-status-critical-border: #FECACA;
+    --color-status-critical-text: #B91C1C;
+    --color-status-critical-rail: #DC2626;
+    --color-danger: #DC2626;
+
+    /* Status: Warning / Amber Caution */
+    --color-status-warning: #D97706;
+    --color-status-warning-bg: #FEF3C7;
+    --color-status-warning-border: #FDE68A;
+    --color-status-warning-text: #B45309;
+    --color-status-warning-rail: #D97706;
+    --color-warning: #D97706;
+
+    /* Status: Safe / Confirmed Normal */
+    --color-status-safe: #16A34A;
+    --color-status-safe-bg: #DCFCE7;
+    --color-status-safe-border: #BBF7D0;
+    --color-status-safe-text: #15803D;
+    --color-status-safe-rail: #16A34A;
+    --color-success: #16A34A;
+
+    /* Status: Info */
+    --color-status-info: #0284C7;
+    --color-status-info-bg: #E0F2FE;
+    --color-status-info-border: #BAE6FD;
+    --color-status-info-text: #0369A1;
+    --color-status-info-rail: #0284C7;
+    --color-info: #0284C7;
+
+    /* Elevation & Shadows */
+    --shadow-base: 0 1px 3px 0 rgba(23, 50, 77, 0.06), 0 1px 2px -1px rgba(23, 50, 77, 0.04);
+    --shadow-raised: 0 4px 12px -1px rgba(23, 50, 77, 0.08), 0 2px 6px -2px rgba(23, 50, 77, 0.05);
+    --shadow-overlay: 0 20px 35px -5px rgba(23, 50, 77, 0.14), 0 8px 16px -6px rgba(23, 50, 77, 0.07);
+
+    /* Radii */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+
+    /* Motion */
+    --duration-fast: 150ms;
+    --duration-normal: 200ms;
+    --duration-slow: 250ms;
+    --ease-out-clinical: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    /* Semantic Surfaces (Dark - Designer Obsidian Slate) */
+    --color-surface-ground: #070B14;
+    --color-surface-card: #0F172A;
+    --color-surface-overlay: #1E293B;
+    --color-surface-hover: #1E293B;
+    --color-surface-sunken: #0B1120;
+
+    /* Semantic Borders (Dark - Precision Outlines) */
+    --color-border-subtle: rgba(148, 163, 184, 0.16);
+    --color-border-strong: rgba(148, 163, 184, 0.3);
+    --color-border-focus: #38BDF8;
+
+    /* Semantic Text (Dark - Crisp WCAG AAA/AA Anti-Fatigue) */
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #CBD5E1;
+    --color-text-muted: #94A3B8;
+    --color-text-inverse: #070B14;
+
+    /* Master Palette Tokens */
+    --color-primary: #0F172A;
+    --color-primary-hover: #1E293B;
+    --color-primary-dark: #070B14;
+    --color-accent: #0EA5E9;
+    --color-accent-hover: #38BDF8;
+    --color-accent-light: rgba(14, 165, 233, 0.18);
+    --color-background: #070B14;
+    --color-surface: #0F172A;
+
+    /* Brand Primary (Dark - Luminous Medical Cyan & Sky) */
+    --color-brand-primary: #38BDF8;
+    --color-brand-primary-hover: #7DD3FC;
+    --color-brand-secondary: #0EA5E9;
+    --color-brand-surface: rgba(14, 165, 233, 0.16);
+    --color-brand-border: rgba(56, 189, 248, 0.38);
+    --color-brand-text: #38BDF8;
+
+    /* Status: Critical Hazard (Dark - High-Luminance Coral) */
+    --color-status-critical: #F87171;
+    --color-status-critical-bg: rgba(239, 68, 68, 0.18);
+    --color-status-critical-border: rgba(248, 113, 113, 0.4);
+    --color-status-critical-text: #FCA5A5;
+    --color-status-critical-rail: #EF4444;
+    --color-danger: #F87171;
+
+    /* Status: Warning (Dark - Luminous Amber Gold) */
+    --color-status-warning: #FBBF24;
+    --color-status-warning-bg: rgba(245, 158, 11, 0.18);
+    --color-status-warning-border: rgba(251, 191, 36, 0.4);
+    --color-status-warning-text: #FDE047;
+    --color-status-warning-rail: #F59E0B;
+    --color-warning: #FBBF24;
+
+    /* Status: Safe (Dark - Luminous Mint Emerald) */
+    --color-status-safe: #34D399;
+    --color-status-safe-bg: rgba(16, 185, 129, 0.18);
+    --color-status-safe-border: rgba(52, 211, 153, 0.4);
+    --color-status-safe-text: #6EE7B7;
+    --color-status-safe-rail: #10B981;
+    --color-success: #34D399;
+
+    /* Status: Info (Dark - High-Clarity Ice Blue) */
+    --color-status-info: #60A5FA;
+    --color-status-info-bg: rgba(14, 165, 233, 0.18);
+    --color-status-info-border: rgba(56, 189, 248, 0.4);
+    --color-status-info-text: #BAE6FD;
+    --color-status-info-rail: #0EA5E9;
+    --color-info: #38BDF8;
+
+    /* Elevation & Shadows (Dark - Specular Inner Edge + Deep Ambient) */
+    --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    --shadow-raised: 0 4px 18px -2px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(148, 163, 184, 0.14), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+    --shadow-overlay: 0 24px 48px -8px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(148, 163, 184, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+  }
+
+  body {
+    background-color: var(--color-surface-ground);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    transition: background-color var(--duration-normal) var(--ease-out-clinical),
+                color var(--duration-normal) var(--ease-out-clinical);
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    border: none;
+    text-align: left;
+  }
+}
+
+/* Tabular Numerals Utility for Clinical Data & Scores */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "cv02" 1, "cv03" 1, "cv04" 1, "cv11" 1;
+}
+
+/* Headings tracking */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.025em;
+  font-feature-settings: "cv02" 1, "cv03" 1, "cv04" 1;
+}
+
+/* Custom Clean Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface-sunken);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Shimmer Animation for Skeletons */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.animate-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.8s infinite;
+}
+
+.dark .animate-shimmer::after {
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Pulse Glow Effect for Critical Hazard State */
+@keyframes pulse-critical {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
+}
+
+.pulse-critical {
+  animation: pulse-critical 2.4s infinite;
+}

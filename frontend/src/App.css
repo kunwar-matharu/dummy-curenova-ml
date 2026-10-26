@@ -1,0 +1,27 @@
+/* CureNova Global Application Styles */
+
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus outline helpers */
+:focus-visible {
+  outline: 2px solid var(--color-brand-primary, #0284c7);
+  outline-offset: 2px;
+}
+
+/* Print utility styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
