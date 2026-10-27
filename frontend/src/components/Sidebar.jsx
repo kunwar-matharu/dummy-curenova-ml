@@ -72,13 +72,23 @@ export const Sidebar = ({ role }) => {
     { name: 'Safety Results', path: '/patient/results', icon: FileText },
   ];
 
+  const adminNav = [
+    { name: 'User Directory', path: '/admin/dashboard', icon: ShieldCheck },
+  ];
+
   const sharedNav = [
     { name: 'Evidence Dossiers', path: '/evidence', icon: Search },
     { name: 'Knowledge Graph', path: '/knowledge-graph', icon: Share2 },
   ];
 
   const activeNavList =
-    currentRole === 'researcher' ? researcherNav : currentRole === 'patient' ? patientNav : doctorNav;
+    currentRole === 'researcher'
+      ? researcherNav
+      : currentRole === 'patient'
+      ? patientNav
+      : currentRole === 'admin'
+      ? adminNav
+      : doctorNav;
 
   const getPortalInfo = () => {
     switch (currentRole) {
@@ -95,6 +105,13 @@ export const Sidebar = ({ role }) => {
           plan: 'Health Companion',
           icon: HeartHandshake,
           color: 'from-emerald-500 to-emerald-600',
+        };
+      case 'admin':
+        return {
+          title: 'System Administration',
+          plan: 'Platform Governance',
+          icon: ShieldCheck,
+          color: 'from-purple-600 to-indigo-600',
         };
       default:
         return {

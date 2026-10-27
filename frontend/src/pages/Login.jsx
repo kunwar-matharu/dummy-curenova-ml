@@ -12,7 +12,8 @@ import {
   Eye,
   EyeOff,
   Sparkles,
-  ArrowLeft
+  ArrowLeft,
+  ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -47,6 +48,16 @@ const ROLES = [
     demoEmail: 'sarah.jenkins@patient-portal.org',
     demoPass: 'CureNova2026!Secure',
     demoName: 'Sarah Jenkins',
+  },
+  {
+    role: 'admin',
+    label: 'Admin',
+    icon: ShieldCheck,
+    color: '#7C3AED',
+    darkColor: '#A78BFA',
+    demoEmail: 'admin@curenova.ai',
+    demoPass: 'CureNova2026!Secure',
+    demoName: 'System Administrator',
   },
 ];
 

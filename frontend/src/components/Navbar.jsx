@@ -48,6 +48,8 @@ export const Navbar = () => {
         return { label: 'Researcher (PhD)', shortLabel: 'Researcher', icon: Microscope, color: 'var(--color-brand-primary)' };
       case 'patient':
         return { label: 'Patient / Caregiver', shortLabel: 'Patient', icon: HeartHandshake, color: 'var(--color-status-safe)' };
+      case 'admin':
+        return { label: 'System Administrator', shortLabel: 'Admin', icon: ShieldCheck, color: '#8b5cf6' };
       default:
         return { label: 'Clinical Guest', shortLabel: 'Guest', icon: User, color: 'var(--color-text-secondary)' };
     }

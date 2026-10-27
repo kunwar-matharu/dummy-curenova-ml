@@ -18,6 +18,7 @@ import {
   Layers
 } from 'lucide-react';
 import { safetyService } from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
 import AnalysisProgress from '../../components/AnalysisProgress';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
@@ -47,6 +48,7 @@ export const DoctorMedicationSafety = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { user, refreshProfile } = useAuth();
 
   const [activeTab, setActiveTab] = useState(
     searchParams.get('tab') === 'twin' ? 'twin' : 'standard'
@@ -147,6 +149,25 @@ export const DoctorMedicationSafety = () => {
 
       navigate('/doctor/results', { state: { analysisData: res } });
     } catch (err) {
+      if (err.message && err.message.toLowerCase().includes('approval required')) {
+        const refreshed = await refreshProfile().catch(() => null);
+        if (refreshed && refreshed.approval_status === 'approved') {
+          try {
+            const res = await safetyService.analyze(
+              medications,
+              { age: Number(age), egfr: Number(egfr) },
+              'doctor'
+            );
+            setLoading(false);
+            navigate('/doctor/results', { state: { analysisData: res } });
+            return;
+          } catch (retryErr) {
+            setLoading(false);
+            setError(retryErr.message);
+            return;
+          }
+        }
+      }
       setLoading(false);
       setError(err.message || 'Safety check failed. Please verify connection.');
     }
@@ -169,6 +190,26 @@ export const DoctorMedicationSafety = () => {
       setLoading(false);
       setTwinResult(sim);
     } catch (err) {
+      if (err.message && err.message.toLowerCase().includes('approval required')) {
+        const refreshed = await refreshProfile().catch(() => null);
+        if (refreshed && refreshed.approval_status === 'approved') {
+          try {
+            const sim = await safetyService.simulateTwin(
+              baselineMeds,
+              addedMeds,
+              removedMeds,
+              { age: Number(age), egfr: Number(egfr) }
+            );
+            setLoading(false);
+            setTwinResult(sim);
+            return;
+          } catch (retryErr) {
+            setLoading(false);
+            setError(retryErr.message);
+            return;
+          }
+        }
+      }
       setLoading(false);
       setError(err.message || 'Simulation failed. Please try again.');
     }
@@ -407,9 +448,27 @@ export const DoctorMedicationSafety = () => {
             </div>
 
             {error && (
-              <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs font-medium flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 shrink-0" />
-                <span>{error}</span>
+              <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs font-medium flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
+                  <span>{error}</span>
+                </div>
+                {error.toLowerCase().includes('approval required') && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      const u = await refreshProfile().catch(() => null);
+                      if (u && u.approval_status === 'approved') {
+                        setError('');
+                        handleRunAnalysis();
+                      }
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs whitespace-nowrap cursor-pointer transition-colors shadow-xs self-start sm:self-auto"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Check Status & Retry</span>
+                  </button>
+                )}
               </div>
             )}
 
@@ -546,6 +605,31 @@ export const DoctorMedicationSafety = () => {
                 </div>
               )}
             </div>
+
+            {error && (
+              <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs font-medium flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
+                  <span>{error}</span>
+                </div>
+                {error.toLowerCase().includes('approval required') && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      const u = await refreshProfile().catch(() => null);
+                      if (u && u.approval_status === 'approved') {
+                        setError('');
+                        handleSimulateTwin();
+                      }
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs whitespace-nowrap cursor-pointer transition-colors shadow-xs self-start sm:self-auto"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Check Status & Retry</span>
+                  </button>
+                )}
+              </div>
+            )}
 
             {/* Run Twin Simulation Button */}
             <div className="flex items-center justify-between pt-2">

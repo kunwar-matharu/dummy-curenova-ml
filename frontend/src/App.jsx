@@ -31,6 +31,9 @@ import PatientDashboard from './pages/patient/PatientDashboard';
 import PatientMedicationSafety from './pages/patient/PatientMedicationSafety';
 import PatientResults from './pages/patient/PatientResults';
 
+// Admin Pages
+import AdminDashboard from './pages/admin/AdminDashboard';
+
 function AppContent() {
   const location = useLocation();
   // Hide global navbar on landing and auth pages for a clean, minimal look
@@ -93,6 +96,19 @@ function AppContent() {
             <Route path="dashboard" element={<PatientDashboard />} />
             <Route path="medication-safety" element={<PatientMedicationSafety />} />
             <Route path="results" element={<PatientResults />} />
+          </Route>
+
+          {/* Admin Protected Routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <DashboardLayout role="admin" />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
           </Route>
 
           {/* Catch-all redirect */}

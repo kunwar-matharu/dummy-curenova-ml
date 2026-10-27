@@ -25,6 +25,9 @@ MODEL_VERSION = bundle.get("model_version", "cure-nova-xgb-v2")
 def query_candidates(disease_id):
     safe_id = str(disease_id).replace("'", "''")
 
+    if not DATA_PATH.exists():
+        return pd.DataFrame()
+
     sql = f"""
     SELECT *
     FROM read_parquet('{DATA_PATH.as_posix()}')
@@ -32,20 +35,24 @@ def query_candidates(disease_id):
       AND label = 0
     """
 
-    result = subprocess.run(
-        ["duckdb", "-csv", "-c", sql],
-        capture_output=True
-    )
-
-    if result.returncode != 0:
-        raise RuntimeError(
-            result.stderr.decode("utf-8", errors="replace")
+    try:
+        import duckdb
+        return duckdb.connect().execute(sql).df()
+    except Exception:
+        result = subprocess.run(
+            ["duckdb", "-csv", "-c", sql],
+            capture_output=True
         )
 
-    if not result.stdout:
-        return pd.DataFrame()
+        if result.returncode != 0:
+            raise RuntimeError(
+                result.stderr.decode("utf-8", errors="replace")
+            )
 
-    return pd.read_csv(BytesIO(result.stdout))
+        if not result.stdout:
+            return pd.DataFrame()
+
+        return pd.read_csv(BytesIO(result.stdout))
 
 
 def add_molecular_features(df):
@@ -112,6 +119,14 @@ def add_molecular_features(df):
             set(molecular["drug_id"])
         )
     ).astype(int)
+
+    for col in [
+        "logp", "tpsa", "hbd", "hba", "rotatable_bonds", "rings",
+        "aromatic_rings", "heavy_atoms", "fraction_csp3", "formal_charge", "num_atoms"
+    ]:
+        mol_col = f"molecular_{col}"
+        if mol_col in FEATURES and mol_col not in df.columns and col in df.columns:
+            df[mol_col] = df[col]
 
     return df
 

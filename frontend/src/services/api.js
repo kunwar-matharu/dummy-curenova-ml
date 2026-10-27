@@ -1,4 +1,4 @@
-﻿import axios from 'axios';
+import axios from 'axios';
 
 // Resolve central backend API base URL
 const rawUrl = (
@@ -73,6 +73,15 @@ export const authService = {
     api.post('/auth/refresh', { refresh_token: refreshToken }),
   logout: (refreshToken) =>
     api.post('/auth/logout', refreshToken ? { refresh_token: refreshToken } : {}),
+  getUsers: () => api.get('/auth/users'),
+  approveUser: (userId, approvalStatus) =>
+    api.post(`/auth/users/${userId}/approve`, { approval_status: approvalStatus }),
+};
+
+export const adminService = {
+  getUsers: () => api.get('/auth/users'),
+  approveUser: (userId, approvalStatus) =>
+    api.post(`/auth/users/${userId}/approve`, { approval_status: approvalStatus }),
 };
 
 export const repurposingService = {
