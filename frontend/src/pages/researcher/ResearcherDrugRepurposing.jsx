@@ -98,7 +98,7 @@ export const ResearcherDrugRepurposing = () => {
         result: response,
       };
 
-      const updatedHistory = [historyItem, ...history.filter(h => h.query.toLowerCase() !== cleanQuery.toLowerCase())].slice(0, 15);
+      const updatedHistory = [historyItem, ...history.filter(h => h.id !== historyItem.id)].slice(0, 15);
       setHistory(updatedHistory);
       try {
         localStorage.setItem('curenova_research_history', JSON.stringify(updatedHistory));
@@ -598,6 +598,41 @@ export const ResearcherDrugRepurposing = () => {
                             <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
                               {selectedCandidate.mechanism}
                             </p>
+                          </div>
+
+                          {/* ML Ranking Score & Stress-Test Robustness */}
+                          <div className="p-3.5 rounded-xl bg-[var(--color-surface-sunken)] border border-[var(--color-border-subtle)] space-y-2">
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="font-mono font-bold text-[var(--color-text-muted)] uppercase tracking-wider">
+                                ML Ranking Score
+                              </span>
+                              <span className="font-mono font-bold text-[var(--color-text-primary)]">
+                                {selectedCandidate.prediction_score ? Number(selectedCandidate.prediction_score).toFixed(4) : (selectedCandidate.curenova_ranking / 100).toFixed(4)}
+                              </span>
+                            </div>
+                            <div className="text-[10px] text-[var(--color-text-muted)]">
+                              Model Signal: CureNova XGBoost candidate prioritization score (not a clinical probability).
+                            </div>
+
+                            {selectedCandidate.stress_score !== undefined && selectedCandidate.stress_score !== null && (
+                              <div className="pt-2 border-t border-[var(--color-border-subtle)] space-y-1">
+                                <div className="flex items-center justify-between text-xs">
+                                  <span className="font-mono font-bold text-[#d97706] uppercase tracking-wider flex items-center gap-1">
+                                    <Activity className="w-3.5 h-3.5" />
+                                    Stress-Test Robustness
+                                  </span>
+                                  <span className="font-mono font-bold text-[#d97706]">
+                                    {Number(selectedCandidate.stress_score).toFixed(2)}
+                                  </span>
+                                </div>
+                                <p className="text-[11px] text-[var(--color-text-secondary)]">
+                                  {selectedCandidate.stress_interpretation || 'Stress-test evaluation complete.'}
+                                </p>
+                                <p className="text-[10px] text-[var(--color-text-muted)] italic">
+                                  Stress-test result measures algorithmic perturbation stability, not clinical drug safety.
+                                </p>
+                              </div>
+                            )}
                           </div>
 
                           {/* Primary Targets & Pathways */}

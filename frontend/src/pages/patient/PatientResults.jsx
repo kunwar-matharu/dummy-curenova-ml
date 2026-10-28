@@ -126,7 +126,9 @@ export const PatientResults = () => {
             {data.summary_headline}
           </h2>
           <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed">
-            This combination may have a potential interaction. Please discuss this with your healthcare professional at your next visit. Do not stop, start, or change your doses without speaking to your doctor first.
+            {(data.patient_friendly_summary && data.patient_friendly_summary.length > 0)
+              ? "This combination may have a potential interaction. Please discuss this with your healthcare professional at your next visit. Do not stop, start, or change your doses without speaking to your doctor first."
+              : "No verified drug-drug interaction found in available curated pharmacovigilance sources. Absence of data does not guarantee safety. Keep your healthcare provider updated on all prescription and over-the-counter medicines."}
           </p>
         </Card>
 
@@ -135,6 +137,18 @@ export const PatientResults = () => {
           <h3 className="text-base font-bold text-[var(--color-text-primary)]">
             What You Need to Know
           </h3>
+
+          {(!data.patient_friendly_summary || data.patient_friendly_summary.length === 0) && (
+            <Card elevation="raised" className="p-6 text-center space-y-2 border border-[var(--color-border-subtle)]">
+              <CheckCircle2 className="w-8 h-8 text-[#0284C7] mx-auto" />
+              <h4 className="text-sm font-bold text-[var(--color-text-primary)]">
+                No Documented Interactions Found
+              </h4>
+              <p className="text-xs text-[var(--color-text-secondary)] max-w-md mx-auto">
+                No verified drug-drug interactions were found among the checked medications in available reference sources. Absence of data does not guarantee safety. Keep your healthcare provider updated on all prescription and over-the-counter medicines.
+              </p>
+            </Card>
+          )}
 
           {data.patient_friendly_summary?.map((item, idx) => (
             <Card key={idx} elevation="raised" className="p-6 space-y-4">

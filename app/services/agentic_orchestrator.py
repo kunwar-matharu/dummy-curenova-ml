@@ -79,38 +79,43 @@ class AgenticOrchestrator:
             chembl_id = matched_drug.chembl_id
             ontology_id = None
         else:
-            resolved_name, resolved_onto_id, _ = DiseaseResolver.resolve_disease(query, db=db)
+            resolved_name, resolved_onto_id, db_dis = DiseaseResolver.resolve_disease(query, db=db)
             if resolved_name and resolved_onto_id:
                 entity_resolved_name = resolved_name
                 entity_type = "Disease (Ontology Matched)"
-                mesh_id = resolved_onto_id
+                mesh_id = db_dis.mesh_id if db_dis else resolved_onto_id
                 ontology_id = resolved_onto_id
             else:
-                default_dis = db.query(Disease).first()
-                entity_resolved_name = default_dis.name if default_dis else "Pulmonary Arterial Hypertension"
-                entity_type = "Disease (Inferred match)"
-                mesh_id = default_dis.mesh_id if default_dis else "D006976"
-                ontology_id = "MONDO_0005149"
-                uncertainties.append(f"Query '{query}' did not have exact dictionary match; resolved to closest ontological neighbor: {entity_resolved_name}.")
+                # Unsupported entity — do not hallucinate PAH or default to random DB entity
+                entity_resolved_name = query
+                entity_type = "Unsupported Entity"
+                uncertainties.append(f"Query '{query}' could not be resolved to any supported disease ontology (MONDO/EFO) or known drug compound. No hypotheses fabricated.")
+
+        resolution_status = "flagged" if entity_type == "Unsupported Entity" else "completed"
+        resolution_summary = (
+            f"Query '{query}' could not be mapped to any known disease ontology identifier or approved drug compound."
+            if entity_type == "Unsupported Entity" else
+            f"Resolved query to {entity_type}: '{entity_resolved_name}' [ID: {ontology_id or mesh_id or chembl_id}]."
+        )
 
         steps.append({
             "step_id": 2,
             "name": "Ontological Entity Resolution",
             "agent_role": "Biomedical Entity Resolution Agent",
-            "status": "completed",
+            "status": resolution_status,
             "tool_called": "tool_resolve_mesh_chembl_identifiers",
             "execution_time_ms": int((time.time() - t0) * 1000) + 40,
             "provenance": "MeSH Ontology / Open Targets Ontology / ChEMBL 33",
-            "findings_summary": f"Resolved query to {entity_type}: '{entity_resolved_name}' [ID: {ontology_id or mesh_id or chembl_id}].",
+            "findings_summary": resolution_summary,
             "uncertainties_detected": uncertainties[-1:] if uncertainties else []
         })
 
         # Role 4 Pre-lookup: Retrieve ranked candidates
-        # 1. Attempt dynamic ML inference using CureNova XGBoost Production Model
+        # 1. Attempt dynamic ML inference using CureNova XGBoost Production Model for diseases
         candidates = None
         ml_used = False
 
-        if ontology_id:
+        if entity_type.startswith("Disease") and ontology_id:
             try:
                 candidates = MLService.generate_repurposing_candidates(
                     db=db,
@@ -125,22 +130,26 @@ class AgenticOrchestrator:
                 logger.warning("ML candidate generation failed; falling back to database records: %s", str(ml_exc))
                 candidates = None
 
-        # 2. Database Fallback: Preserve existing database lookup if ML is unavailable, yields 0 candidates, or encounters error
+        # 2. Database Fallback: Scoped strictly to the resolved query entity (NEVER LEAK CROSS-ENTITY DATA)
         if not candidates:
-            candidates = db.query(CandidatePrediction).filter(
-                CandidatePrediction.disease_name.ilike(f"%{entity_resolved_name}%")
-            ).order_by(CandidatePrediction.rank).all()
-            if not candidates:
-                # Query might be drug name, check if candidates match drug
+            if entity_type.startswith("Disease"):
                 candidates = db.query(CandidatePrediction).filter(
-                    CandidatePrediction.drug_name.ilike(f"%{entity_resolved_name}%")
-                ).all()
-            if not candidates:
-                candidates = db.query(CandidatePrediction).order_by(CandidatePrediction.rank).all()
+                    CandidatePrediction.disease_name.ilike(f"%{entity_resolved_name}%")
+                ).order_by(CandidatePrediction.rank).all()
+            elif entity_type == "Drug":
+                candidates = db.query(CandidatePrediction).filter(
+                    (CandidatePrediction.drug_name.ilike(f"%{entity_resolved_name}%")) |
+                    (CandidatePrediction.chembl_id == chembl_id)
+                ).order_by(CandidatePrediction.rank).all()
+            else:
+                candidates = []
+
+        if not candidates:
+            candidates = []
 
         top_candidate = candidates[0] if candidates else None
-        target_drug = top_candidate.drug_name if top_candidate else "Imatinib"
-        target_disease = entity_resolved_name
+        target_drug = top_candidate.drug_name if top_candidate else (entity_resolved_name if entity_type == "Drug" else "Unassigned")
+        target_disease = (top_candidate.disease_name if top_candidate else entity_resolved_name) if entity_type.startswith("Disease") else (top_candidate.disease_name if top_candidate else "Multiple Indications")
 
         # Agent A (Role 5): LiteratureScout
         t0 = time.time()
@@ -205,11 +214,14 @@ class AgenticOrchestrator:
             if ml_used else
             "tool_compute_calibrated_graph_ensemble"
         )
-        scoring_summary = (
-            f"Ranked {len(candidates)} repurposing candidates using production XGBoost model with 39 biomedical and molecular features (held-out unseen-disease AP: 0.9047, ROC-AUC: 0.9735). Scores are uncalibrated ranking scores."
-            if ml_used else
-            f"Ranked {len(candidates)} repurposing candidates. Scores are calibrated model likelihoods."
-        )
+        if candidates:
+            scoring_summary = (
+                f"Ranked {len(candidates)} repurposing candidates using production XGBoost model with 39 biomedical and molecular features (held-out unseen-disease AP: 0.9047, ROC-AUC: 0.9735). Scores are uncalibrated ranking scores."
+                if ml_used else
+                f"Ranked {len(candidates)} repurposing candidates. Scores are calibrated model likelihoods."
+            )
+        else:
+            scoring_summary = f"No candidate hypotheses identified for {entity_type.lower()} '{entity_resolved_name}'." 
 
         detected_uncertainties = []
         if ml_used:
@@ -345,12 +357,18 @@ class AgenticOrchestrator:
                 "stress_interpretation": getattr(c, "stress_interpretation", None)
             })
 
-        synthesis_text = (
-            f"Investigation for '{entity_resolved_name}' completed across {len(steps)} verified agentic workflow steps ({provenance_mode}). "
-            f"Candidate: {target_drug}. Mechanism: {structured_synth.proposed_mechanism} "
-            f"Identified {len(candidates)} ranked candidates. "
-            f"Evidence citations validated: {len(structured_synth.validated_citations)} verified pass-through sources."
-        )
+        if candidates:
+            synthesis_text = (
+                f"Investigation for '{entity_resolved_name}' completed across {len(steps)} verified agentic workflow steps ({provenance_mode}). "
+                f"Candidate: {target_drug}. Mechanism: {structured_synth.proposed_mechanism} "
+                f"Identified {len(candidates)} ranked candidates. "
+                f"Evidence citations validated: {len(structured_synth.validated_citations)} verified pass-through sources."
+            )
+        else:
+            synthesis_text = (
+                f"Investigation for '{entity_resolved_name}' completed across {len(steps)} workflow steps. "
+                f"No verified candidate hypotheses were identified for {entity_type.lower()} '{entity_resolved_name}' in the current biomedical dataset."
+            )
 
         return {
             "workflow_id": workflow_id,

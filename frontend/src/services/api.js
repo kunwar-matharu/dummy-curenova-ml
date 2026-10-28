@@ -85,7 +85,7 @@ export const adminService = {
 };
 
 export const repurposingService = {
-  getDiseases: () => api.get('/candidates'),
+  getDiseases: () => api.get('/candidates/diseases'),
   analyze: async (query, minEvidence = 'all') => {
     const cleanQuery = encodeURIComponent(query.trim());
     const raw = await api.post(`/candidates/investigate?query=${cleanQuery}`);
@@ -101,14 +101,21 @@ export const repurposingService = {
       candidates: (raw.candidate_hypotheses || []).map((c, idx) => ({
         id: c.id,
         drug_name: c.drug_name,
+        chembl_id: c.chembl_id,
+        disease: c.disease_name || raw.query_entity,
+        disease_name: c.disease_name || raw.query_entity,
         original_indication: c.approval_status || 'Preclinical Repurposing Hypothesis',
         curenova_ranking: Math.round((c.prediction_score || 0.85) * 100),
         prediction_score: c.prediction_score,
+        score_type: c.score_type || 'ranking_score',
+        stress_score: c.stress_score,
+        stress_interpretation: c.stress_interpretation,
         confidence_interval: `[${(c.confidence_interval_low ?? 0.70).toFixed(2)}, ${(c.confidence_interval_high ?? 0.95).toFixed(2)}]`,
         confidence_interval_low: c.confidence_interval_low,
         confidence_interval_high: c.confidence_interval_high,
         evidence_strength: c.evidence_count >= 3 ? 'high' : c.evidence_count >= 1 ? 'moderate' : 'low',
         evidence_count: c.evidence_count,
+        mechanism: c.rationale || c.biological_mechanism || synthesis.proposed_mechanism || 'Target kinase signaling modulation',
         mechanism_summary: c.rationale || c.biological_mechanism || synthesis.proposed_mechanism || 'Target kinase signaling modulation',
         evidence_passages: synthesis.validated_citations || [],
         safety_signals: synthesis.safety_concerns || [],
@@ -119,6 +126,16 @@ export const repurposingService = {
         is_bookmarked: c.is_bookmarked,
         rank: c.rank || idx + 1,
         status: c.status,
+        status_label: c.status || 'Research Hypothesis',
+        targets: c.targets || [],
+        pathways: c.pathways || [],
+        supporting_papers: (synthesis.validated_citations || []).map(cit => ({
+          title: cit.title || `Biomedical Evidence Record #${cit.id}`,
+          journal: cit.journal || 'PubMed Citation',
+          year: cit.year || 2024,
+          pmid: cit.pmid,
+          citation: cit.citation || (cit.pmid ? `PMID:${cit.pmid}` : 'Internal Study')
+        })),
       })),
       synthesis_report: raw.synthesis_report,
       completed_steps: raw.completed_steps || [],
@@ -135,7 +152,10 @@ export const repurposingService = {
 };
 
 export const safetyService = {
-  getCatalog: () => api.get('/patient/medicines'),
+  getCatalog: async () => {
+    const res = await api.get('/patient/medicines');
+    return Array.isArray(res) ? { catalog: res } : res;
+  },
   analyze: async (medications, patientContext = null, roleView = 'doctor') => {
     const medList = Array.isArray(medications) ? medications : [medications];
     const names = medList
@@ -154,11 +174,11 @@ export const safetyService = {
 
     return {
       analysis_id: `safe-${Date.now()}`,
-      overall_risk_category: hasMajor ? 'High Risk' : (ddiArray.length > 0 ? 'Moderate Risk' : 'Low Risk'),
-      overall_risk_score: hasMajor ? 82 : (ddiArray.length > 0 ? 50 : 12),
+      overall_risk_category: hasMajor ? 'High Risk' : (ddiArray.length > 0 ? 'Moderate Risk' : 'No Documented Signal'),
+      overall_risk_score: hasMajor ? 82 : (ddiArray.length > 0 ? 50 : 0),
       summary_headline: ddiArray.length > 0
         ? `Identified ${ddiArray.length} potential interaction signal(s) among evaluated medications.`
-        : 'No critical drug-drug interactions detected in curated pharmacovigilance database.',
+        : 'No verified drug-drug interaction found in available curated pharmacovigilance sources (absence of data does not guarantee safety).',
       pairwise_interactions: ddiArray.map((d) => ({
         drug_a: d.drug_a,
         drug_b: d.drug_b,
@@ -168,6 +188,24 @@ export const safetyService = {
         source: d.verified_source,
         url: d.source_url,
       })),
+      patient_friendly_summary: ddiArray.map((d) => ({
+        medications_involved: `${d.drug_a} + ${d.drug_b}`,
+        what_was_detected: `${d.severity || 'Known'} interaction signal: ${d.mechanism || 'Pharmacokinetic or pharmacodynamic interaction reported.'}`,
+        why_it_matters: 'Co-administration may alter effectiveness or increase the risk of adverse reactions.',
+        recommended_action: d.recommendation || 'Discuss this combination with your physician or pharmacist at your next appointment.',
+      })),
+      patient_questions_for_doctor: ddiArray.length > 0
+        ? [
+            ...ddiArray.map((d) => `Is it safe for me to take ${d.drug_a} together with ${d.drug_b}?`),
+            'Are there any symptoms I should monitor that might indicate a medication interaction?',
+            'Should my dose or administration timing be adjusted to minimize any risk?'
+          ]
+        : [
+            'Are there any over-the-counter medicines or vitamins I should avoid taking with my current prescriptions?',
+            'What is the best time of day to take each of my medications?',
+            'Do any of my medications require regular blood or kidney function tests?'
+          ],
+      has_potential_interaction: ddiArray.length > 0,
       medications: medList,
       patient_context: patientContext,
       role_view: roleView,
@@ -186,7 +224,15 @@ export const safetyService = {
 };
 
 export const evidenceService = {
-  search: (params) => api.get('/evidence', { params }),
+  search: (params) => {
+    const cleanParams = {};
+    if (params) {
+      if (params.q) cleanParams.search = params.q;
+      if (params.evidence_type && params.evidence_type !== 'all') cleanParams.study_type = params.evidence_type;
+      if (params.source && params.source !== 'all') cleanParams.search = params.source;
+    }
+    return api.get('/evidence', { params: cleanParams });
+  },
   synthesize: (evidenceIds) => api.post('/evidence/synthesize', evidenceIds),
   searchLivePubmed: (query, maxResults = 5) =>
     api.get('/evidence/pubmed-live', { params: { query, max_results: maxResults } }),

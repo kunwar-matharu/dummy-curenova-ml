@@ -15,6 +15,12 @@ MODEL_PATH = BASE / "models" / "cure_nova_xgb_final.joblib"
 DATA_PATH = BASE / "data" / "training" / "drug_disease_features_v4.parquet"
 MOLECULAR_PATH = BASE / "data" / "training" / "drug_molecular_features.csv"
 
+if not DATA_PATH.exists() and (Path(r"A:\CureNovaML") / "data" / "training" / "drug_disease_features_v4.parquet").exists():
+    DATA_PATH = Path(r"A:\CureNovaML") / "data" / "training" / "drug_disease_features_v4.parquet"
+
+if not MOLECULAR_PATH.exists() and (Path(r"A:\CureNovaML") / "data" / "training" / "drug_molecular_features.csv").exists():
+    MOLECULAR_PATH = Path(r"A:\CureNovaML") / "data" / "training" / "drug_molecular_features.csv"
+
 bundle = joblib.load(MODEL_PATH)
 
 model = bundle["model"]

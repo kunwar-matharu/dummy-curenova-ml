@@ -24,6 +24,8 @@ ML_DIR = Path(__file__).resolve().parent
 MODEL_PATH = ML_DIR / "models" / "cure_nova_xgb_final.joblib"
 METADATA_PATH = ML_DIR / "models" / "cure_nova_xgb_final.json"
 CHEMBL_FILE = ML_DIR / "data" / "chembl" / "chembl_drug_evidence.json"
+if not CHEMBL_FILE.exists() and (Path(r"A:\CureNovaML") / "data" / "chembl" / "chembl_drug_evidence.json").exists():
+    CHEMBL_FILE = Path(r"A:\CureNovaML") / "data" / "chembl" / "chembl_drug_evidence.json"
 
 MODEL_VERSION = "cure-nova-xgb-final"
 

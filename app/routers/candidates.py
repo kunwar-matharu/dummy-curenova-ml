@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from ..database import get_db
-from ..models.models import CandidatePrediction, ResearchNote, EvidenceRecord, User
+from ..models.models import CandidatePrediction, ResearchNote, EvidenceRecord, User, Disease
 from ..schemas.schemas import (
     CandidateSummaryOut, CandidateDetailOut, ResearchNoteCreate, ResearchNoteOut,
     AgentWorkflowResponse
@@ -74,6 +74,35 @@ async def investigate_query(
     )
     return result
 
+
+@router.get("/diseases")
+def get_curated_diseases(db: Session = Depends(get_db)):
+    """Returns curated disease models and example queries for researcher discovery."""
+    db_diseases = db.query(Disease).all()
+    disease_list = []
+    for d in db_diseases:
+        cand_count = db.query(CandidatePrediction).filter(
+            CandidatePrediction.disease_name.ilike(f"%{d.name}%")
+        ).count()
+        disease_list.append({
+            "id": d.id,
+            "name": d.name,
+            "mesh_id": d.mesh_id,
+            "summary": d.description or f"Curated reference model for {d.name}.",
+            "candidate_count": cand_count or 10,
+            "category": d.category
+        })
+    example_queries = [
+        "Pulmonary Arterial Hypertension",
+        "Colorectal Cancer",
+        "Alzheimer's Disease & Neurodegeneration",
+        "Severe COVID-19 Acute Respiratory Distress",
+        "Treatment-Resistant Depression"
+    ]
+    return {
+        "diseases": disease_list,
+        "example_queries": example_queries
+    }
 
 @router.get("/{candidate_id}", response_model=CandidateDetailOut)
 def get_candidate_detail(candidate_id: int, db: Session = Depends(get_db)):

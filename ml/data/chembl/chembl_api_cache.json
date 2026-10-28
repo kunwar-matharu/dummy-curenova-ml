@@ -3178,5 +3178,683 @@
       }
     ],
     "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL2103839": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL2103839",
+    "drug_name": "RIDAFOROLIMUS",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 296,
+    "usable_activity_count": 1,
+    "target_count": 1,
+    "strong_target_count": 0,
+    "max_pchembl": 5.9,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL5543",
+        "target_name": "Dual specificity tyrosine-phosphorylation-regulated kinase 1B",
+        "max_pchembl": 5.9,
+        "median_pchembl": 5.9,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3545097": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3545097",
+    "drug_name": "SAPANISERTIB",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 174,
+    "usable_activity_count": 55,
+    "target_count": 24,
+    "strong_target_count": 20,
+    "max_pchembl": 10.04,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL2842",
+        "target_name": "Serine/threonine-protein kinase mTOR",
+        "max_pchembl": 10.04,
+        "median_pchembl": 8.85,
+        "activity_count": 14,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4296661",
+        "target_name": "mTORC1",
+        "max_pchembl": 9.16,
+        "median_pchembl": 9.0,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 8.74,
+        "median_pchembl": 8.4,
+        "activity_count": 4,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3267",
+        "target_name": "Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit gamma isoform",
+        "max_pchembl": 8.43,
+        "median_pchembl": 6.78,
+        "activity_count": 3,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4523999",
+        "target_name": "mTORC2",
+        "max_pchembl": 8.3,
+        "median_pchembl": 8.3,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3145",
+        "target_name": "Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit beta isoform",
+        "max_pchembl": 8.28,
+        "median_pchembl": 5.33,
+        "activity_count": 5,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614039",
+        "target_name": "Huh-7",
+        "max_pchembl": 8.15,
+        "median_pchembl": 8.15,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614912",
+        "target_name": "SK-HEP1",
+        "max_pchembl": 8.1,
+        "median_pchembl": 8.1,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4005",
+        "target_name": "Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit alpha isoform",
+        "max_pchembl": 7.82,
+        "median_pchembl": 7.55,
+        "activity_count": 4,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1075584",
+        "target_name": "SNU-423",
+        "max_pchembl": 7.82,
+        "median_pchembl": 7.82,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3130",
+        "target_name": "Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit delta isoform",
+        "max_pchembl": 7.52,
+        "median_pchembl": 7.52,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL400",
+        "target_name": "MDA-MB-231",
+        "max_pchembl": 7.51,
+        "median_pchembl": 7.51,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL399",
+        "target_name": "HeLa",
+        "max_pchembl": 7.44,
+        "median_pchembl": 7.44,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL394",
+        "target_name": "HCT-116",
+        "max_pchembl": 7.32,
+        "median_pchembl": 7.32,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL387",
+        "target_name": "MCF7",
+        "max_pchembl": 7.28,
+        "median_pchembl": 7.28,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL364",
+        "target_name": "Plasmodium falciparum",
+        "max_pchembl": 7.12,
+        "median_pchembl": 7.12,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4296409",
+        "target_name": "CNE-2",
+        "max_pchembl": 7.0,
+        "median_pchembl": 7.0,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL383",
+        "target_name": "HL-60",
+        "max_pchembl": 6.8,
+        "median_pchembl": 6.8,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL392",
+        "target_name": "A549",
+        "max_pchembl": 6.76,
+        "median_pchembl": 6.76,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4296457",
+        "target_name": "L02",
+        "max_pchembl": 6.55,
+        "median_pchembl": 6.55,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL395",
+        "target_name": "HepG2",
+        "max_pchembl": 5.76,
+        "median_pchembl": 5.76,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4296437",
+        "target_name": "Hep 3B2",
+        "max_pchembl": 5.35,
+        "median_pchembl": 5.35,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1075165",
+        "target_name": "Phosphatidylinositol 3-kinase catalytic subunit type 3",
+        "max_pchembl": 5.25,
+        "median_pchembl": 5.25,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1075561",
+        "target_name": "PLC-PRF-5",
+        "max_pchembl": 5.18,
+        "median_pchembl": 5.18,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL812": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL812",
+    "drug_name": "PYRIDOSTIGMINE BROMIDE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 110,
+    "usable_activity_count": 9,
+    "target_count": 2,
+    "strong_target_count": 2,
+    "max_pchembl": 6.46,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL220",
+        "target_name": "Acetylcholinesterase",
+        "max_pchembl": 6.46,
+        "median_pchembl": 6.46,
+        "activity_count": 5,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1914",
+        "target_name": "Cholinesterase",
+        "max_pchembl": 6.05,
+        "median_pchembl": 6.0,
+        "activity_count": 4,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1201092": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1201092",
+    "drug_name": "RIVASTIGMINE TARTRATE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 182,
+    "usable_activity_count": 6,
+    "target_count": 5,
+    "strong_target_count": 1,
+    "max_pchembl": 6.3,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL5763",
+        "target_name": "Cholinesterase",
+        "max_pchembl": 6.3,
+        "median_pchembl": 6.3,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1914",
+        "target_name": "Cholinesterase",
+        "max_pchembl": 5.84,
+        "median_pchembl": 5.84,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL220",
+        "target_name": "Acetylcholinesterase",
+        "max_pchembl": 5.19,
+        "median_pchembl": 5.19,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL5754",
+        "target_name": "MAP/microtubule affinity-regulating kinase 4",
+        "max_pchembl": 5.17,
+        "median_pchembl": 5.17,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4078",
+        "target_name": "Acetylcholinesterase",
+        "max_pchembl": 4.21,
+        "median_pchembl": 4.21,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL338975": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL338975",
+    "drug_name": "PHYSOSTIGMINE SALICYLATE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 23,
+    "usable_activity_count": 4,
+    "target_count": 4,
+    "strong_target_count": 4,
+    "max_pchembl": 7.8,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1914",
+        "target_name": "Cholinesterase",
+        "max_pchembl": 7.8,
+        "median_pchembl": 7.8,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4780",
+        "target_name": "Acetylcholinesterase",
+        "max_pchembl": 7.67,
+        "median_pchembl": 7.67,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL220",
+        "target_name": "Acetylcholinesterase",
+        "max_pchembl": 7.55,
+        "median_pchembl": 7.55,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4078",
+        "target_name": "Acetylcholinesterase",
+        "max_pchembl": 6.68,
+        "median_pchembl": 6.68,
+        "activity_count": 1,
+        "strong_activity": true
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL483465": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL483465",
+    "drug_name": "ELRAGLUSIB",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 7,
+    "usable_activity_count": 4,
+    "target_count": 4,
+    "strong_target_count": 3,
+    "max_pchembl": 6.22,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL1075477",
+        "target_name": "HuP-T3",
+        "max_pchembl": 6.22,
+        "median_pchembl": 6.22,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL262",
+        "target_name": "Glycogen synthase kinase-3 beta",
+        "max_pchembl": 6.15,
+        "median_pchembl": 6.15,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614530",
+        "target_name": "BXPC-3",
+        "max_pchembl": 6.0,
+        "median_pchembl": 6.0,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614725",
+        "target_name": "MIA PaCa-2",
+        "max_pchembl": 5.3,
+        "median_pchembl": 5.3,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1201192": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1201192",
+    "drug_name": "ARMODAFINIL",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 32,
+    "usable_activity_count": 7,
+    "target_count": 5,
+    "strong_target_count": 2,
+    "max_pchembl": 8.68,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL217",
+        "target_name": "D(2) dopamine receptor",
+        "max_pchembl": 8.68,
+        "median_pchembl": 8.68,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL238",
+        "target_name": "Sodium-dependent dopamine transporter",
+        "max_pchembl": 6.19,
+        "median_pchembl": 6.19,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL338",
+        "target_name": "Sodium-dependent dopamine transporter",
+        "max_pchembl": 5.52,
+        "median_pchembl": 5.52,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 5.05,
+        "median_pchembl": 5.05,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL234",
+        "target_name": "D(3) dopamine receptor",
+        "max_pchembl": 4.41,
+        "median_pchembl": 4.41,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL2107308": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL2107308",
+    "drug_name": "ACOTIAMIDE HYDROCHLORIDE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL660": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL660",
+    "drug_name": "AMANTADINE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1000,
+    "usable_activity_count": 106,
+    "target_count": 20,
+    "strong_target_count": 7,
+    "max_pchembl": 7.69,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL287",
+        "target_name": "Sigma non-opioid intracellular receptor 1",
+        "max_pchembl": 7.69,
+        "median_pchembl": 7.69,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL3879801",
+        "target_name": "NON-PROTEIN TARGET",
+        "max_pchembl": 7.4,
+        "median_pchembl": 5.85,
+        "activity_count": 12,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 7.0,
+        "median_pchembl": 5.06,
+        "activity_count": 10,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613740",
+        "target_name": "Influenza A virus",
+        "max_pchembl": 6.52,
+        "median_pchembl": 4.89,
+        "activity_count": 50,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1932894",
+        "target_name": "Matrix protein 2",
+        "max_pchembl": 6.5,
+        "median_pchembl": 6.5,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL613193",
+        "target_name": "H3N2 subtype",
+        "max_pchembl": 6.4,
+        "median_pchembl": 6.09,
+        "activity_count": 8,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL2366902",
+        "target_name": "Influenza A virus H3N2",
+        "max_pchembl": 6.3,
+        "median_pchembl": 5.82,
+        "activity_count": 6,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL614068",
+        "target_name": "MDCK",
+        "max_pchembl": 5.96,
+        "median_pchembl": 5.96,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613845",
+        "target_name": "H5N1 subtype",
+        "max_pchembl": 5.42,
+        "median_pchembl": 5.42,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL364",
+        "target_name": "Plasmodium falciparum",
+        "max_pchembl": 5.25,
+        "median_pchembl": 5.25,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1907604",
+        "target_name": "Glutamate NMDA receptor; GRIN1/GRIN2A",
+        "max_pchembl": 5.0,
+        "median_pchembl": 5.0,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL2094124",
+        "target_name": "Glutamate [NMDA] receptor",
+        "max_pchembl": 4.98,
+        "median_pchembl": 4.98,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL2052",
+        "target_name": "Matrix protein 2",
+        "max_pchembl": 4.8,
+        "median_pchembl": 4.8,
+        "activity_count": 2,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1743122",
+        "target_name": "Solute carrier family 22 member 2",
+        "max_pchembl": 4.64,
+        "median_pchembl": 4.64,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1743126",
+        "target_name": "Multidrug and toxin extrusion protein 1",
+        "max_pchembl": 4.42,
+        "median_pchembl": 4.42,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612610",
+        "target_name": "Influenza A virus (A/Puerto Rico/8/1934(H1N1))",
+        "max_pchembl": 4.36,
+        "median_pchembl": 4.36,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL613129",
+        "target_name": "Influenza B virus",
+        "max_pchembl": 4.3,
+        "median_pchembl": 4.3,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL612348",
+        "target_name": "Trypanosoma brucei rhodesiense",
+        "max_pchembl": 4.28,
+        "median_pchembl": 4.28,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL2073670",
+        "target_name": "Solute carrier family 22 member 1",
+        "max_pchembl": 4.12,
+        "median_pchembl": 4.12,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL1907608",
+        "target_name": "Glutamate NMDA receptor",
+        "max_pchembl": 4.04,
+        "median_pchembl": 4.04,
+        "activity_count": 4,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3137301": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3137301",
+    "drug_name": "SACUBITRIL",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 11,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
   }
 }

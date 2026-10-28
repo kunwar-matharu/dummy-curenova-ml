@@ -80,7 +80,7 @@ npm run dev
 | **Researcher** | `dr.elena.vance@curenova-research.org` | `CureNova2026!Secure` | Approved privileged research |
 | **Doctor** | `marcus.chen.md@metropolitan-health.org` | `CureNova2026!Secure` | Pharmacovigilance & DDI |
 | **Patient** | `sarah.jenkins@patient-portal.org` | `CureNova2026!Secure` | Plain-language medicine guides |
-| **Admin** | `admin@curenova.ai` | `Admin2026!Secure` | System & user approvals |
+| **Admin** | `admin@curenova.ai` | `CureNova2026!Secure` | System & user approvals |
 
 ---
 
