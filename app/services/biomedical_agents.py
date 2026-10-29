@@ -88,28 +88,61 @@ class TargetMechanist:
         llm_client: Optional[BaseLLMClient] = None
     ) -> Dict[str, Any]:
         edges = db.query(KnowledgeEdge).all()
-        relevant_edges = [
+        drug_term = drug_name.lower().strip()
+        disease_term = disease_name.lower().strip()
+
+        # 1. Direct biological edges connecting drug and disease
+        direct_edges = [
             e for e in edges
-            if drug_name.lower() in e.source_id.lower() or drug_name.lower() in e.target_id.lower()
-            or disease_name.lower() in e.source_id.lower() or disease_name.lower() in e.target_id.lower()
+            if (drug_term in e.source_id.lower() and disease_term in e.target_id.lower())
+            or (disease_term in e.source_id.lower() and drug_term in e.target_id.lower())
         ]
+
+        # 2. 2-hop edges via shared target/pathway in the knowledge graph
+        drug_targets = {
+            e.target_id.lower() for e in edges
+            if drug_term in e.source_id.lower() and e.relationship_type.lower() in ("targets", "inhibits", "binds", "modulates")
+        } | {
+            e.source_id.lower() for e in edges
+            if drug_term in e.target_id.lower() and e.relationship_type.lower() in ("targets", "inhibits", "binds", "modulates")
+        }
+
+        disease_targets = {
+            e.source_id.lower() for e in edges
+            if disease_term in e.target_id.lower() and e.relationship_type.lower() in ("associated_with", "causes", "expressed_in", "targets")
+        } | {
+            e.target_id.lower() for e in edges
+            if disease_term in e.source_id.lower() and e.relationship_type.lower() in ("associated_with", "causes", "expressed_in", "targets")
+        }
+
+        shared_targets = drug_targets.intersection(disease_targets)
+        connected_edges_count = len(direct_edges) + len(shared_targets)
 
         supporting_ids = [e["id"] for e in evidence_facts if e.get("evidence_direction") == "supporting"]
         conflicting_ids = [e["id"] for e in evidence_facts if e.get("evidence_direction") == "contradictory"]
 
-        # Deterministic mechanistic baseline
-        pathway_desc = (
-            f"Modulation of kinase/target signaling cascades relevant to {disease_name}. "
-            f"Knowledge graph indicates {len(relevant_edges)} connected biological interaction edges."
-        )
-        is_established = any(e.relationship_type.lower() in ("treats", "targets") for e in relevant_edges)
+        # ZERO-EVIDENCE RULE:
+        # If knowledge graph connected biological edges = 0, never assert a confirmed biological mechanism.
+        if connected_edges_count == 0:
+            pathway_desc = (
+                "Evidence limitation: No connected biological interaction edges were identified in the available knowledge graph. "
+                "ML interpretation: This pair was computationally ranked highly by feature embeddings, but direct biological support was not established by retrieved evidence."
+            )
+            is_established = False
+        else:
+            shared_info = f" via shared biological target(s): {', '.join(sorted(shared_targets)[:3])}" if shared_targets else ""
+            pathway_desc = (
+                f"Knowledge graph identifies {connected_edges_count} connected biological interaction edge(s) "
+                f"linking {drug_name} and {disease_name}{shared_info}."
+            )
+            is_established = any(e.relationship_type.lower() in ("treats", "targets", "indicated_for") for e in direct_edges)
 
         mechanistic_result = {
             "target_pathway": pathway_desc,
             "is_established": is_established,
             "supporting_evidence_ids": supporting_ids,
             "conflicting_evidence_ids": conflicting_ids,
-            "biological_edges_count": len(relevant_edges)
+            "biological_edges_count": connected_edges_count
         }
 
         # If LLM is active, enhance mechanistic reasoning grounded strictly on evidence
@@ -118,11 +151,12 @@ class TargetMechanist:
                 "You are CureNova TargetMechanist, an expert biomedical reasoning agent. "
                 "Analyze biological mechanisms connecting the candidate drug to the disease. "
                 "CRITICAL: Ground claims ONLY in the provided evidence. Cite supporting and conflicting IDs. "
+                "If connected edges = 0, you MUST enforce the evidence limitation rule and not claim confirmed biology. "
                 "Return JSON with keys: proposed_mechanism (str), is_established (bool), "
                 "supporting_evidence_ids (list of int), conflicting_evidence_ids (list of int)."
             )
             user_prompt = (
-                f"<candidate_context>\nDrug: {drug_name}\nDisease: {disease_name}\n</candidate_context>\n"
+                f"<candidate_context>\nDrug: {drug_name}\nDisease: {disease_name}\nConnected Edges: {connected_edges_count}\n</candidate_context>\n"
                 f"<retrieved_evidence>\n{json.dumps(evidence_facts[:8])}\n</retrieved_evidence>"
             )
             try:
@@ -134,9 +168,17 @@ class TargetMechanist:
                     response_json=True
                 )
                 if isinstance(llm_out, dict) and "proposed_mechanism" in llm_out:
-                    mechanistic_result["target_pathway"] = str(llm_out["proposed_mechanism"])
-                    if "is_established" in llm_out:
-                        mechanistic_result["is_established"] = bool(llm_out["is_established"])
+                    if connected_edges_count == 0:
+                        # Enforce Zero-Evidence rule even if LLM hallucinated
+                        mechanistic_result["target_pathway"] = (
+                            "Evidence limitation: No connected biological interaction edges were identified in the available knowledge graph. "
+                            "ML interpretation: This pair was computationally ranked highly by feature embeddings, but direct biological support was not established by retrieved evidence."
+                        )
+                        mechanistic_result["is_established"] = False
+                    else:
+                        mechanistic_result["target_pathway"] = str(llm_out["proposed_mechanism"])
+                        if "is_established" in llm_out:
+                            mechanistic_result["is_established"] = bool(llm_out["is_established"])
             except Exception as e:
                 logger.warning("TargetMechanist LLM failure: %s", str(e))
                 raise
@@ -264,7 +306,24 @@ class Synthesizer:
         conf_ids = [i for i in safety_data.get("contradictory_evidence_ids", []) if i in valid_ids]
         safety_concerns = safety_data.get("safety_concerns", [])
         missing_info = safety_data.get("missing_safety_data", [])
-        strength = "Moderate (Phase 2/Clinical)" if any("clinical" in str(e.get("study_type", "")).lower() for e in evidence_facts) else "Preliminary Preclinical"
+        # Determine deterministic baseline evidence strength
+        edges_count = mechanistic_data.get("biological_edges_count", 0)
+        has_clinical = any(
+            "clinical" in str(e.get("study_type", "")).lower() or
+            "trial" in str(e.get("study_type", "")).lower() or
+            "approved" in str(e.get("excerpt", "")).lower()
+            for e in evidence_facts
+        )
+        has_direct_target = any(e.get("evidence_category") in ("mechanism", "pharmacology") for e in evidence_facts)
+
+        if edges_count == 0 and not has_direct_target:
+            strength = "Insufficient (Computational Hypothesis Only)"
+        elif has_clinical:
+            strength = "Strong (Direct Target + Bioactivity + Clinical/Approved)"
+        elif has_direct_target or edges_count > 0:
+            strength = "Preliminary Preclinical"
+        else:
+            strength = "Insufficient (Computational Hypothesis Only)"
 
         rejected_ids: List[int] = []
 
@@ -328,6 +387,15 @@ class Synthesizer:
             except Exception as e:
                 logger.warning("Synthesizer LLM failure: %s", str(e))
                 raise
+
+        # ZERO-EVIDENCE RULE ENFORCEMENT:
+        # If edges_count == 0 and no direct target facts exist, never claim a confirmed mechanism
+        if edges_count == 0 and not has_direct_target:
+            proposed_mech = (
+                "Evidence limitation: No connected biological interaction edges were identified in the available knowledge graph. "
+                "ML interpretation: This pair was computationally ranked highly by feature embeddings, but direct biological support was not established by retrieved evidence."
+            )
+            strength = "Insufficient (Computational Hypothesis Only)"
 
         # Build validated citations list
         all_cited_ids = list(dict.fromkeys(supp_ids + conf_ids))

@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { ToastProvider } from './components/ui/Toast';
 import Navbar from './components/Navbar';
+import ErrorBoundary from './components/ErrorBoundary';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardLayout from './layouts/DashboardLayout';
 
@@ -43,7 +44,8 @@ function AppContent() {
     <div className="min-h-screen flex flex-col bg-[var(--color-surface-ground)] text-[var(--color-text-primary)] font-sans antialiased">
       {!hideNavbar && <Navbar />}
       <div className="flex-1 flex flex-col">
-        <Routes>
+        <ErrorBoundary>
+          <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
@@ -114,6 +116,7 @@ function AppContent() {
           {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </ErrorBoundary>
       </div>
     </div>
   );

@@ -131,12 +131,14 @@ export const ResearcherResults = () => {
 
           <div className="sm:text-right shrink-0">
             <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--color-text-muted)] block">
-              CureNova Congruence Ranking
+              ML Ranking Score
             </span>
-            <div className="text-3xl font-extrabold tabular text-[#0284C7]">
-              {data.curenova_ranking}
-              <span className="text-sm font-normal text-[var(--color-text-muted)]"> / 100</span>
+            <div className="text-2xl font-extrabold tabular font-mono text-[#0284C7]">
+              {data.prediction_score ? Number(data.prediction_score).toFixed(4) : (data.curenova_ranking / 100).toFixed(4)}
             </div>
+            <span className="text-[9px] text-[var(--color-text-muted)] block">
+              Computational score (not clinical probability)
+            </span>
           </div>
         </div>
       </Card>

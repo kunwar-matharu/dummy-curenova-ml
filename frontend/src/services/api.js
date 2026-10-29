@@ -19,11 +19,36 @@ const api = axios.create({
   timeout: 35000,
 });
 
+// Dedicated unintercepted axios instance for auth token refresh calls
+const plainAxios = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  timeout: 15000,
+});
+
+// Concurrency queue management to prevent multiple simultaneous refresh calls
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
 // Intercept requests to attach JWT access token if present
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('curenova_token');
     if (token) {
+      config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -31,24 +56,151 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Intercept responses for consistent error formatting and session expiration detection
+// Intercept responses for consistent error formatting and automatic token refresh/retry
 api.interceptors.response.use(
   (response) => response.data,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
     const status = error.response?.status;
     const detail = error.response?.data?.detail;
-    const message =
+    let message =
       (typeof detail === 'string' ? detail : null) ||
       error.response?.data?.message ||
       error.message ||
       'Biomedical intelligence service temporarily unavailable.';
 
-    // Clear stale session on 401 when token was rejected
-    if (status === 401 && localStorage.getItem('curenova_token')) {
-      console.warn('Session expired or unauthorized request:', message);
+    if (!error.response && (error.code === 'ERR_NETWORK' || error.message === 'Network Error')) {
+      message = 'Backend service is currently unreachable (http://127.0.0.1:8000). Please ensure the CureNova backend is running.';
+      error.message = message;
+    } else if (status === 404) {
+      message = 'Requested API endpoint was not found on backend (404).';
+      error.message = message;
+    } else if (status === 403) {
+      message = 'Researcher permissions required for this action (403).';
+      error.message = message;
     }
 
-    return Promise.reject(new Error(message));
+    // Check if error is 401 Unauthorized and not already retried
+    if (status === 401 && originalRequest && !originalRequest._retry) {
+      const url = originalRequest.url || '';
+      const isAuthEndpoint =
+        url.includes('/auth/login') ||
+        url.includes('/auth/signup') ||
+        url.includes('/auth/refresh');
+
+      if (!isAuthEndpoint) {
+        const storedRefreshToken = localStorage.getItem('curenova_refresh_token');
+
+        if (storedRefreshToken) {
+          if (isRefreshing) {
+            // Queue this request until ongoing refresh completes
+            return new Promise((resolve, reject) => {
+              failedQueue.push({ resolve, reject });
+            })
+              .then((newToken) => {
+                originalRequest.headers = originalRequest.headers || {};
+                originalRequest.headers.Authorization = `Bearer ${newToken}`;
+                return api(originalRequest);
+              })
+              .catch((err) => Promise.reject(err));
+          }
+
+          originalRequest._retry = true;
+          isRefreshing = true;
+
+          try {
+            // Refresh access token via plainAxios to avoid circular interceptors
+            const refreshRes = await plainAxios.post('/auth/refresh', {
+              refresh_token: storedRefreshToken,
+            });
+
+            const newAccessToken = refreshRes.data?.access_token;
+            const newRefreshToken = refreshRes.data?.refresh_token;
+
+            if (!newAccessToken) {
+              throw new Error('Refresh response missing access token');
+            }
+
+            // Persist new token pair
+            localStorage.setItem('curenova_token', newAccessToken);
+            if (newRefreshToken) {
+              localStorage.setItem('curenova_refresh_token', newRefreshToken);
+            }
+
+            // Update default Authorization header for future requests
+            api.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+
+            // Notify application in memory of updated token
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(
+                new CustomEvent('curenova:token_refreshed', {
+                  detail: { access_token: newAccessToken, refresh_token: newRefreshToken },
+                })
+              );
+            }
+
+            // Flush all pending queued requests with new token
+            processQueue(null, newAccessToken);
+
+            // Retry the original request with new token
+            originalRequest.headers = originalRequest.headers || {};
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            return api(originalRequest);
+          } catch (refreshErr) {
+            // Token refresh failed (expired, revoked, collision, or deactivated user)
+            localStorage.removeItem('curenova_token');
+            localStorage.removeItem('curenova_refresh_token');
+            localStorage.removeItem('curenova_user');
+            delete api.defaults.headers.common['Authorization'];
+
+            const authExpiredError = new Error('Your session has expired. Please sign in again.');
+            authExpiredError.code = 'AUTH_TOKEN_EXPIRED';
+            authExpiredError.status = 401;
+
+            processQueue(authExpiredError, null);
+
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(
+                new CustomEvent('curenova:session_expired', {
+                  detail: { reason: refreshErr.message || 'refresh_failed' },
+                })
+              );
+            }
+
+            return Promise.reject(authExpiredError);
+          } finally {
+            isRefreshing = false;
+          }
+        } else {
+          // No refresh token available in storage
+          localStorage.removeItem('curenova_token');
+          localStorage.removeItem('curenova_user');
+          delete api.defaults.headers.common['Authorization'];
+
+          const authExpiredError = new Error('Authentication required or session expired.');
+          authExpiredError.code = 'AUTH_TOKEN_EXPIRED';
+          authExpiredError.status = 401;
+
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(
+              new CustomEvent('curenova:session_expired', {
+                detail: { reason: 'no_refresh_token' },
+              })
+            );
+          }
+
+          return Promise.reject(authExpiredError);
+        }
+      }
+    }
+
+    // Default error formatting for non-401 or requests that already retried
+    const formattedError = new Error(message);
+    if (status === 401) {
+      formattedError.code = 'AUTH_TOKEN_EXPIRED';
+    }
+    formattedError.status = status;
+    return Promise.reject(formattedError);
   }
 );
 
@@ -84,36 +236,120 @@ export const adminService = {
     api.post(`/auth/users/${userId}/approve`, { approval_status: approvalStatus }),
 };
 
+export const drugSimilarityService = {
+  findSimilar: async (drugName, topK = 10) => {
+    const cleanDrug = drugName.trim();
+    const raw = await api.post('/drugs/similar', {
+      drug: cleanDrug,
+      top_k: topK,
+    });
+
+    const isUnsupported = raw.is_unsupported || raw.status === 'unsupported';
+    return {
+      query: drugName,
+      query_entity: raw.query_entity || raw.query_drug || cleanDrug,
+      entity_type: raw.entity_type || (isUnsupported ? 'Unsupported Entity' : 'Drug'),
+      workflow: 'drug_to_drug',
+      workflow_type: 'drug_to_similar_drugs',
+      analysis_type: 'Drug → Similar / Alternative Drugs',
+      analysis_direction: 'drug_to_similar_drugs',
+      status: raw.status || 'completed',
+      is_drug_query: true,
+      is_unsupported: isUnsupported,
+      message: raw.message,
+      safety_disclaimer: raw.safety_disclaimer,
+      clinical_safety_boundary: raw.clinical_safety_boundary,
+      synthesis_report: raw.synthesis_report,
+      methodology_note: raw.methodology_note,
+      resolved_entity: raw.resolved_entity,
+      candidates: (raw.candidates || []).map((c, idx) => ({
+        id: c.chembl_id || c.drug_id || `sim-${idx}`,
+        drug_id: c.drug_id,
+        drug_name: c.drug_name,
+        chembl_id: c.chembl_id,
+        candidate_title: c.drug_name,
+        candidate_subtitle: `ChEMBL: ${c.chembl_id} · Stage: ${c.clinical_stage || c.approval_status}`,
+        approval_status: c.approval_status,
+        clinical_stage: c.clinical_stage,
+        similarity_score: c.similarity_score,
+        ml_ranking_score: c.similarity_score,
+        curenova_ranking: Math.round((c.similarity_score || 0) * 100),
+        evidence_level: c.evidence_level,
+        evidence_strength: (c.evidence_level || 'moderate').toLowerCase(),
+        alternative_status: c.alternative_status,
+        alternative_status_label: c.alternative_status_label,
+        molecular_similarity: c.molecular_similarity,
+        target_similarity: c.target_similarity,
+        mechanism_similarity: c.mechanism_similarity,
+        indication_similarity: c.indication_similarity,
+        bioactivity_similarity: c.bioactivity_similarity,
+        shared_targets: c.shared_targets || [],
+        shared_indications: c.shared_indications || [],
+        scientific_rationale: c.scientific_rationale,
+        safety_disclaimer: c.safety_disclaimer,
+        weights_used: c.weights_used || {},
+      })),
+      structured_synthesis: {
+        narrative_synthesis: raw.synthesis_report,
+        methodology_summary: raw.methodology_note,
+      }
+    };
+  },
+};
+
 export const repurposingService = {
   getDiseases: () => api.get('/candidates/diseases'),
   analyze: async (query, minEvidence = 'all') => {
     const cleanQuery = encodeURIComponent(query.trim());
     const raw = await api.post(`/candidates/investigate?query=${cleanQuery}`);
     const synthesis = raw.structured_synthesis || {};
+    const entityType = raw.entity_type || 'Disease';
+    const isDrug = entityType === 'Drug';
+    const isUnsupported = entityType === 'Unsupported Entity';
+    const analysisType = isDrug
+      ? 'Drug → Disease Repurposing'
+      : (isUnsupported ? 'Entity Resolution Failed' : 'Disease → Drug Repurposing');
 
     return {
-      analysis_id: raw.workflow_id,
+      analysis_id: raw.analysis_id || raw.workflow_id,
       workflow_id: raw.workflow_id,
       query: query,
       disease_detected: raw.query_entity,
       query_entity: raw.query_entity,
-      entity_type: raw.entity_type,
+      entity_type: entityType,
+      analysis_type: analysisType,
+      analysis_direction: raw.analysis_direction || (isDrug ? 'drug_to_disease' : (entityType === 'Disease' ? 'disease_to_drug' : null)),
+      status: raw.status || (isUnsupported ? 'unsupported' : (raw.candidate_hypotheses?.length ? 'completed' : 'partial')),
+      resolved_entity: raw.resolved_entity,
+      model_info: raw.model_info,
+      is_drug_query: isDrug,
+      is_unsupported: isUnsupported,
       candidates: (raw.candidate_hypotheses || []).map((c, idx) => ({
         id: c.id,
         drug_name: c.drug_name,
         chembl_id: c.chembl_id,
         disease: c.disease_name || raw.query_entity,
         disease_name: c.disease_name || raw.query_entity,
+        candidate_title: isDrug ? c.disease_name : c.drug_name,
+        candidate_subtitle: isDrug ? `Evaluated Drug: ${c.drug_name}` : `Candidate Repurposing Compound`,
         original_indication: c.approval_status || 'Preclinical Repurposing Hypothesis',
         curenova_ranking: Math.round((c.prediction_score || 0.85) * 100),
         prediction_score: c.prediction_score,
+        ml_ranking_score: c.prediction_score != null ? Number(c.prediction_score.toFixed(4)) : null,
         score_type: c.score_type || 'ranking_score',
         stress_score: c.stress_score,
         stress_interpretation: c.stress_interpretation,
+        stress_flags: c.stress_flags || [],
+        indication_status: c.indication_status || 'potential_repurposing',
+        indication_label: c.indication_label || 'Potential repurposing candidate',
+        evidence_refs: c.evidence_refs || [],
+        chembl_evidence: c.chembl_evidence || {},
+        biological_edges_count: c.biological_edges_count ?? 0,
+        ontology_id: c.ontology_id,
         confidence_interval: `[${(c.confidence_interval_low ?? 0.70).toFixed(2)}, ${(c.confidence_interval_high ?? 0.95).toFixed(2)}]`,
         confidence_interval_low: c.confidence_interval_low,
         confidence_interval_high: c.confidence_interval_high,
-        evidence_strength: c.evidence_count >= 3 ? 'high' : c.evidence_count >= 1 ? 'moderate' : 'low',
+        evidence_strength: c.evidence_strength || (c.evidence_count >= 3 ? 'high' : c.evidence_count >= 1 ? 'moderate' : 'low'),
         evidence_count: c.evidence_count,
         mechanism: c.rationale || c.biological_mechanism || synthesis.proposed_mechanism || 'Target kinase signaling modulation',
         mechanism_summary: c.rationale || c.biological_mechanism || synthesis.proposed_mechanism || 'Target kinase signaling modulation',
@@ -138,6 +374,7 @@ export const repurposingService = {
         })),
       })),
       synthesis_report: raw.synthesis_report,
+      summary: raw.synthesis_report,
       completed_steps: raw.completed_steps || [],
       provenance_mode: raw.provenance_mode,
       llm_provider: raw.llm_provider,
@@ -242,6 +479,8 @@ export const graphService = {
   getOverview: (entityType = null, maxNodes = 60) =>
     api.get('/graph', { params: { node_type: entityType } }),
   getNodeSubgraph: (entityId) => api.get(`/graph/neighbors/${entityId}`),
+  getSimilaritySubgraph: (drugA, drugB) =>
+    api.get('/graph/similarity-subgraph', { params: { drug_a: drugA, drug_b: drugB } }),
 };
 
 export const feedbackService = {

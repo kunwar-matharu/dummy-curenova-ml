@@ -73,6 +73,31 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    const handleTokenRefreshed = (e) => {
+      const newToken = e.detail?.access_token;
+      if (newToken) {
+        setToken(newToken);
+      }
+    };
+
+    const handleSessionExpired = () => {
+      localStorage.removeItem('curenova_token');
+      localStorage.removeItem('curenova_refresh_token');
+      localStorage.removeItem('curenova_user');
+      setToken(null);
+      setUser(null);
+    };
+
+    window.addEventListener('curenova:token_refreshed', handleTokenRefreshed);
+    window.addEventListener('curenova:session_expired', handleSessionExpired);
+
+    return () => {
+      window.removeEventListener('curenova:token_refreshed', handleTokenRefreshed);
+      window.removeEventListener('curenova:session_expired', handleSessionExpired);
+    };
+  }, []);
+
+  useEffect(() => {
     const savedUser = localStorage.getItem('curenova_user');
     const savedToken = localStorage.getItem('curenova_token');
 

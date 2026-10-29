@@ -29,6 +29,7 @@ MODEL_VERSION = bundle.get("model_version", "cure-nova-xgb-v2")
 
 
 def query_candidates(disease_id):
+    """Queries candidate drugs for a disease where label = 0 (unlabeled hypotheses)."""
     safe_id = str(disease_id).replace("'", "''")
 
     if not DATA_PATH.exists():
@@ -38,6 +39,44 @@ def query_candidates(disease_id):
     SELECT *
     FROM read_parquet('{DATA_PATH.as_posix()}')
     WHERE disease_id = '{safe_id}'
+      AND label = 0
+    """
+
+    try:
+        import duckdb
+        return duckdb.connect().execute(sql).df()
+    except Exception:
+        result = subprocess.run(
+            ["duckdb", "-csv", "-c", sql],
+            capture_output=True
+        )
+
+        if result.returncode != 0:
+            raise RuntimeError(
+                result.stderr.decode("utf-8", errors="replace")
+            )
+
+        if not result.stdout:
+            return pd.DataFrame()
+
+        return pd.read_csv(BytesIO(result.stdout))
+
+
+def query_disease_candidates(drug_id):
+    """
+    Symmetric drug-side query:
+    Queries candidate diseases for a drug where label = 0 (unlabeled hypotheses).
+    Excludes approved/clinical indications (label = 1).
+    """
+    safe_id = str(drug_id).replace("'", "''")
+
+    if not DATA_PATH.exists():
+        return pd.DataFrame()
+
+    sql = f"""
+    SELECT *
+    FROM read_parquet('{DATA_PATH.as_posix()}')
+    WHERE drug_id = '{safe_id}'
       AND label = 0
     """
 
@@ -138,7 +177,9 @@ def add_molecular_features(df):
 
 
 def predict(disease_id, top_k=10):
-
+    """
+    Disease -> Drug candidate prediction using production XGBoost model.
+    """
     candidates = query_candidates(disease_id)
 
     if candidates.empty:
@@ -189,12 +230,16 @@ def predict(disease_id, top_k=10):
         start=1
     ):
         output.append({
-    "drug_id": str(row["drug_id"]),
-    "rank": rank,
-    "score": round(float(row["score"]), 6),
-    "score_type": "ranking_score",
-    "has_molecular_structure": int(row["has_molecular_structure"])
-})
+            "drug_id": str(row["drug_id"]),
+            "rank": rank,
+            "score": round(float(row["score"]), 6),
+            "score_type": "ranking_score",
+            "has_molecular_structure": int(row.get("has_molecular_structure", 0)),
+            "shared_targets": float(row.get("shared_targets", 0)),
+            "avg_target_association": float(row.get("avg_target_association", 0)),
+            "max_target_association": float(row.get("max_target_association", 0)),
+            "total_target_evidence": float(row.get("total_target_evidence", 0)),
+        })
     return {
         "disease_id": disease_id,
         "model_version": MODEL_VERSION,
@@ -209,16 +254,100 @@ def predict(disease_id, top_k=10):
     }
 
 
-if __name__ == "__main__":
+def predict_drug(drug_id, top_k=10):
+    """
+    Symmetric Drug -> Disease candidate prediction using the SAME production XGBoost model.
+    Queries candidate diseases for a drug where label = 0, applies exact 39-feature schema,
+    scores via XGBoost predict_proba, and ranks diseases descending by score.
+    """
+    candidates = query_disease_candidates(drug_id)
 
+    if candidates.empty:
+        return {
+            "drug_id": drug_id,
+            "model_version": MODEL_VERSION,
+            "candidate_count": 0,
+            "candidates": [],
+            "message": (
+                "No unlabeled candidate pairs were found for this "
+                "drug in the current candidate dataset."
+            )
+        }
+
+    candidates = add_molecular_features(candidates)
+
+    missing = [
+        feature
+        for feature in FEATURES
+        if feature not in candidates.columns
+    ]
+
+    if missing:
+        raise RuntimeError(
+            "Missing model features: " + ", ".join(missing)
+        )
+
+    X = (
+        candidates[FEATURES]
+        .replace([np.inf, -np.inf], np.nan)
+        .fillna(0)
+    )
+
+    scores = model.predict_proba(X)[:, 1]
+
+    candidates["score"] = scores
+
+    candidates = (
+        candidates
+        .sort_values("score", ascending=False)
+        .head(top_k)
+    )
+
+    output = []
+
+    for rank, (_, row) in enumerate(
+        candidates.iterrows(),
+        start=1
+    ):
+        output.append({
+            "disease_id": str(row["disease_id"]),
+            "drug_id": str(row["drug_id"]),
+            "rank": rank,
+            "score": round(float(row["score"]), 6),
+            "score_type": "ranking_score",
+            "has_molecular_structure": int(row.get("has_molecular_structure", 0)),
+            "shared_targets": float(row.get("shared_targets", 0)),
+            "avg_target_association": float(row.get("avg_target_association", 0)),
+            "max_target_association": float(row.get("max_target_association", 0)),
+            "total_target_evidence": float(row.get("total_target_evidence", 0)),
+        })
+
+    return {
+        "drug_id": drug_id,
+        "model_version": MODEL_VERSION,
+        "candidate_count": len(output),
+        "candidates": output,
+        "disclaimer": (
+            "These are research hypotheses generated from biomedical "
+            "data. Scores are ranking scores, not probabilities of "
+            "clinical efficacy or treatment recommendations. "
+            "Candidates require independent evidence validation."
+        )
+    }
+
+
+if __name__ == "__main__":
     if len(sys.argv) >= 2:
-        disease_id = sys.argv[1]
+        entity_id = sys.argv[1]
         top_k = int(sys.argv[2]) if len(sys.argv) >= 3 else 10
     else:
-        disease_id = "MONDO_0004989"
+        entity_id = "MONDO_0004989"
         top_k = 10
 
-    result = predict(disease_id, top_k)
+    if entity_id.upper().startswith("CHEMBL"):
+        result = predict_drug(entity_id, top_k)
+    else:
+        result = predict(entity_id, top_k)
 
     print(
         json.dumps(
@@ -227,5 +356,3 @@ if __name__ == "__main__":
             ensure_ascii=False
         )
     )
-
-

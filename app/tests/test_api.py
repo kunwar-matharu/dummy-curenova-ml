@@ -41,8 +41,7 @@ def override_get_db():
     finally:
         db.close()
 
-# Apply FastAPI dependency override
-app.dependency_overrides[get_db] = override_get_db
+# FastAPI dependency override will be managed per test fixture
 
 client = TestClient(app)
 
@@ -83,11 +82,13 @@ def guard_dev_database_session():
 def isolated_test_database():
     """
     Per-test database lifecycle:
-    1. Creates fresh tables in the in-memory test database.
-    2. Seeds initial verified biomedical data for the test.
-    3. Yields control to the test function.
-    4. Drops all tables after the test completes for clean isolation.
+    1. Sets FastAPI dependency override to isolated in-memory DB.
+    2. Creates fresh tables in the in-memory test database.
+    3. Seeds initial verified biomedical data for the test.
+    4. Yields control to the test function.
+    5. Drops all tables and pops override after the test completes for clean isolation.
     """
+    app.dependency_overrides[get_db] = override_get_db
     Base.metadata.create_all(bind=test_engine)
     db = TestingSessionLocal()
     try:
@@ -98,6 +99,7 @@ def isolated_test_database():
     yield
 
     Base.metadata.drop_all(bind=test_engine)
+    app.dependency_overrides.pop(get_db, None)
 
 # ---------------------------------------------------------------------------
 # Preserved API Test Scenarios (Running in Complete Isolation)
@@ -1833,3 +1835,131 @@ def test_layman_plain_language_explanation_and_dossier_reports():
     assert r_rep.status_code == 200
     assert "CURENOVA 2.0" in r_rep.text
     assert "BIOLOGICAL MECHANISM OF ACTION" in r_rep.text
+
+
+# ---------------------------------------------------------------------------
+# Auth Session Lifecycle & Token Expiration Regression Tests
+# ---------------------------------------------------------------------------
+def test_expired_access_token_returns_401_token_has_expired():
+    """An expired access token triggers HTTP 401 with detail 'Token has expired'."""
+    import jwt
+    from datetime import datetime, timedelta, timezone
+
+    now = datetime.now(timezone.utc)
+    expired_time = now - timedelta(minutes=10)
+    expired_payload = {
+        "sub": "2",
+        "role": "researcher",
+        "email": "dr.elena.vance@curenova-research.org",
+        "token_type": "access",
+        "exp": expired_time,
+        "iat": expired_time - timedelta(minutes=30),
+    }
+    expired_token = jwt.encode(expired_payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
+
+    res = client.post(
+        "/api/candidates/investigate?query=Everolimus",
+        headers={"Authorization": f"Bearer {expired_token}"}
+    )
+    assert res.status_code == 401
+    assert res.json()["detail"] == "Token has expired"
+
+
+def test_refresh_token_rotation_and_subsequent_access():
+    """
+    Simulates the exact frontend recovery path:
+    1. Access token expires.
+    2. Client calls /api/auth/refresh with refresh_token.
+    3. Backend returns new access_token and rotated refresh_token.
+    4. Client retries request with new access_token and succeeds.
+    """
+    login_res = client.post("/api/auth/login", json={
+        "email": "dr.elena.vance@curenova-research.org",
+        "password": "CureNova2026!Secure",
+    })
+    tokens = login_res.json()
+    old_access = tokens["access_token"]
+    old_refresh = tokens["refresh_token"]
+
+    # Step 2: Refresh
+    refresh_res = client.post("/api/auth/refresh", json={"refresh_token": old_refresh})
+    assert refresh_res.status_code == 200
+    refreshed_tokens = refresh_res.json()
+
+    new_access = refreshed_tokens["access_token"]
+    new_refresh = refreshed_tokens["refresh_token"]
+
+    assert new_access != old_access, "Rotated access token must differ from initial token"
+    assert new_refresh != old_refresh, "Rotated refresh token must differ from old refresh token"
+
+    # Step 4: Access with new token
+    res = client.post(
+        "/api/candidates/investigate?query=Aspirin",
+        headers={"Authorization": f"Bearer {new_access}"}
+    )
+    assert res.status_code == 200
+    assert res.json()["query_entity"] == "Aspirin"
+
+
+def test_revoked_refresh_token_reuse_invalidates_family():
+    """Reusing an already-rotated refresh token terminates the entire token family."""
+    login_res = client.post("/api/auth/login", json={
+        "email": "dr.elena.vance@curenova-research.org",
+        "password": "CureNova2026!Secure",
+    })
+    tokens = login_res.json()
+    refresh_1 = tokens["refresh_token"]
+
+    # First rotation: succeeds
+    refresh_res_1 = client.post("/api/auth/refresh", json={"refresh_token": refresh_1})
+    assert refresh_res_1.status_code == 200
+    refresh_2 = refresh_res_1.json()["refresh_token"]
+
+    # Second call with refresh_1: REUSE DETECTED!
+    reuse_res = client.post("/api/auth/refresh", json={"refresh_token": refresh_1})
+    assert reuse_res.status_code == 401
+    assert "Revoked refresh token reuse detected" in reuse_res.json()["detail"]
+
+    # Now refresh_2 should also be revoked because the entire family is terminated
+    subsequent_res = client.post("/api/auth/refresh", json={"refresh_token": refresh_2})
+    assert subsequent_res.status_code == 401
+    assert "reuse detected" in subsequent_res.json()["detail"].lower()
+
+
+def test_expired_refresh_token_returns_401():
+    """Expired refresh token signature is rejected by /api/auth/refresh."""
+    import jwt
+    from datetime import datetime, timedelta, timezone
+
+    now = datetime.now(timezone.utc)
+    expired_time = now - timedelta(days=2)
+    expired_payload = {
+        "sub": "2",
+        "jti": "expired-refresh-jti-001",
+        "family_id": "fam-test-expired",
+        "token_type": "refresh",
+        "exp": expired_time,
+        "iat": expired_time - timedelta(days=7),
+    }
+    expired_refresh = jwt.encode(expired_payload, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
+
+    res = client.post("/api/auth/refresh", json={"refresh_token": expired_refresh})
+    assert res.status_code == 401
+    assert res.json()["detail"] == "Refresh token has expired"
+
+
+def test_logout_revokes_refresh_token_preventing_refresh():
+    """Calling /api/auth/logout revokes the token so subsequent refresh attempts fail."""
+    login_res = client.post("/api/auth/login", json={
+        "email": "dr.elena.vance@curenova-research.org",
+        "password": "CureNova2026!Secure",
+    })
+    tokens = login_res.json()
+    refresh_tok = tokens["refresh_token"]
+
+    logout_res = client.post("/api/auth/logout", json={"refresh_token": refresh_tok})
+    assert logout_res.status_code == 200
+
+    # Refresh attempt with logged out token must fail
+    refresh_res = client.post("/api/auth/refresh", json={"refresh_token": refresh_tok})
+    assert refresh_res.status_code == 401

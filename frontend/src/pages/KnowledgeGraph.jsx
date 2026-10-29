@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Share2,
   Filter,
@@ -27,6 +28,7 @@ const TYPE_COLORS = {
 };
 
 export const KnowledgeGraph = () => {
+  const location = useLocation();
   const [graphData, setGraphData] = useState({ nodes: [], edges: [], stats: {} });
   const [loading, setLoading] = useState(true);
   const [selectedNode, setSelectedNode] = useState(null);
@@ -44,9 +46,26 @@ export const KnowledgeGraph = () => {
   const loadGraph = async () => {
     setLoading(true);
     try {
-      const res = await graphService.getOverview(filterType !== 'all' ? filterType : null, 40);
+      let res;
+      if (location.state?.similarityContext) {
+        const { drugA, drugB } = location.state.similarityContext;
+        res = await graphService.getSimilaritySubgraph(drugA, drugB);
+      } else {
+        res = await graphService.getOverview(filterType !== 'all' ? filterType : null, 40);
+      }
       setGraphData(res);
-      if (res.nodes.length > 0 && !selectedNode) {
+      const targetQuery = location.state?.drug || location.state?.disease;
+      if (targetQuery && res.nodes.length > 0) {
+        const found = res.nodes.find(n =>
+          n.label?.toLowerCase().includes(targetQuery.toLowerCase()) ||
+          n.id?.toLowerCase().includes(targetQuery.toLowerCase())
+        );
+        if (found) {
+          setSelectedNode(found);
+        } else if (!selectedNode) {
+          setSelectedNode(res.nodes[0]);
+        }
+      } else if (res.nodes.length > 0 && !selectedNode) {
         setSelectedNode(res.nodes[0]);
       }
     } catch (err) {

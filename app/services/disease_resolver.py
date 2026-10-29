@@ -17,6 +17,19 @@ logger = logging.getLogger("curenova.disease_resolver")
 
 # Verified curated mappings between common query terms and Open Targets ontology IDs
 CURATED_DISEASE_MAPPINGS: Dict[str, Tuple[str, str]] = {
+    "hypertension": ("Essential Hypertension", "MONDO_0007781"),
+    "atherosclerosis": ("Atherosclerosis", "MONDO_0005311"),
+    "copd": ("Chronic Obstructive Pulmonary Disease", "MONDO_0005002"),
+    "chronic obstructive pulmonary disease": ("Chronic Obstructive Pulmonary Disease", "MONDO_0005002"),
+    "epilepsy": ("Epileptic Disorder", "MONDO_0005027"),
+    "schizophrenia": ("Schizophrenia", "MONDO_0005090"),
+    "tuberculosis": ("Tuberculosis", "MONDO_0005232"),
+    "malaria": ("Malaria", "MONDO_0005136"),
+    "hepatitis c": ("Hepatitis C Infection", "MONDO_0005183"),
+    "chronic kidney disease": ("Chronic Kidney Disease", "MONDO_0005300"),
+    "ckd": ("Chronic Kidney Disease", "MONDO_0005300"),
+    "asthma": ("Asthma", "MONDO_0004979"),
+    "heart failure": ("Congestive Heart Failure", "MONDO_0005016"),
     # Key query pattern (lower): (Canonical Name, Open Targets Ontology ID)
     "pulmonary arterial hypertension": ("Pulmonary Arterial Hypertension", "MONDO_0005149"),
     "pah": ("Pulmonary Arterial Hypertension", "MONDO_0005149"),

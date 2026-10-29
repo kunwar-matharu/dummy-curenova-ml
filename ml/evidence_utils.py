@@ -42,6 +42,8 @@ def _save_json(path, data):
 
 
 CHEMBL_CACHE = _load_json(CHEMBL_CACHE_FILE)
+_CHEMBL_MEM_CACHE = dict(CHEMBL_CACHE)
+_DRUG_EVIDENCE_CACHE = {}
 
 
 def _chembl_request(path, params=None):
@@ -58,9 +60,9 @@ def _chembl_request(path, params=None):
     )
 
     try:
-        with urlopen(request, timeout=15) as response:
+        with urlopen(request, timeout=3.0) as response:
             return json.loads(response.read().decode("utf-8"))
-    except (HTTPError, URLError, TimeoutError, json.JSONDecodeError):
+    except (HTTPError, URLError, TimeoutError, json.JSONDecodeError, Exception):
         return None
 
 
@@ -79,8 +81,8 @@ def get_chembl_live_evidence(drug_id):
             "reason": "not_a_chembl_id",
         }
 
-    # Cache hit
-    cached = CHEMBL_CACHE.get(drug_id)
+    # Cache hit (memory or disk)
+    cached = _CHEMBL_MEM_CACHE.get(drug_id) or CHEMBL_CACHE.get(drug_id)
 
     if cached is not None:
         return cached
@@ -90,11 +92,13 @@ def get_chembl_live_evidence(drug_id):
     )
 
     if molecule is None:
-        return {
+        res = {
             "available": False,
             "source": "ChEMBL",
-            "reason": "molecule_lookup_failed",
+            "reason": "molecule_lookup_failed_or_timeout",
         }
+        _CHEMBL_MEM_CACHE[drug_id] = res
+        return res
 
     # Fetch a bounded activity set.
     # We only need evidence summaries, not the entire ChEMBL database.
@@ -217,6 +221,7 @@ def get_chembl_live_evidence(drug_id):
     }
 
     # Cache successful result
+    _CHEMBL_MEM_CACHE[drug_id] = evidence
     CHEMBL_CACHE[drug_id] = evidence
     _save_json(CHEMBL_CACHE_FILE, CHEMBL_CACHE)
 
@@ -227,6 +232,18 @@ def get_drug_evidence(drug_id):
     """
     Open Targets evidence for a drug.
     """
+    if not drug_id:
+        return {
+            "drug_id": drug_id,
+            "sources": [],
+            "drug_name": None,
+            "drug_type": None,
+            "maximum_clinical_stage": None,
+            "mechanisms": [],
+        }
+
+    if drug_id in _DRUG_EVIDENCE_CACHE:
+        return _DRUG_EVIDENCE_CACHE[drug_id]
 
     query = """
     SELECT
@@ -284,7 +301,7 @@ def get_drug_evidence(drug_id):
     except Exception:
         pass
 
-    return {
+    ev = {
         "drug_id": drug_id,
         "sources": [
             {
@@ -300,6 +317,8 @@ def get_drug_evidence(drug_id):
         "maximum_clinical_stage": clinical_stage,
         "mechanisms": mechanisms,
     }
+    _DRUG_EVIDENCE_CACHE[drug_id] = ev
+    return ev
 
 
 def get_combined_drug_evidence(drug_id):

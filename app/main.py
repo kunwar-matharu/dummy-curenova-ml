@@ -5,7 +5,7 @@ from .config import settings
 from .database import engine, Base, SessionLocal, get_db
 from .services.seed_data import seed_database
 from .routers import (
-    auth, candidates, stress_tests, graph,
+    auth, candidates, drugs, stress_tests, graph,
     evidence, experiments, doctor, patient, reports, system, feedback
 )
 
@@ -40,6 +40,7 @@ app.add_middleware(
 # Include all API routers under settings.API_PREFIX ("/api")
 app.include_router(auth.router, prefix=settings.API_PREFIX)
 app.include_router(candidates.router, prefix=settings.API_PREFIX)
+app.include_router(drugs.router, prefix=settings.API_PREFIX)
 app.include_router(stress_tests.router, prefix=settings.API_PREFIX)
 app.include_router(graph.router, prefix=settings.API_PREFIX)
 app.include_router(evidence.router, prefix=settings.API_PREFIX)

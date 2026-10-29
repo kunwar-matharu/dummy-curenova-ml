@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional, Dict, Any, Literal
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, model_validator
 
 # User & Auth
 class UserBase(BaseModel):
@@ -103,6 +103,14 @@ class CandidateSummaryOut(BaseModel):
     score_type: Optional[str] = "ranking_score"
     stress_score: Optional[float] = None
     stress_interpretation: Optional[str] = None
+    stress_flags: Optional[List[str]] = []
+    indication_status: Optional[str] = None
+    indication_label: Optional[str] = None
+    evidence_strength: Optional[str] = None
+    evidence_refs: Optional[Any] = None
+    chembl_evidence: Optional[Dict[str, Any]] = None
+    ontology_id: Optional[str] = None
+    biological_edges_count: Optional[int] = None
     model_config = ConfigDict(from_attributes=True)
 
 class CandidateDetailOut(CandidateSummaryOut):
@@ -254,6 +262,12 @@ class AgentWorkflowResponse(BaseModel):
     workflow_id: str
     query_entity: str
     entity_type: str
+    status: Optional[str] = "completed"
+    analysis_direction: Optional[str] = None
+    direction: Optional[str] = None
+    analysis_id: Optional[str] = None
+    resolved_entity: Optional[Dict[str, Any]] = None
+    model_info: Optional[Dict[str, Any]] = None
     completed_steps: List[AgentWorkflowStep]
     candidate_hypotheses: List[CandidateSummaryOut]
     synthesis_report: str
@@ -304,3 +318,68 @@ class FeedbackEvaluationSummary(BaseModel):
     prompt_version_breakdown: Dict[str, Any]
     recurring_failure_patterns: List[Dict[str, Any]]
     policy_evaluation_status: str
+
+
+# ---------------------------------------------------------------------------
+# Drug Similarity & Alternative Drug Discovery Schemas
+# ---------------------------------------------------------------------------
+class DrugSimilarityRequest(BaseModel):
+    drug: Optional[str] = Field(None, min_length=2, max_length=150, description="Drug name or compound to find alternatives for")
+    drug_name: Optional[str] = Field(None, min_length=2, max_length=150, description="Drug name alias")
+    top_k: Optional[int] = Field(10, ge=1, le=50, description="Maximum number of similar candidates to return")
+
+    @model_validator(mode="before")
+    @classmethod
+    def check_drug_name(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            val = data.get("drug") or data.get("drug_name")
+            if not val:
+                raise ValueError("Field 'drug' or 'drug_name' is required")
+            data["drug"] = val
+        return data
+
+class DrugSimilarityCandidateOut(BaseModel):
+    drug_id: str
+    drug_name: str
+    chembl_id: str
+    approval_status: Optional[str] = "Approved"
+    clinical_stage: Optional[str] = "UNKNOWN"
+    similarity_score: float = Field(..., ge=0.0, le=1.0)
+    similarity_type: str = "multi_factor"
+    molecular_similarity: Optional[float] = None
+    target_similarity: Optional[float] = None
+    mechanism_similarity: Optional[float] = None
+    indication_similarity: Optional[float] = None
+    bioactivity_similarity: Optional[float] = None
+    shared_targets: List[Dict[str, Any]] = []
+    shared_indications: List[str] = []
+    evidence_level: Literal["Strong", "Moderate", "Preliminary", "Insufficient"]
+    alternative_status: Literal["known_alternative", "potential_alternative", "computational_similarity"]
+    alternative_status_label: str
+    scientific_rationale: Optional[str] = None
+    weights_used: Optional[Dict[str, float]] = None
+    safety_disclaimer: str
+
+class DrugSimilarityResponse(BaseModel):
+    success: bool = True
+    status: str
+    workflow: str = "drug_to_drug"
+    workflow_type: str = "drug_to_similar_drugs"
+    workflow_title: str = "Drug → Similar / Alternative Drugs"
+    direction: str = "drug_to_similar_drugs"
+    query: str
+    query_drug: Optional[str] = None
+    query_chembl_id: Optional[str] = None
+    query_entity: str
+    entity_type: str = "Drug"
+    is_drug_query: bool = True
+    is_unsupported: bool = False
+    resolved_entity: Optional[Dict[str, Any]] = None
+    candidate_count: int
+    total_candidates: int = 0
+    candidates: List[DrugSimilarityCandidateOut] = []
+    methodology_note: Optional[str] = None
+    safety_disclaimer: str
+    clinical_safety_boundary: Optional[str] = None
+    synthesis_report: Optional[str] = None
+    message: Optional[str] = None
