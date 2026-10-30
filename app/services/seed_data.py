@@ -792,6 +792,15 @@ def seed_database(db: Session):
             source_url="https://www.accessdata.fda.gov/drugsatfda_docs/label/2018/021588s053lbl.pdf"
         ),
         DrugInteraction(
+            drug_a_name="Warfarin",
+            drug_b_name="Aspirin",
+            severity="major",
+            mechanism="Pharmacodynamic synergism: Concurrent administration of warfarin (vitamin K antagonist) and aspirin (platelet COX-1 inhibitor) profoundly impairs hemostasis, dramatically escalating gastrointestinal and systemic hemorrhagic risk.",
+            recommendation="Avoid concomitant use unless strongly indicated for mechanical heart valves or acute coronary events. Monitor INR closely and assess for signs of bleeding.",
+            verified_source="American College of Chest Physicians (CHEST) Guidelines & FDA Monograph",
+            source_url="https://journal.chestnet.org/"
+        ),
+        DrugInteraction(
             drug_a_name="Baricitinib",
             drug_b_name="Probenecid",
             severity="moderate",

@@ -113,7 +113,8 @@ export const ResearcherDrugRepurposing = () => {
       if (searchMode === 'drug-to-drug') {
         response = await drugSimilarityService.findSimilar(cleanQuery);
       } else {
-        response = await repurposingService.analyze(cleanQuery, minEvidence);
+        const backendSearchType = searchMode === 'drug-to-disease' ? 'drug_to_disease' : 'disease_to_drug';
+        response = await repurposingService.analyze(cleanQuery, minEvidence, backendSearchType);
       }
 
       // Discard stale out-of-order response if user launched a newer query
@@ -225,6 +226,28 @@ export const ResearcherDrugRepurposing = () => {
   useEffect(() => {
     if (location.state?.prefilledQuery) {
       handleRunAnalysis(location.state.prefilledQuery);
+    } else {
+      const params = new URLSearchParams(window.location.search);
+      const wid = params.get('workflow_id') || params.get('id');
+      if (wid && !result) {
+        repurposingService
+          .getInvestigation(wid)
+          .then((res) => {
+            if (res) {
+              setResult(res);
+              setQuery(res.query_entity || res.disease_detected || '');
+              if (res.candidates?.length > 0) setSelectedCandidate(res.candidates[0]);
+              try {
+                sessionStorage.setItem('curenova_active_investigation', JSON.stringify(res));
+              } catch {
+                // ignore
+              }
+            }
+          })
+          .catch((err) => {
+            console.warn('Failed to load investigation run from URL param:', err);
+          });
+      }
     }
   }, [location.state?.prefilledQuery]);
 

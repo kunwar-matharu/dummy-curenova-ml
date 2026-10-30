@@ -298,10 +298,13 @@ export const drugSimilarityService = {
 };
 
 export const repurposingService = {
+  listInvestigations: (limit = 20) => api.get('/candidates/investigations', { params: { limit } }),
+  getInvestigation: (workflowId) => api.get(`/candidates/investigation/${workflowId}`),
+
   getDiseases: () => api.get('/candidates/diseases'),
-  analyze: async (query, minEvidence = 'all') => {
+  analyze: async (query, minEvidence = 'all', searchType = 'drug_to_disease') => {
     const cleanQuery = encodeURIComponent(query.trim());
-    const raw = await api.post(`/candidates/investigate?query=${cleanQuery}`);
+    const raw = await api.post(`/candidates/investigate?query=${cleanQuery}&search_type=${encodeURIComponent(searchType)}`);
     const synthesis = raw.structured_synthesis || {};
     const entityType = raw.entity_type || 'Disease';
     const isDrug = entityType === 'Drug';
@@ -393,8 +396,34 @@ export const safetyService = {
     const res = await api.get('/patient/medicines');
     return Array.isArray(res) ? { catalog: res } : res;
   },
+  analyzeBackend: (medications, patientContext = null, roleView = 'doctor') =>
+    api.post(
+      '/doctor/safety/analyze-regimen',
+      { medications: Array.isArray(medications) ? medications : [medications], patient_context: patientContext },
+      { params: { role_view: roleView } }
+    ),
+  getAdverseEvents: (drug, limit = 5) => api.get('/doctor/adverse-events', { params: { drug, limit } }),
   analyze: async (medications, patientContext = null, roleView = 'doctor') => {
     const medList = Array.isArray(medications) ? medications : [medications];
+    const medNames = medList
+      .map((m) => (typeof m === 'string' ? m : m.name || m.drug_name || ''))
+      .filter(Boolean);
+
+    // Try real backend polypharmacy engine first
+    try {
+      if (medNames.length >= 1) {
+        const realRes = await api.post(
+          '/doctor/safety/analyze-regimen',
+          { medications: medNames, patient_context: patientContext },
+          { params: { role_view: roleView } }
+        );
+        if (realRes && realRes.pairwise_interactions !== undefined) {
+          return realRes;
+        }
+      }
+    } catch (backendErr) {
+      console.warn('Backend regimen analysis endpoint fallback to curated monographs:', backendErr);
+    }
     const names = medList
       .map((m) => (typeof m === 'string' ? m : m.name || m.drug_name || ''))
       .filter(Boolean)
@@ -498,3 +527,28 @@ export const metaService = {
 };
 
 export default api;
+export const patientService = {
+  getMedicines: (search) => api.get('/patient/medicines', { params: { q: search } }),
+  getMedicineGuide: (name) => api.get(`/patient/medicines/${name}`),
+  explainResearch: (data) => api.post('/patient/explain-research', data),
+  getOverview: () => api.get('/patient/overview'),
+  getRegimen: () => api.get('/patient/regimen'),
+  addMedication: (data) => api.post('/patient/regimen', data),
+  removeMedication: (id) => api.delete(`/patient/regimen/${id}`),
+  toggleDose: (id) => api.post(`/patient/regimen/${id}/toggle`),
+  checkRegimenSafety: () => api.post('/patient/regimen/safety-check'),
+};
+
+export const doctorService = {
+  getOverview: () => api.get('/doctor/overview'),
+  getInteractions: (drugs) => api.get('/doctor/interactions', { params: { drugs: Array.isArray(drugs) ? drugs.join(',') : drugs } }),
+  getClinicalTrials: (disease, drug = null) => api.get('/doctor/clinical-trials', { params: { disease, drug } }),
+  getLiveTrials: (params) => api.get('/doctor/clinical-trials/live', { params }),
+  getAdverseEvents: (drug, limit = 5) => api.get('/doctor/adverse-events', { params: { drug, limit } }),
+  analyzeRegimen: (medications, patientContext = null) => safetyService.analyze(medications, patientContext, 'doctor'),
+};
+
+export const reportsService = {
+  downloadCandidateReport: (candidateId) => api.get(`/reports/candidate/${candidateId}/markdown`, { responseType: 'blob' }),
+  downloadInvestigationReport: (workflowId) => api.get(`/reports/investigation/${workflowId}/markdown`, { responseType: 'blob' }),
+};

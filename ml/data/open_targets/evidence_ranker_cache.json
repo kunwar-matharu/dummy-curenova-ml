@@ -5658,5 +5658,654 @@
       }
     ],
     "pchembl_targets": {}
+  },
+  "drug_profile_CHEMBL47298": {
+    "chembl_id": "CHEMBL47298",
+    "targets": [],
+    "mechanisms": [],
+    "indications": [
+      {
+        "disease_id": "MONDO_0005108",
+        "disease_name": "viral infectious disease",
+        "max_clinical_stage": "APPROVAL"
+      }
+    ],
+    "pchembl_targets": {}
+  },
+  "drug_profile_CHEMBL1436": {
+    "chembl_id": "CHEMBL1436",
+    "targets": [],
+    "mechanisms": [],
+    "indications": [
+      {
+        "disease_id": "MONDO_0000922",
+        "disease_name": "pelvic inflammatory disease",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0005113",
+        "disease_name": "bacterial infectious disease",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005101",
+        "disease_name": "ulcerative colitis",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "HP_0012388",
+        "disease_name": "Acute bronchitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "HP_0002788",
+        "disease_name": "Recurrent upper respiratory tract infections",
+        "max_clinical_stage": "EARLY_PHASE_1"
+      },
+      {
+        "disease_id": "EFO_0000544",
+        "disease_name": "infection",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0006781",
+        "disease_name": "Helicobacter pylori infectious disease",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0005649",
+        "disease_name": "appendicitis",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "EFO_1001888",
+        "disease_name": "eye infection",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0001930",
+        "disease_name": "acute cholangitis",
+        "max_clinical_stage": "UNKNOWN"
+      }
+    ],
+    "pchembl_targets": {}
+  },
+  "drug_profile_CHEMBL529": {
+    "chembl_id": "CHEMBL529",
+    "targets": [],
+    "mechanisms": [],
+    "indications": [
+      {
+        "disease_id": "MONDO_0015474",
+        "disease_name": "cryptosporidiosis",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "EFO_0007411",
+        "disease_name": "Orthomyxoviridae infectious disease",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0004992",
+        "disease_name": "cancer",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0020753",
+        "disease_name": "Orthocoronavirinae infectious disease",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0000922",
+        "disease_name": "pelvic inflammatory disease",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0004277",
+        "disease_name": "gonorrhea",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0001195",
+        "disease_name": "spotted fever",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "HP_0030828",
+        "disease_name": "Wheezing",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "HP_0000371",
+        "disease_name": "Acute otitis media",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0019345",
+        "disease_name": "shigellosis",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0005824",
+        "disease_name": "Legionnaires' disease",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0001358",
+        "disease_name": "bronchial disorder",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005316",
+        "disease_name": "bacterial vaginosis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "EFO_0009910",
+        "disease_name": "chronic lung disease",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0021113",
+        "disease_name": "respiratory failure",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "HP_0002783",
+        "disease_name": "Recurrent lower respiratory tract infections",
+        "max_clinical_stage": "PHASE_2_3"
+      },
+      {
+        "disease_id": "MONDO_0005929",
+        "disease_name": "postpartum depression",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0006781",
+        "disease_name": "Helicobacter pylori infectious disease",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0000257",
+        "disease_name": "acute diarrhea",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0005076",
+        "disease_name": "periodontitis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005976",
+        "disease_name": "syphilis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005961",
+        "disease_name": "sinusitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005808",
+        "disease_name": "inclusion conjunctivitis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0017376",
+        "disease_name": "reactive arthritis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005867",
+        "disease_name": "Mycoplasma pneumoniae pneumonia",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0005446",
+        "disease_name": "cutaneous leishmaniasis",
+        "max_clinical_stage": "PHASE_2_3"
+      },
+      {
+        "disease_id": "MONDO_0003781",
+        "disease_name": "bronchitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0006668",
+        "disease_name": "bacterial conjunctivitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0018076",
+        "disease_name": "tuberculosis",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0004664",
+        "disease_name": "helminthiasis",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0045057",
+        "disease_name": "delirium",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0015925",
+        "disease_name": "interstitial lung disease",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0005441",
+        "disease_name": "otitis media",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005377",
+        "disease_name": "nephrotic syndrome",
+        "max_clinical_stage": "PHASE_1"
+      },
+      {
+        "disease_id": "MONDO_0002154",
+        "disease_name": "trichomoniasis",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0011438",
+        "disease_name": "acne",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005230",
+        "disease_name": "cellulitis",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "HP_0002239",
+        "disease_name": "Gastrointestinal hemorrhage",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0005709",
+        "disease_name": "common cold",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0005249",
+        "disease_name": "pneumonia",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005866",
+        "disease_name": "Mycobacterium avium complex disease",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "EFO_0010282",
+        "disease_name": "gastrointestinal disease",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "HP_0006536",
+        "disease_name": "Airway obstruction",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0004979",
+        "disease_name": "asthma",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0006019",
+        "disease_name": "yaws",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0019365",
+        "disease_name": "scrub typhus",
+        "max_clinical_stage": "PHASE_2_3"
+      },
+      {
+        "disease_id": "MONDO_0005619",
+        "disease_name": "typhoid fever",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0005109",
+        "disease_name": "HIV infectious disease",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0015265",
+        "disease_name": "bronchiolitis obliterans syndrome",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0019091",
+        "disease_name": "bronchopulmonary dysplasia",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0006769",
+        "disease_name": "gastroparesis",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "EFO_0000544",
+        "disease_name": "infection",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0006052",
+        "disease_name": "pulmonary tuberculosis",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0100096",
+        "disease_name": "COVID-19",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005593",
+        "disease_name": "chronic periodontitis",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0009061",
+        "disease_name": "cystic fibrosis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "HP_0012388",
+        "disease_name": "Acute bronchitis",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0004785",
+        "disease_name": "blepharitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005800",
+        "disease_name": "hordeolum",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005275",
+        "disease_name": "lung disorder",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "EFO_0008572",
+        "disease_name": "malnutrition",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0001577",
+        "disease_name": "respiratory syncytial virus infectious disease",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "EFO_0000768",
+        "disease_name": "idiopathic pulmonary fibrosis",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "EFO_0003917",
+        "disease_name": "premature birth",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005761",
+        "disease_name": "filarial elephantiasis",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0021681",
+        "disease_name": "sexually transmitted disease",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0005113",
+        "disease_name": "bacterial infectious disease",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "HP_0030746",
+        "disease_name": "Intraventricular hemorrhage",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0002492",
+        "disease_name": "acute kidney injury",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "EFO_1001466",
+        "disease_name": "Graves ophthalmopathy",
+        "max_clinical_stage": "PHASE_1_2"
+      },
+      {
+        "disease_id": "MONDO_0002635",
+        "disease_name": "periodontal disorder",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "HP_0001873",
+        "disease_name": "Thrombocytopenia",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0005607",
+        "disease_name": "chronic bronchitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005002",
+        "disease_name": "chronic obstructive pulmonary disease",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0100163",
+        "disease_name": "COVID-19\u2013associated multisystem inflammatory syndrome in children",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0001708",
+        "disease_name": "pulmonary sarcoidosis",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "HP_0011110",
+        "disease_name": "Recurrent tonsillitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0001673",
+        "disease_name": "diarrheal disease",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005010",
+        "disease_name": "coronary artery disorder",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "EFO_0803536",
+        "disease_name": "multiple sclerosis symptom measurement",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0002345",
+        "disease_name": "cervicitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005701",
+        "disease_name": "chlamydia trachomatis infectious disease",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0011382",
+        "disease_name": "sickle cell disease",
+        "max_clinical_stage": "PHASE_1_2"
+      },
+      {
+        "disease_id": "HP_0012735",
+        "disease_name": "Cough",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0001266",
+        "disease_name": "erysipelas",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0008114",
+        "disease_name": "obsessive-compulsive disorder",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0005842",
+        "disease_name": "maxillary sinusitis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0017137",
+        "disease_name": "onchocerciasis",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0005920",
+        "disease_name": "Plasmodium falciparum malaria",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0005149",
+        "disease_name": "pulmonary hypertension",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0003085",
+        "disease_name": "keratitis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "HP_0011947",
+        "disease_name": "Respiratory tract infection",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0001039",
+        "disease_name": "tonsillitis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0012511",
+        "disease_name": "preterm premature rupture of the membranes",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "EFO_1001888",
+        "disease_name": "eye infection",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005737",
+        "disease_name": "Ebola hemorrhagic fever",
+        "max_clinical_stage": "PHASE_1_2"
+      },
+      {
+        "disease_id": "MONDO_0002258",
+        "disease_name": "pharyngitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0005147",
+        "disease_name": "type 1 diabetes mellitus",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0005313",
+        "disease_name": "necrotizing enterocolitis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0001549",
+        "disease_name": "hemolytic-uremic syndrome",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0018469",
+        "disease_name": "pulmonary non-tuberculous mycobacterial infection",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0002420",
+        "disease_name": "tic disorder",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0005136",
+        "disease_name": "malaria",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0044881",
+        "disease_name": "hematopoietic and lymphoid cell neoplasm",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0005974",
+        "disease_name": "strongyloidiasis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005011",
+        "disease_name": "Crohn disease",
+        "max_clinical_stage": "PHASE_2"
+      },
+      {
+        "disease_id": "MONDO_0004822",
+        "disease_name": "bronchiectasis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0003799",
+        "disease_name": "conjunctivitis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "EFO_0008497",
+        "disease_name": "chronic lung allograft dysfunction",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0006502",
+        "disease_name": "acute respiratory distress syndrome",
+        "max_clinical_stage": "UNKNOWN"
+      },
+      {
+        "disease_id": "MONDO_0024330",
+        "disease_name": "infectious otitis media",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0005297",
+        "disease_name": "urethritis",
+        "max_clinical_stage": "APPROVAL"
+      },
+      {
+        "disease_id": "MONDO_0002307",
+        "disease_name": "blepharoconjunctivitis",
+        "max_clinical_stage": "PHASE_3"
+      },
+      {
+        "disease_id": "MONDO_0007007",
+        "disease_name": "Ureaplasma urethritis",
+        "max_clinical_stage": "PHASE_3"
+      }
+    ],
+    "pchembl_targets": {}
   }
 }

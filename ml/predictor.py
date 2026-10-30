@@ -1228,35 +1228,25 @@ def predict_disease_candidates(drug_id: str, top_k: int = 10, drug_name: str = "
 
 
 
-    # Tier 1: Production XGBoost from feature store
+    # Tier 1 & 2: Production XGBoost from feature store or dynamic feature generation
 
     raw_res = _raw_predict_drug(drug_id=clean_id, top_k=top_k)
 
     if raw_res.get("candidates"):
 
-        raw_res["prediction_mode"] = "PRODUCTION_XGBOOST"
+        prov = raw_res.get("provenance", "precomputed_feature_store")
+
+        raw_res["prediction_mode"] = "DYNAMIC_XGBOOST" if prov == "dynamic_feature_generation" else "PRODUCTION_XGBOOST"
 
         raw_res["engine"] = "CureNova XGBoost Final"
+
+        raw_res["provenance"] = prov
 
         return raw_res
 
 
 
-    # Tier 3: Evidence-Grounded Biomedical Ranking
-
-    evidence_res = EvidenceGroundedRanker.rank_diseases_for_drug(
-
-        drug_id=clean_id,
-
-        drug_name=drug_name,
-
-        top_k=top_k
-
-    )
-
-    if evidence_res.get("candidate_count", 0) > 0:
-
-        return evidence_res
+    # (Tier 3 EvidenceGroundedRanker bypassed for drug query to prevent non-ML candidate leakage)
 
 
 
@@ -1486,3 +1476,6 @@ if __name__ == "__main__":
 
     print(json.dumps(res, indent=2, ensure_ascii=False))
 
+# Compatibility aliases
+predict_candidates_for_drug = predict_disease_candidates
+predict_and_enrich_for_drug = predict_drug_and_enrich

@@ -9983,5 +9983,182 @@
     "max_pchembl": null,
     "targets": [],
     "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL38380": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL38380",
+    "drug_name": "FASUDIL",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1436": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1436",
+    "drug_name": "CEFUROXIME",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 1000,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL5314782": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL5314782",
+    "drug_name": "TRASTUZUMAB BOTIDOTIN",
+    "molecule_type": "Antibody drug conjugate",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL47298": {
+    "available": true,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL47298",
+    "drug_name": "TILORONE",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 94,
+    "usable_activity_count": 13,
+    "target_count": 7,
+    "strong_target_count": 3,
+    "max_pchembl": 7.25,
+    "targets": [
+      {
+        "target_chembl_id": "CHEMBL4980",
+        "target_name": "Neuronal acetylcholine receptor subunit alpha-7",
+        "max_pchembl": 7.25,
+        "median_pchembl": 7.25,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL1907609",
+        "target_name": "Muscarinic acetylcholine receptor",
+        "max_pchembl": 6.38,
+        "median_pchembl": 6.38,
+        "activity_count": 1,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL612545",
+        "target_name": "Unchecked",
+        "max_pchembl": 6.14,
+        "median_pchembl": 6.14,
+        "activity_count": 2,
+        "strong_activity": true
+      },
+      {
+        "target_chembl_id": "CHEMBL4434621",
+        "target_name": "Ebolavirus",
+        "max_pchembl": 5.94,
+        "median_pchembl": 5.94,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL2492",
+        "target_name": "Neuronal acetylcholine receptor subunit alpha-7",
+        "max_pchembl": 5.6,
+        "median_pchembl": 5.6,
+        "activity_count": 1,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4303835",
+        "target_name": "SARS-CoV-2",
+        "max_pchembl": 5.39,
+        "median_pchembl": 5.39,
+        "activity_count": 5,
+        "strong_activity": false
+      },
+      {
+        "target_chembl_id": "CHEMBL4296563",
+        "target_name": "Chikungunya virus",
+        "max_pchembl": 5.38,
+        "median_pchembl": 5.38,
+        "activity_count": 1,
+        "strong_activity": false
+      }
+    ],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL3545135": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL3545135",
+    "drug_name": "NV-128",
+    "molecule_type": "Unknown",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL5314386": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL5314386",
+    "drug_name": "ME-344",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1730601": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1730601",
+    "drug_name": "GIMERACIL",
+    "molecule_type": "Small molecule",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
+  },
+  "CHEMBL1743051": {
+    "available": false,
+    "source": "ChEMBL",
+    "source_release": "ChEMBL_37",
+    "drug_id": "CHEMBL1743051",
+    "drug_name": "ONARTUZUMAB",
+    "molecule_type": "Antibody",
+    "activity_record_count": 0,
+    "usable_activity_count": 0,
+    "target_count": 0,
+    "strong_target_count": 0,
+    "max_pchembl": null,
+    "targets": [],
+    "note": "Pharmacological activity evidence from ChEMBL. This evidence does not establish clinical efficacy, clinical safety, or treatment suitability."
   }
 }
